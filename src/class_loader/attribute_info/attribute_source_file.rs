@@ -1,0 +1,24 @@
+use crate::class_loader::{parser::{Parser, U2, U4}, constant_pool_info::ConstantPool};
+
+use super::Attribute;
+
+#[derive(Debug)]
+pub struct AttributeSourceFile {
+	pub attribute_name_index: U2,
+	pub attribute_length: U4,
+	pub source_file_index: U2,
+}
+
+impl Attribute for AttributeSourceFile {
+	fn new(parser: &mut Parser, _: &ConstantPool) -> AttributeSourceFile {
+		let attribute_name_index = parser.consume_u2();
+		let attribute_length = parser.consume_u4();
+		let source_file_index = parser.consume_u2();
+
+		AttributeSourceFile {
+			attribute_name_index,
+			attribute_length,
+			source_file_index,
+		}
+	}
+}
