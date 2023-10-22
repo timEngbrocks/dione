@@ -2,4 +2,4 @@
 
 cargo build
 
-./target/debug/dione -c Main.class -j ./jdk
+RUST_BACKTRACE=1 ./target/debug/dione -c Main.class -j ./jdk
