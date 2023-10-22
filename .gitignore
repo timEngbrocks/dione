@@ -1,3 +1,4 @@
 /target
 /jdk
 .vscode
+rust*.txt
