@@ -8,6 +8,12 @@ pub struct ConstantLongInfo {
 	pub low_bytes: U4,
 }
 
+impl ConstantLongInfo {
+	pub fn to_i64(&self) -> i64 {
+		(i64::from_be(self.high_bytes as i64) << 32) + i64::from_be(self.low_bytes as i64)
+	}
+}
+
 impl ConstantPoolInfo for ConstantLongInfo {
 	fn new(parser: &mut Parser) -> Self {
 		let tag = parser.consume_u1();

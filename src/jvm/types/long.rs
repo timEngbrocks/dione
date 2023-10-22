@@ -1,10 +1,16 @@
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, IntegralTypes};
 
 pub struct Long {
 	value: i64,
 }
 
-impl Value<i64> for Long {
+impl IntegralTypes for Long {}
+
+impl Value for Long {
+    type Type = i64;
+
     fn new() -> Self {
         Self {
             value: 0,
@@ -23,5 +29,9 @@ impl Value<i64> for Long {
 
     fn get(&self) -> i64 {
         self.value
+    }
+
+    fn width(&self) -> U2 {
+        2
     }
 }

@@ -1,10 +1,16 @@
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, FloatingPointTypes};
 
 pub struct Float {
 	value: f32,
 }
 
-impl Value<f32> for Float {
+impl FloatingPointTypes for Float {}
+
+impl Value for Float {
+    type Type = f32;
+
     fn new() -> Self {
         Self {
             value: 0.0,
@@ -23,5 +29,9 @@ impl Value<f32> for Float {
 
     fn get(&self) -> f32 {
         self.value
+    }
+
+    fn width(&self) -> U2 {
+        1
     }
 }

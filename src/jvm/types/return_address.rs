@@ -1,10 +1,16 @@
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, PrimitiveTypes};
 
 pub struct ReturnAddress {
 	value: usize,
 }
 
-impl Value<usize> for ReturnAddress {
+impl PrimitiveTypes for ReturnAddress {}
+
+impl Value for ReturnAddress {
+    type Type = usize;
+
     fn new() -> Self {
         panic!("Can not create ReturnAddress without a value");
     }
@@ -21,5 +27,9 @@ impl Value<usize> for ReturnAddress {
 
     fn get(&self) -> usize {
         self.value
+    }
+
+    fn width(&self) -> U2 {
+        1
     }
 }

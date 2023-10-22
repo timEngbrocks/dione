@@ -1,10 +1,16 @@
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, IntegralTypes};
 
 pub struct Byte {
 	value: i8,
 }
 
-impl Value<i8> for Byte {
+impl IntegralTypes for Byte {}
+
+impl Value for Byte {
+    type Type = i8;
+
     fn new() -> Self {
         Self {
             value: 0,
@@ -23,5 +29,9 @@ impl Value<i8> for Byte {
 
     fn get(&self) -> i8 {
         self.value
+    }
+
+    fn width(&self) -> U2 {
+        1
     }
 }

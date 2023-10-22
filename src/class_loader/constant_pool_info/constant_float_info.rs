@@ -7,6 +7,12 @@ pub struct ConstantFloatInfo {
 	pub bytes: U4,
 }
 
+impl ConstantFloatInfo {
+	pub fn to_f32(&self) -> f32 {
+		self.bytes as f32
+	}
+}
+
 impl ConstantPoolInfo for ConstantFloatInfo {
 	fn new(parser: &mut Parser) -> Self {
 		let tag = parser.consume_u1();

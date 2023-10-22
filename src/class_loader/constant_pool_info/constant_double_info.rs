@@ -8,6 +8,12 @@ pub struct ConstantDoubleInfo {
 	pub low_bytes: U4,
 }
 
+impl ConstantDoubleInfo {
+	pub fn to_f64(&self) -> f64 {
+		(((self.high_bytes as i64) << 32) + (self.low_bytes as i64)) as f64
+	}
+}
+
 impl ConstantPoolInfo for ConstantDoubleInfo {
 	fn new(parser: &mut Parser) -> Self {
 		let tag = parser.consume_u1();

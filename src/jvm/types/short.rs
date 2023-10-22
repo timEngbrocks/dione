@@ -1,10 +1,16 @@
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, IntegralTypes};
 
 pub struct Short {
 	value: i16,
 }
 
-impl Value<i16> for Short {
+impl IntegralTypes for Short {}
+
+impl Value for Short {
+    type Type = i16;
+
     fn new() -> Self {
         Self {
             value: 0,
@@ -23,5 +29,9 @@ impl Value<i16> for Short {
 
     fn get(&self) -> i16 {
         self.value
+    }
+
+    fn width(&self) -> U2 {
+        1
     }
 }

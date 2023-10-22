@@ -1,4 +1,4 @@
-use crate::{jvm::{instructions::{Instruction, Instructions}, execution_context::ExecutionContext}, class_loader::parser::{Parser, U2}};
+use crate::{jvm::{instructions::{Instruction, Instructions}, frame::Frame}, class_loader::parser::{Parser, U2}};
 
 pub struct NOP {}
 
@@ -9,7 +9,7 @@ impl Instruction for NOP {
 		NOP {}
 	}
 
-	fn execute(&mut self, _: &ExecutionContext) {}
+	fn execute(&mut self, _: &mut Frame) {}
 
 	fn length(&self) -> U2 {
 		1

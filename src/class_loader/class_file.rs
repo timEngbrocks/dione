@@ -1,6 +1,18 @@
 use super::{constant_pool_info::{ConstantPool, ConstantPoolInfo, ConstantPoolInfoType}, field_info::FieldInfo, method_info::MethodInfo, attribute_info::AttributeInfo, parser::{Parser, U2, U4}};
 use crate::class_loader::{attribute_info::Attribute, constant_pool_info::ConstantEmptyItem};
 
+pub enum ClassFileAccessFlags {
+    Public = 0x0001,
+    Final = 0x0010,
+    Super = 0x0020,
+    Interface = 0x0200,
+    Abstract = 0x0400,
+    Synthetic = 0x1000,
+    Annotation = 0x2000,
+    Enum = 0x4000,
+    Module = 0x8000,
+}
+
 #[derive(Debug)]
 pub struct ClassFile {
 	pub magic: U4,
@@ -84,5 +96,13 @@ impl ClassFile {
             attributes_count,
             attributes
         }
+    }
+
+    pub fn is_class(&self) -> bool {
+        !self.is_interface()
+    }
+
+    pub fn is_interface(&self) -> bool {
+        self.access_flags & ClassFileAccessFlags::Interface as u16 != 0
     }
 }

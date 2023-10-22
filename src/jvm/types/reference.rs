@@ -1,4 +1,4 @@
-use crate::util::heap::ReferencePtr;
+use crate::{util::heap::ReferencePtr, class_loader::parser::U2};
 
 use super::Value;
 
@@ -6,7 +6,9 @@ pub struct Reference {
 	value: ReferencePtr,
 }
 
-impl Value<ReferencePtr> for Reference {
+impl Value for Reference {
+	type Type = ReferencePtr;
+
 	fn new() -> Self {
 		Reference {
 			value: ReferencePtr::Null,
@@ -25,5 +27,9 @@ impl Value<ReferencePtr> for Reference {
 
     fn get(&self) -> ReferencePtr {
         self.value.clone()
+    }
+
+	fn width(&self) -> U2 {
+        1
     }
 }

@@ -4,21 +4,18 @@
 #![feature(allocator_api)]
 #![feature(strict_provenance)]
 
-use std::path::{PathBuf, Path};
-
 use getopts::Occur;
-
 use args::{ArgsError, Args};
-use class_loader::ClassLoader;
 
-use crate::util::file_util::list_files;
+use jvm::JVM;
 
-mod class_loader;
-mod jvm;
-mod util;
+pub mod class_loader;
+pub mod jvm;
+pub mod util;
+pub mod macros;
 
 fn main() {
-    let (class, jdk) = match parse(&std::env::args().collect()) {
+    let (class, jdk_base_path) = match parse(&std::env::args().collect()) {
         Ok(Some((class, jdk))) => (class, jdk),
         Ok(None) => return,
         Err(e) => {
@@ -27,19 +24,14 @@ fn main() {
         }
     };
 
-	let jdk_file_paths = list_files(Path::new(&jdk));
-	let jdk: Vec<&str> = jdk_file_paths.iter().map(|pathbuf: &PathBuf| {
-		match pathbuf.to_str() {
-			Some(v) => v,
-			None => panic!("Failed to load JDK"),
-		}
-	}).collect();
-
 	use std::time::Instant;
     let now = Instant::now();
+
 	{
-		ClassLoader::load(vec![&class], vec![jdk]);
+		jvm!().initialize(jdk_base_path);
+        jvm!().run(vec![class]);
 	}
+
 	let elapsed = now.elapsed();
     println!("Elapsed: {:.2?}", elapsed);
 

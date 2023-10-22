@@ -1,10 +1,14 @@
 use core::panic;
 
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, PrimitiveTypes};
 
 pub struct Boolean {
 	value: u8,
 }
+
+impl PrimitiveTypes for Boolean {}
 
 #[repr(u8)]
 pub enum BooleanValue {
@@ -12,7 +16,9 @@ pub enum BooleanValue {
     True = 1
 }
 
-impl Value<BooleanValue> for Boolean {
+impl Value for Boolean {
+    type Type = BooleanValue;
+
     fn new() -> Self {
         Self {
             value: BooleanValue::False as u8,
@@ -35,5 +41,9 @@ impl Value<BooleanValue> for Boolean {
             1 => BooleanValue::True,
             v => panic!("Invalid boolean value: {}", v)
         }
+    }
+
+    fn width(&self) -> U2 {
+        1
     }
 }

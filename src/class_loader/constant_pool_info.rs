@@ -4,23 +4,23 @@ use self::{constant_utf8_info::ConstantUtf8Info, constant_integer_info::Constant
 
 use super::parser::{U1, U2, Parser};
 
-mod constant_class_info;
-mod constant_fieldref_info;
-mod constant_methodref_info;
-mod constant_interface_methodref_info;
-mod constant_string_info;
-mod constant_integer_info;
-mod constant_float_info;
-mod constant_long_info;
-mod constant_double_info;
-mod constant_name_and_type_info;
-mod constant_utf8_info;
-mod constant_method_handle_info;
-mod constant_method_type_info;
-mod constant_dynamic_info;
-mod constant_invoke_dynamic_info;
-mod constant_module_info;
-mod constant_package_info;
+pub mod constant_class_info;
+pub mod constant_fieldref_info;
+pub mod constant_methodref_info;
+pub mod constant_interface_methodref_info;
+pub mod constant_string_info;
+pub mod constant_integer_info;
+pub mod constant_float_info;
+pub mod constant_long_info;
+pub mod constant_double_info;
+pub mod constant_name_and_type_info;
+pub mod constant_utf8_info;
+pub mod constant_method_handle_info;
+pub mod constant_method_type_info;
+pub mod constant_dynamic_info;
+pub mod constant_invoke_dynamic_info;
+pub mod constant_module_info;
+pub mod constant_package_info;
 
 #[repr(u8)]
 pub enum ConstantPoolInfoType {
@@ -145,6 +145,10 @@ impl ConstantPool {
 			Some(constant) => constant,
 			None => panic!("{index}"),
 		}
+	}
+
+	pub fn len(&self) -> U2 {
+		self.constants.len() as U2
 	}
 }
 

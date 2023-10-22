@@ -1,10 +1,16 @@
-use super::Value;
+use crate::class_loader::parser::U2;
+
+use super::{Value, IntegralTypes};
 
 pub struct Int {
 	value: i32,
 }
 
-impl Value<i32> for Int {
+impl IntegralTypes for Int {}
+
+impl Value for Int {
+    type Type = i32;
+    
     fn new() -> Self {
         Self {
             value: 0,
@@ -13,7 +19,7 @@ impl Value<i32> for Int {
 
     fn from_value(value: i32) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
 
@@ -23,5 +29,9 @@ impl Value<i32> for Int {
 
     fn get(&self) -> i32 {
         self.value
+    }
+
+    fn width(&self) -> U2 {
+        1
     }
 }
