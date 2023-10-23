@@ -31,6 +31,23 @@ pub enum Types {
 	Reference(Reference),
 }
 
+impl Clone for Types {
+	fn clone(&self) -> Self {
+		match self {
+			Types::Byte(byte) => Types::Byte(byte.clone()),
+			Types::Short(short) => Types::Short(short.clone()),
+			Types::Int(int) => Types::Int(int.clone()),
+			Types::Long(long) => Types::Long(long.clone()),
+			Types::Char(char) => Types::Char(char.clone()),
+			Types::Float(float) => Types::Float(float.clone()),
+			Types::Double(double) => Types::Double(double.clone()),
+			Types::Boolean(boolean) => Types::Boolean(boolean.clone()),
+			Types::ReturnAddress(return_address) => Types::ReturnAddress(return_address.clone()),
+			Types::Reference(reference) => Types::Reference(reference.clone()),
+		}
+	}
+}
+
 pub trait PrimitiveTypes {}
 
 impl PrimitiveTypes for dyn NumericTypes {}

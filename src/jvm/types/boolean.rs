@@ -47,3 +47,11 @@ impl Value for Boolean {
         1
     }
 }
+
+impl Clone for Boolean {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

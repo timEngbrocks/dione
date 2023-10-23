@@ -38,7 +38,7 @@ impl JVM {
 		self.object_manager.initialize(jdk_base_path);
 	}
 
-	pub fn run(&self, _names: Vec<String>) {
-		unimplemented!("JVM::run")
+	pub fn run(&mut self, _: Vec<String>) {
+		unimplemented!()
 	}
 }

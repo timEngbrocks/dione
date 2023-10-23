@@ -16,13 +16,13 @@ pub enum MethodAccesFlags {
 }
 
 pub struct Method {
-    name: String,
-    descriptor: String,
-    access_flags: u16,
-    max_locals: u16,
-    max_stack: u16,
-    instruction_stream: InstructionStream,
-    native: bool,
+    pub name: String,
+    pub descriptor: String,
+    pub access_flags: u16,
+    pub max_locals: u16,
+    pub max_stack: u16,
+    pub instruction_stream: InstructionStream,
+    pub native: bool,
 }
 
 impl Method {

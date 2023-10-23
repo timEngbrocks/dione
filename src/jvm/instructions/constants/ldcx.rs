@@ -1,4 +1,4 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction, runtime_constant_pool::{RuntimeConstants, runtime_constant_integer::RuntimeConstantInteger, runtime_constant_float::RuntimeConstantFloat, runtime_constant_string::RuntimeConstantString, runtime_constant_class::RuntimeConstantClass, runtime_constant_long::RuntimeConstantLong, runtime_constant_double::RuntimeConstantDouble}, types::{int::Int, Types, Value, float::Float, double::Double, long::Long}}, class_loader::parser::{Parser, U2, U1}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::Instruction, runtime_constant_pool::{RuntimeConstants, numeric_constant::{NumericConstant, NumericConstantKind}}, types::Types}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
 #[allow(non_camel_case_types)]
 pub struct LDC {
@@ -69,11 +69,11 @@ impl Instruction for LDC2_W {
 	fn execute(&mut self, execution_context: &mut Frame) {
 		let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
 		match execution_context.constant_pool.get(index) {
-			RuntimeConstants::Long(RuntimeConstantLong { value }) => {
-				execution_context.stack.push(Types::Long(Long::from_value(*value)));
+			RuntimeConstants::NumericConstant(NumericConstant { value: NumericConstantKind::Long(value) }) => {
+				execution_context.stack.push(Types::Long(value.clone()));
 			},
-			RuntimeConstants::Double(RuntimeConstantDouble { value }) => {
-				execution_context.stack.push(Types::Double(Double::from_value(*value)));
+			RuntimeConstants::NumericConstant(NumericConstant { value: NumericConstantKind::Double(value) }) => {
+				execution_context.stack.push(Types::Double(value.clone()));
 			},
 			// TODO: Dynamically computed long/double constant
 			_ => {
@@ -90,18 +90,18 @@ impl Instruction for LDC2_W {
 // TODO: https://docs.oracle.com/javase/specs/jvms/se19/html/jvms-6.html#jvms-6.5.ldc
 fn ldc_impl(execution_context: &mut Frame, index: u16) {
 	match execution_context.constant_pool.get(index) {
-		RuntimeConstants::Integer(RuntimeConstantInteger { value }) => {
-			execution_context.stack.push(Types::Int(Int::from_value(*value)));
+		RuntimeConstants::NumericConstant(NumericConstant { value: NumericConstantKind::Integer(value) }) => {
+			execution_context.stack.push(Types::Int(value.clone()));
 		},
-		RuntimeConstants::Float(RuntimeConstantFloat { value }) => {
-			execution_context.stack.push(Types::Float(Float::from_value(*value)));
+		RuntimeConstants::NumericConstant(NumericConstant { value: NumericConstantKind::Float(value) }) => {
+			execution_context.stack.push(Types::Float(value.clone()));
 		},
-		RuntimeConstants::String(RuntimeConstantString { .. }) => {
+		RuntimeConstants::StringConstant(_) => {
 			// TODO: Push reference to an instance of class String that contains value
 			// TODO: Push reference to the above instance
 			unimplemented!("LDC::execute: String");
 		},
-		RuntimeConstants::Class(RuntimeConstantClass { .. }) => {
+		RuntimeConstants::SymRefClassOrInterface(_) => {
 			// TODO: Resolve named Class/Interface and push reference to it
 			unimplemented!("LDC::execute: Class");
 		},

@@ -35,3 +35,11 @@ impl Value for Float {
         1
     }
 }
+
+impl Clone for Float {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

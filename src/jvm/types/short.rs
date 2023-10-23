@@ -35,3 +35,11 @@ impl Value for Short {
         1
     }
 }
+
+impl Clone for Short {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

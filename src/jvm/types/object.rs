@@ -104,4 +104,8 @@ impl Object {
     pub fn is_module(&self) -> bool {
         self.access_flags & ObjectAccessFlags::Module as u16 != 0
     }
+
+    pub fn has_main_method(&self) -> bool {
+        self.methods.contains_key("main")
+    }
 }

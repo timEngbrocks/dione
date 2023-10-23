@@ -963,96 +963,6 @@ impl Instruction for POP2 {
 	}
 }
 #[allow(non_camel_case_types)]
-pub struct DUP {}
-impl Instruction for DUP {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DUP));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
-pub struct DUP_X1 {}
-impl Instruction for DUP_X1 {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DUP_X1));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
-pub struct DUP_X2 {}
-impl Instruction for DUP_X2 {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DUP_X2));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
-pub struct DUP2 {}
-impl Instruction for DUP2 {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DUP2));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
-pub struct DUP2_X1 {}
-impl Instruction for DUP2_X1 {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DUP2_X1));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
-pub struct DUP2_X2 {}
-impl Instruction for DUP2_X2 {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DUP2_X2));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
 pub struct SWAP {}
 impl Instruction for SWAP {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
@@ -2363,21 +2273,6 @@ impl Instruction for INVOKEVIRTUAL {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::INVOKEVIRTUAL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) {}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[allow(non_camel_case_types)]
-pub struct INVOKESPECIAL {}
-impl Instruction for INVOKESPECIAL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::INVOKESPECIAL));
 		todo!("Implement");
 	}
 

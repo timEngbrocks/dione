@@ -35,3 +35,12 @@ impl Value for Double {
         2
     }
 }
+
+
+impl Clone for Double {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

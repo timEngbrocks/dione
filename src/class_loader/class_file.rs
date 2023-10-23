@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use super::{constant_pool_info::{ConstantPool, ConstantPoolInfo, ConstantPoolInfoType}, field_info::FieldInfo, method_info::MethodInfo, attribute_info::AttributeInfo, parser::{Parser, U2, U4}};
 use crate::class_loader::{attribute_info::Attribute, constant_pool_info::ConstantEmptyItem};
 
@@ -11,6 +13,27 @@ pub enum ClassFileAccessFlags {
     Annotation = 0x2000,
     Enum = 0x4000,
     Module = 0x8000,
+}
+
+pub static mut GLOBAL_CLASS_FILE_MAJOR_VERSION: u16 = 0xFF;
+pub static mut GLOBAL_CLASS_FILE_MINOR_VERSION: u16 = 0xFF;
+
+pub fn compare_class_file_version_to_global(major_version: u16, minor_version: u16) -> Ordering {
+    let global_major_version = unsafe { GLOBAL_CLASS_FILE_MAJOR_VERSION };
+    let global_minor_version = unsafe { GLOBAL_CLASS_FILE_MINOR_VERSION };
+    if major_version > global_major_version {
+        Ordering::Greater
+    } else if major_version < global_major_version {
+        Ordering::Less
+    } else {
+        if minor_version > global_minor_version {
+            Ordering::Greater
+        } else if minor_version < global_minor_version {
+            Ordering::Less
+        } else {
+            Ordering::Equal
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -39,6 +62,16 @@ impl ClassFile {
         let magic = parser.consume_u4();
         let minor_version = parser.consume_u2();
         let major_version = parser.consume_u2();
+
+        unsafe {
+            if GLOBAL_CLASS_FILE_MAJOR_VERSION == 0xFF {
+                GLOBAL_CLASS_FILE_MAJOR_VERSION = major_version.clone();
+            }
+            if GLOBAL_CLASS_FILE_MINOR_VERSION == 0xFF {
+                GLOBAL_CLASS_FILE_MINOR_VERSION = minor_version.clone();
+            }
+        }
+
         let constant_pool_count = parser.consume_u2();
         let mut constants: Vec<ConstantPoolInfoType> = Vec::with_capacity((constant_pool_count - 1) as usize);
         for _ in 0..(constant_pool_count - 1) {

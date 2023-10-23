@@ -35,3 +35,11 @@ impl Value for Long {
         2
     }
 }
+
+impl Clone for Long {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

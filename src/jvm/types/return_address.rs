@@ -33,3 +33,11 @@ impl Value for ReturnAddress {
         1
     }
 }
+
+impl Clone for ReturnAddress {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

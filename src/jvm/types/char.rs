@@ -35,3 +35,11 @@ impl Value for Char {
         1
     }
 }
+
+impl Clone for Char {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

@@ -33,3 +33,12 @@ impl Value for Reference {
         1
     }
 }
+
+
+impl Clone for Reference {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}

@@ -35,3 +35,12 @@ impl Value for Byte {
         1
     }
 }
+
+
+impl Clone for Byte {
+    fn clone(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+        }
+    }
+}
