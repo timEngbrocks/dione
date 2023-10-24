@@ -1,4 +1,4 @@
-use super::{execution_context::ExecutionContext, instructions::{Instruction}};
+use super::{execution_context::ExecutionContext, instructions::Instruction};
 
 pub struct Interpreter {
 	call_stack: Vec<ExecutionContext>,

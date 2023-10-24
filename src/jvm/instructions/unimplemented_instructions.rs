@@ -2722,42 +2722,6 @@ impl Instruction for PUTFIELD {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct INVOKEVIRTUAL {}
-impl Instruction for INVOKEVIRTUAL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::INVOKEVIRTUAL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct INVOKESTATIC {}
-impl Instruction for INVOKESTATIC {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::INVOKESTATIC));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct INVOKEINTERFACE {}
 impl Instruction for INVOKEINTERFACE {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
