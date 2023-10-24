@@ -72,6 +72,10 @@ impl Parser {
         self.data.len()
     }
 
+    pub fn remaining(&self) -> usize {
+        self.current_data().len()
+    }
+
     fn current_data(&self) -> &[u8] {
         &self.data[self.cursor..self.length()]
     }
