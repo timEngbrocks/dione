@@ -31,6 +31,12 @@ pub enum Types {
 	Reference(Reference),
 }
 
+#[derive(Clone)]
+pub enum ReturnTypes {
+	Type(Types),
+	Void,
+}
+
 impl Clone for Types {
 	fn clone(&self) -> Self {
 		match self {
@@ -44,6 +50,29 @@ impl Clone for Types {
 			Types::Boolean(boolean) => Types::Boolean(boolean.clone()),
 			Types::ReturnAddress(return_address) => Types::ReturnAddress(return_address.clone()),
 			Types::Reference(reference) => Types::Reference(reference.clone()),
+		}
+	}
+}
+
+impl Types {
+	pub fn assert_matches_type(&self, other: &Types) {
+		assert_eq!(std::mem::discriminant(self), std::mem::discriminant(other));
+	}
+
+	pub fn transfer_from(&mut self, other: &Types) {
+		self.assert_matches_type(other);
+		match self {
+			Types::Byte(ref mut a) if let Types::Byte(b) = other => a.set(b.get()),
+			Types::Short(ref mut a) if let Types::Short(b) = other => a.set(b.get()),
+			Types::Int(ref mut a) if let Types::Int(b) = other => a.set(b.get()),
+			Types::Long(ref mut a) if let Types::Long(b) = other => a.set(b.get()),
+			Types::Char(ref mut a) if let Types::Char(b) = other => a.set(b.get()),
+			Types::Float(ref mut a) if let Types::Float(b) = other => a.set(b.get()),
+			Types::Double(ref mut a) if let Types::Double(b) = other => a.set(b.get()),
+			Types::Boolean(ref mut a) if let Types::Boolean(b) = other => a.set(b.get()),
+			Types::ReturnAddress(ref mut a) if let Types::ReturnAddress(b) = other => a.set(b.get()),
+			Types::Reference(ref mut a) if let Types::Reference(b) = other => a.set(b.get()),
+			_ => panic!("Invalid types transfer")
 		}
 	}
 }

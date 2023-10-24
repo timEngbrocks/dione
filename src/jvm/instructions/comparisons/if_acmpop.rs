@@ -1,5 +1,6 @@
-use crate::{jvm::{instructions::Instruction, frame::Frame}, class_loader::parser::{Parser, U2, U1}, opcodes};
+use crate::{jvm::{instructions::{Instruction, InstructionResult}, frame::Frame}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct IF_ACMPEQ {
 	branchbyte1: U1,
@@ -17,7 +18,7 @@ impl Instruction for IF_ACMPEQ {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IF_ACMPEQ::execute")
 	}
 
@@ -25,6 +26,7 @@ impl Instruction for IF_ACMPEQ {
 		3
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct IF_ACMPNE {
 	branchbyte1: U1,
@@ -42,7 +44,7 @@ impl Instruction for IF_ACMPNE {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IF_ACMPNE::execute")
 	}
 

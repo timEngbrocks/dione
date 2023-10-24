@@ -1,35 +1,49 @@
-use crate::{util::{sized_array::SizedArray, stack::Stack}, class_loader::{parser::U2, constant_pool_info::ConstantPool}, jvm::types::Types};
+use crate::{util::{sized_array::SizedArray, stack::Stack}, class_loader::constant_pool_info::ConstantPool, jvm::types::Types};
 
-use super::runtime_constant_pool::RuntimeConstantPool;
+use super::{runtime_constant_pool::RuntimeConstantPool, types::ReturnTypes};
 
 pub struct Frame {
 	pub local_variables: SizedArray<Types>,
 	pub stack: Stack<Types>,
-	pub constant_pool: RuntimeConstantPool,
+	pub runtime_constant_pool: RuntimeConstantPool,
+	pub method_name: String,
+	pub return_value: ReturnTypes,
 }
 
 impl Frame {
-	pub fn new_native(constant_pool: &ConstantPool) -> Frame {
+	pub fn new(
+		local_variables: SizedArray<Types>,
+		stack: Stack<Types>,
+		constant_pool: &ConstantPool,
+		method_name: String,
+		return_value: ReturnTypes
+	) -> Frame {
 		Frame {
-			local_variables: SizedArray::<Types>::new(0),
-			stack: Stack::<Types>::new(0),
-			constant_pool: RuntimeConstantPool::new(constant_pool),
+			local_variables,
+			stack,
+			runtime_constant_pool: RuntimeConstantPool::new(constant_pool),
+			method_name,
+			return_value,
 		}
 	}
 
-	pub fn new(max_locals: U2, max_stack: U2, constant_pool: &ConstantPool) -> Frame {
-		Frame {
-			local_variables: SizedArray::<Types>::new(max_locals),
-			stack: Stack::<Types>::new(max_stack),
-			constant_pool: RuntimeConstantPool::new(constant_pool),
-		}
+	pub fn get_return_value(&self) -> &ReturnTypes {
+		&self.return_value
 	}
 
-	pub fn clone(&self) -> Frame {
+	pub fn set_return_from_called_method(&mut self, return_value: ReturnTypes) {
+		self.return_value = return_value;
+	}
+}
+
+impl Clone for Frame {
+	fn clone(&self) -> Frame {
 		Frame {
 			local_variables: SizedArray::<Types>::new(self.local_variables.len()),
 			stack: Stack::<Types>::new(self.stack.max_size()),
-			constant_pool: self.constant_pool.clone(),
+			runtime_constant_pool: self.runtime_constant_pool.clone(),
+			method_name: self.method_name.clone(),
+			return_value: self.return_value.clone(),
 		}
 	}
 }

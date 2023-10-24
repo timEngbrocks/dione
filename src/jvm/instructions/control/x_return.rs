@@ -1,5 +1,6 @@
-use crate::{jvm::{instructions::Instruction, frame::Frame}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{instructions::{Instruction, InstructionResult}, frame::Frame}, class_loader::parser::{Parser, U2}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct IRETURN {}
 impl Instruction for IRETURN {
@@ -9,7 +10,7 @@ impl Instruction for IRETURN {
 		IRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IRETURN::execute")
 	}
 
@@ -17,6 +18,7 @@ impl Instruction for IRETURN {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct LRETURN {}
 impl Instruction for LRETURN {
@@ -26,7 +28,7 @@ impl Instruction for LRETURN {
 		LRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("LRETURN::execute")
 	}
 
@@ -34,6 +36,7 @@ impl Instruction for LRETURN {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct FRETURN {}
 impl Instruction for FRETURN {
@@ -43,7 +46,7 @@ impl Instruction for FRETURN {
 		FRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("FRETURN::execute")
 	}
 
@@ -51,6 +54,7 @@ impl Instruction for FRETURN {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DRETURN {}
 impl Instruction for DRETURN {
@@ -60,7 +64,7 @@ impl Instruction for DRETURN {
 		DRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("DRETURN::execute")
 	}
 
@@ -68,6 +72,7 @@ impl Instruction for DRETURN {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ARETURN {}
 impl Instruction for ARETURN {
@@ -77,7 +82,7 @@ impl Instruction for ARETURN {
 		ARETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("ARETURN::execute")
 	}
 
@@ -85,6 +90,7 @@ impl Instruction for ARETURN {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct RETURN {}
 impl Instruction for RETURN {
@@ -94,7 +100,7 @@ impl Instruction for RETURN {
 		RETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("RETURN::execute")
 	}
 

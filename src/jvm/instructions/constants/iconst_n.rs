@@ -1,5 +1,6 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction, types::{int::Int, Value, Types}}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, types::{int::Int, Value, Types}}, class_loader::parser::{Parser, U2}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_M1 {}
 impl Instruction for ICONST_M1 {
@@ -9,15 +10,17 @@ impl Instruction for ICONST_M1 {
 		ICONST_M1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(-1);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_0 {}
 impl Instruction for ICONST_0 {
@@ -27,9 +30,10 @@ impl Instruction for ICONST_0 {
 		ICONST_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(0);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 
@@ -37,6 +41,7 @@ impl Instruction for ICONST_0 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_1 {}
 impl Instruction for ICONST_1 {
@@ -46,9 +51,10 @@ impl Instruction for ICONST_1 {
 		ICONST_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(1);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 
@@ -56,6 +62,7 @@ impl Instruction for ICONST_1 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_2 {}
 impl Instruction for ICONST_2 {
@@ -65,9 +72,10 @@ impl Instruction for ICONST_2 {
 		ICONST_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(2);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 
@@ -75,6 +83,7 @@ impl Instruction for ICONST_2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_3 {}
 impl Instruction for ICONST_3 {
@@ -84,9 +93,10 @@ impl Instruction for ICONST_3 {
 		ICONST_3 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(3);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 
@@ -94,6 +104,7 @@ impl Instruction for ICONST_3 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_4 {}
 impl Instruction for ICONST_4 {
@@ -103,9 +114,10 @@ impl Instruction for ICONST_4 {
 		ICONST_4 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(4);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 
@@ -113,6 +125,7 @@ impl Instruction for ICONST_4 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ICONST_5 {}
 impl Instruction for ICONST_5 {
@@ -122,9 +135,10 @@ impl Instruction for ICONST_5 {
 		ICONST_5 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(5);
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 

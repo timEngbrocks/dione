@@ -34,6 +34,8 @@ static CLASS_ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllo
 static ARRAY_ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllocator::new());
 static INTERFACE_ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllocator::new());
 
+static mut INSTANCE: Option<Heap> = None;
+
 const HEAP_START: usize = 0x10000000; // 256 MB
 const HEAP_SIZE: usize = 1024 * 1024; // 1 MB
 
@@ -44,7 +46,26 @@ pub struct Heap {
 }
 
 impl Heap {
-	pub fn new() -> Self {
+	pub fn initialize() {
+		Self::it();
+	}
+
+	pub fn allocate(value: ReferenceableTypes) -> Reference {
+		Self::it().allocate_impl(value)
+	}
+
+	fn it() -> &'static Self {
+		unsafe {
+			if let Some(_) = INSTANCE {
+				INSTANCE.as_ref().unwrap()
+			} else {
+				INSTANCE = Some(Heap::new());
+				INSTANCE.as_ref().unwrap()
+			}
+		}
+	}
+
+	fn new() -> Self {
 		let class_allocator = &CLASS_ALLOCATOR;
 		let array_allocator = &ARRAY_ALLOCATOR;
 		let interface_allocator = &INTERFACE_ALLOCATOR;
@@ -62,7 +83,7 @@ impl Heap {
 		}
 	}
 
-	pub fn allocate(&self, value: ReferenceableTypes) -> Reference {
+	fn allocate_impl(&self, value: ReferenceableTypes) -> Reference {
 		match value {
 			ReferenceableTypes::Class(_) => {
 				let value = Rc::new_in(RefCell::new(value), self.class_allocator);

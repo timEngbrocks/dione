@@ -1,8 +1,8 @@
-use crate::class_loader::{parser::{Parser, U4, U2}, constant_pool_info::ConstantPool};
+use crate::class_loader::parser::{Parser, U4, U2};
 
 use self::{constants::{nop::NOP, iconst_n::{ICONST_M1, ICONST_0, ICONST_1, ICONST_2, ICONST_3, ICONST_4, ICONST_5}, lconst_n::{LCONST_0, LCONST_1}, fconst_n::{FCONST_0, FCONST_1, FCONST_2}, dconst_n::{DCONST_0, DCONST_1}, xpush::{BIPUSH, SIPUSH}, ldcx::{LDC, LDC_W, LDC2_W}, aconst_null::ACONST_NULL}, unimplemented_instructions::ILOAD, unimplemented_instructions::LLOAD, unimplemented_instructions::FLOAD, unimplemented_instructions::DLOAD, unimplemented_instructions::ALOAD, unimplemented_instructions::ILOAD_0, unimplemented_instructions::ILOAD_1, unimplemented_instructions::ILOAD_2, unimplemented_instructions::ILOAD_3, unimplemented_instructions::LLOAD_0, unimplemented_instructions::LLOAD_1, unimplemented_instructions::LLOAD_2, unimplemented_instructions::LLOAD_3, unimplemented_instructions::FLOAD_0, unimplemented_instructions::FLOAD_1, unimplemented_instructions::FLOAD_2, unimplemented_instructions::FLOAD_3, unimplemented_instructions::DLOAD_0, unimplemented_instructions::DLOAD_1, unimplemented_instructions::DLOAD_2, unimplemented_instructions::DLOAD_3, unimplemented_instructions::IALOAD, unimplemented_instructions::LALOAD, unimplemented_instructions::FALOAD, unimplemented_instructions::DALOAD, unimplemented_instructions::AALOAD, unimplemented_instructions::BALOAD, unimplemented_instructions::CALOAD, unimplemented_instructions::SALOAD, unimplemented_instructions::ISTORE, unimplemented_instructions::LSTORE, unimplemented_instructions::FSTORE, unimplemented_instructions::DSTORE, unimplemented_instructions::ASTORE, unimplemented_instructions::ISTORE_0, unimplemented_instructions::ISTORE_1, unimplemented_instructions::ISTORE_2, unimplemented_instructions::ISTORE_3, unimplemented_instructions::LSTORE_0, unimplemented_instructions::LSTORE_1, unimplemented_instructions::LSTORE_2, unimplemented_instructions::LSTORE_3, unimplemented_instructions::FSTORE_0, unimplemented_instructions::FSTORE_1, unimplemented_instructions::FSTORE_2, unimplemented_instructions::FSTORE_3, unimplemented_instructions::DSTORE_0, unimplemented_instructions::DSTORE_1, unimplemented_instructions::DSTORE_2, unimplemented_instructions::DSTORE_3, unimplemented_instructions::ASTORE_0, unimplemented_instructions::ASTORE_1, unimplemented_instructions::ASTORE_2, unimplemented_instructions::ASTORE_3, unimplemented_instructions::{IASTORE, PUTSTATIC}, unimplemented_instructions::LASTORE, unimplemented_instructions::FASTORE, unimplemented_instructions::DASTORE, unimplemented_instructions::AASTORE, unimplemented_instructions::BASTORE, unimplemented_instructions::CASTORE, unimplemented_instructions::SASTORE, unimplemented_instructions::POP, unimplemented_instructions::POP2, unimplemented_instructions::SWAP, unimplemented_instructions::IADD, unimplemented_instructions::LADD, unimplemented_instructions::FADD, unimplemented_instructions::DADD, unimplemented_instructions::ISUB, unimplemented_instructions::LSUB, unimplemented_instructions::FSUB, unimplemented_instructions::DSUB, unimplemented_instructions::IMUL, unimplemented_instructions::LMUL, unimplemented_instructions::FMUL, unimplemented_instructions::DMUL, unimplemented_instructions::{IDIV, GETFIELD}, unimplemented_instructions::LDIV, unimplemented_instructions::FDIV, unimplemented_instructions::DDIV, unimplemented_instructions::IREM, unimplemented_instructions::LREM, unimplemented_instructions::FREM, unimplemented_instructions::DREM, unimplemented_instructions::INEG, unimplemented_instructions::LNEG, unimplemented_instructions::FNEG, unimplemented_instructions::DNEG, unimplemented_instructions::ISHL, unimplemented_instructions::LSHL, unimplemented_instructions::ISHR, unimplemented_instructions::LSHR, unimplemented_instructions::IUSHR, unimplemented_instructions::LUSHR, unimplemented_instructions::{IAND, GETSTATIC}, unimplemented_instructions::LAND, unimplemented_instructions::IOR, unimplemented_instructions::LOR, unimplemented_instructions::IXOR, unimplemented_instructions::LXOR, unimplemented_instructions::{IINC, MONITOREXIT}, unimplemented_instructions::I2L, unimplemented_instructions::I2F, unimplemented_instructions::I2D, unimplemented_instructions::L2I, unimplemented_instructions::L2F, unimplemented_instructions::L2D, unimplemented_instructions::F2I, unimplemented_instructions::F2L, unimplemented_instructions::F2D, unimplemented_instructions::D2I, unimplemented_instructions::D2L, unimplemented_instructions::D2F, unimplemented_instructions::I2B, unimplemented_instructions::I2C, unimplemented_instructions::I2S, unimplemented_instructions::LCMP, unimplemented_instructions::FCMPL, unimplemented_instructions::FCMPG, unimplemented_instructions::DCMPL, unimplemented_instructions::DCMPG, unimplemented_instructions::{IFEQ, PUTFIELD}, unimplemented_instructions::{IFNE, INVOKEDYNAMIC}, unimplemented_instructions::{IFLT, INVOKEINTERFACE}, unimplemented_instructions::{IFGE, INVOKEVIRTUAL}, unimplemented_instructions::IFGT, unimplemented_instructions::{IFLE, INVOKESTATIC}, unimplemented_instructions::{IF_ICMPEQ, ANEWARRAY}, unimplemented_instructions::{IF_ICMPNE, MONITORENTER}, unimplemented_instructions::{IF_ICMPLT, INSTANCEOF}, unimplemented_instructions::{IF_ICMPGE, ARRAYLENGTH}, unimplemented_instructions::{IF_ICMPGT, ATHROW}, unimplemented_instructions::{IF_ICMPLE, CHECKCAST}, unimplemented_instructions::JSR, unimplemented_instructions::RET, unimplemented_instructions::TABLESWITCH, unimplemented_instructions::LOOKUPSWITCH, unimplemented_instructions::WIDE, unimplemented_instructions::MULTIANEWARRAY, unimplemented_instructions::{IFNULL, NEWARRAY}, unimplemented_instructions::IFNONNULL, unimplemented_instructions::GOTO_W, unimplemented_instructions::JSR_W, unimplemented_instructions::BREAKPOINT, unimplemented_instructions::IMPDEP1, unimplemented_instructions::IMPDEP2, control::{x_return::{IRETURN, LRETURN, FRETURN, DRETURN, ARETURN, RETURN}, goto::GOTO}, loads::aload_i::{ALOAD_0, ALOAD_1, ALOAD_2, ALOAD_3}, comparisons::if_acmpop::{IF_ACMPEQ, IF_ACMPNE}, references::{new::NEW, invokespecial::INVOKESPECIAL}, stack::dup::{DUP, DUP_X1, DUP_X2, DUP2, DUP2_X1, DUP2_X2}};
 
-use super::frame::Frame;
+use super::{frame::Frame, execution_context::ExecutionContext};
 
 pub mod unimplemented_instructions;
 
@@ -20,28 +20,39 @@ pub mod reserved;
 
 pub trait Instruction {
     fn new(parser: &mut Parser) -> Self where Self: Sized;
-    fn execute(&mut self, execution_context: &mut Frame);
+    fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult;
     fn length(&self) -> U2;
 }
 
+pub struct InstructionResult {
+    pub call: Option<ExecutionContext>,
+}
+
+impl InstructionResult {
+    pub fn empty() -> Self {
+        InstructionResult {
+            call: None,
+        }
+    }
+}
+
+#[derive(Clone)]
 pub struct InstructionStream {
     instructions: Vec<Instructions>,
     length: usize,
-    frame: Frame,
     cursor: usize,
 }
 
 impl InstructionStream {
-    pub fn new_native(constant_pool: &ConstantPool) -> InstructionStream {
+    pub fn new_native() -> InstructionStream {
         InstructionStream {
             instructions: Vec::new(),
             length: 0,
-            frame: Frame::new_native(constant_pool),
             cursor: 0,
         }
     }
 
-    pub fn new(parser: &mut Parser, length: U4, max_locals: U2, max_stack: U2, constant_pool: &ConstantPool) -> InstructionStream {
+    pub fn new(parser: &mut Parser, length: U4) -> InstructionStream {
         let mut instructions = Vec::with_capacity(length as usize);
         let mut cursor = 0;
         while cursor < length {
@@ -54,7 +65,6 @@ impl InstructionStream {
         InstructionStream {
             instructions,
             length,
-            frame: Frame::new(max_locals, max_stack, &constant_pool),
             cursor: 0,
         }
     }
@@ -63,12 +73,13 @@ impl InstructionStream {
         self.cursor < self.length
     }
 
-    pub fn execute_next(&mut self) {
+    pub fn next(&mut self) -> &mut Instructions {
         if !self.has_next() {
             panic!("Error handling!");
         }
-        self.instructions[self.cursor].execute(&mut self.frame);
+        let instruction = &mut self.instructions[self.cursor];
         self.cursor += 1;
+        instruction
     }
 
     pub fn absolute_jump(&mut self, index: usize) {
@@ -83,6 +94,7 @@ impl InstructionStream {
     }
 }
 
+#[derive(Clone)]
 #[repr(u8)]
 #[allow(non_camel_case_types)]
 pub enum Instructions {
@@ -506,7 +518,7 @@ impl Instruction for Instructions {
         }
     }
 
-    fn execute(&mut self, execution_context: &mut Frame) {
+    fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
         match self {
             Instructions::NOP(instruction) => instruction.execute(execution_context),
             Instructions::ACONST_NULL(instruction) => instruction.execute(execution_context),

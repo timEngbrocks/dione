@@ -1,5 +1,6 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction, types::{Value, int::Int, Types}}, class_loader::parser::{Parser, U2, U1}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, types::{Value, int::Int, Types}}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct BIPUSH {
 	byte: U1,
@@ -14,15 +15,17 @@ impl Instruction for BIPUSH {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Int::from_value(bitutils::sign_extend32(self.byte as u32, 8));
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		2
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SIPUSH {
 	byte1: U1,
@@ -40,10 +43,11 @@ impl Instruction for SIPUSH {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let intermediate_short = ((self.byte1 as u16) << 8) | self.byte2 as u16;
 		let value = Int::from_value(bitutils::sign_extend32(intermediate_short as u32, 16));
 		execution_context.stack.push(Types::Int(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {

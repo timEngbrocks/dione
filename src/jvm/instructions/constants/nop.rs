@@ -1,5 +1,7 @@
-use crate::{jvm::{instructions::{Instruction, Instructions}, frame::Frame}, class_loader::parser::{Parser, U2}};
+use crate::{jvm::{instructions::{Instruction, Instructions, InstructionResult}, frame::Frame}, class_loader::parser::{Parser, U2}};
 
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct NOP {}
 
 impl Instruction for NOP {
@@ -9,7 +11,9 @@ impl Instruction for NOP {
 		NOP {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {}
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+		unimplemented!()
+	}
 
 	fn length(&self) -> U2 {
 		1

@@ -1,5 +1,6 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction}, class_loader::parser::{Parser, U2, U1}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct NEW {
 	indexbyte1: U1,
@@ -17,7 +18,7 @@ impl Instruction for NEW {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("NEW::execute")
 	}
 

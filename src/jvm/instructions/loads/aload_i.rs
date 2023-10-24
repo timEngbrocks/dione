@@ -1,5 +1,6 @@
-use crate::{jvm::{instructions::Instruction, frame::Frame}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{instructions::{Instruction, InstructionResult}, frame::Frame}, class_loader::parser::{Parser, U2}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ALOAD_0 {}
 impl Instruction for ALOAD_0 {
@@ -9,7 +10,7 @@ impl Instruction for ALOAD_0 {
 		ALOAD_0 {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("ALOAD_0::execute")
 	}
 
@@ -17,6 +18,7 @@ impl Instruction for ALOAD_0 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ALOAD_1 {}
 impl Instruction for ALOAD_1 {
@@ -26,7 +28,7 @@ impl Instruction for ALOAD_1 {
 		ALOAD_1 {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("ALOAD_1::execute")
 	}
 
@@ -34,6 +36,7 @@ impl Instruction for ALOAD_1 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ALOAD_2 {}
 impl Instruction for ALOAD_2 {
@@ -43,7 +46,7 @@ impl Instruction for ALOAD_2 {
 		ALOAD_2 {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("ALOAD_2::execute")
 	}
 
@@ -51,6 +54,7 @@ impl Instruction for ALOAD_2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ALOAD_3 {}
 impl Instruction for ALOAD_3 {
@@ -60,7 +64,7 @@ impl Instruction for ALOAD_3 {
 		ALOAD_3 {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) {
+	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("ALOAD_3::execute")
 	}
 

@@ -3,6 +3,8 @@
 #![feature(const_mut_refs)]
 #![feature(allocator_api)]
 #![feature(strict_provenance)]
+#![feature(let_chains)]
+#![feature(if_let_guard)]
 
 use getopts::Occur;
 use args::{ArgsError, Args};
@@ -28,8 +30,8 @@ fn main() {
     let now = Instant::now();
 
 	{
-		jvm!().initialize(jdk_base_path);
-        jvm!().run(vec![class]);
+		JVM::start(jdk_base_path);
+        JVM::run(vec![class]);
 	}
 
 	let elapsed = now.elapsed();

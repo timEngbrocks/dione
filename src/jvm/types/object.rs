@@ -1,5 +1,7 @@
 use std::collections::{HashSet, HashMap};
 
+use crate::jvm::object_manager::ObjectManager;
+
 use super::{field::Field, method::Method};
 
 #[repr(u16)]
@@ -15,6 +17,7 @@ pub enum ObjectAccessFlags {
     Module = 0x8000,
 }
 
+#[derive(Clone)]
 pub struct Object {
     pub name: String,
     pub access_flags: u16,
@@ -62,6 +65,18 @@ impl Object {
             fields: HashMap::with_capacity(0),
             static_fields,
             methods,
+        }
+    }
+
+    pub fn get_method(&self, method_name: &str, descriptor: &str) -> Option<(&Self, &Method)> {
+        let key = format!("{}{}", method_name, descriptor);
+        if self.methods.contains_key(key.as_str()) {
+            Some((self, self.methods.get(key.as_str()).unwrap()))
+        } else if let Some(super_class) = &self.super_class {
+            let super_class = ObjectManager::get(super_class);
+            super_class.get_method(method_name, descriptor)
+        } else {
+            None
         }
     }
 

@@ -15,6 +15,7 @@ pub enum MethodAccesFlags {
     Synthetic = 0x1000,
 }
 
+#[derive(Clone)]
 pub struct Method {
     pub name: String,
     pub descriptor: String,

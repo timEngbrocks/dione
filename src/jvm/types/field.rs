@@ -12,6 +12,7 @@ pub enum FieldAccessFlags {
     Enum = 0x4000,
 }
 
+#[derive(Clone)]
 pub struct Field {
     name: String,
     descriptor: String,

@@ -1,5 +1,6 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction, types::{long::Long, Value, Types}}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, types::{long::Long, Value, Types}}, class_loader::parser::{Parser, U2}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct LCONST_0 {}
 impl Instruction for LCONST_0 {
@@ -9,15 +10,17 @@ impl Instruction for LCONST_0 {
 		LCONST_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Long::from_value(0);
 		execution_context.stack.push(Types::Long(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct LCONST_1 {}
 impl Instruction for LCONST_1 {
@@ -27,9 +30,10 @@ impl Instruction for LCONST_1 {
 		LCONST_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Long::from_value(1);
 		execution_context.stack.push(Types::Long(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {

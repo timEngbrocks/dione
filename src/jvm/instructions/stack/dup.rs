@@ -1,5 +1,6 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction, types::Types}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, types::Types}, class_loader::parser::{Parser, U2}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DUP {}
 impl Instruction for DUP {
@@ -9,7 +10,7 @@ impl Instruction for DUP {
 		DUP {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = execution_context.stack.pop();
 		match value {
 			Types::Double(_) | Types::Long(_) => panic!("Can not DUP a Double or Long"),
@@ -18,12 +19,14 @@ impl Instruction for DUP {
 				execution_context.stack.push(value);
 			},
 		}
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DUP_X1 {}
 impl Instruction for DUP_X1 {
@@ -33,7 +36,7 @@ impl Instruction for DUP_X1 {
 		DUP_X1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -44,12 +47,14 @@ impl Instruction for DUP_X1 {
 				execution_context.stack.push(value1);
 			},
 		}
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DUP_X2 {}
 impl Instruction for DUP_X2 {
@@ -59,7 +64,7 @@ impl Instruction for DUP_X2 {
 		DUP_X2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -82,12 +87,14 @@ impl Instruction for DUP_X2 {
 				}
 			},
 		}
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DUP2 {}
 impl Instruction for DUP2 {
@@ -97,7 +104,7 @@ impl Instruction for DUP2 {
 		DUP2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		match value1 {
 			Types::Double(_) | Types::Long(_) => {
@@ -117,12 +124,14 @@ impl Instruction for DUP2 {
 				}
 			}
 		}
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DUP2_X1 {}
 impl Instruction for DUP2_X1 {
@@ -132,7 +141,7 @@ impl Instruction for DUP2_X1 {
 		DUP2_X1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -165,12 +174,14 @@ impl Instruction for DUP2_X1 {
 				}	
 			}
 		}
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DUP2_X2 {}
 impl Instruction for DUP2_X2 {
@@ -180,7 +191,7 @@ impl Instruction for DUP2_X2 {
 		DUP2_X2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -237,6 +248,7 @@ impl Instruction for DUP2_X2 {
 				}
 			}
 		}
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {

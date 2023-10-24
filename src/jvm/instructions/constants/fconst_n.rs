@@ -1,5 +1,6 @@
-use crate::{jvm::{frame::Frame, instructions::Instruction, types::{float::Float, Value, Types}}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, types::{float::Float, Value, Types}}, class_loader::parser::{Parser, U2}, opcodes};
 
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct FCONST_0 {}
 impl Instruction for FCONST_0 {
@@ -9,15 +10,17 @@ impl Instruction for FCONST_0 {
 		FCONST_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Float::from_value(0.0);
 		execution_context.stack.push(Types::Float(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct FCONST_1 {}
 impl Instruction for FCONST_1 {
@@ -27,15 +30,17 @@ impl Instruction for FCONST_1 {
 		FCONST_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Float::from_value(1.0);
 		execution_context.stack.push(Types::Float(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
 		1
 	}
 }
+#[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct FCONST_2 {}
 impl Instruction for FCONST_2 {
@@ -45,9 +50,10 @@ impl Instruction for FCONST_2 {
 		FCONST_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) {
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Float::from_value(2.0);
 		execution_context.stack.push(Types::Float(value));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {

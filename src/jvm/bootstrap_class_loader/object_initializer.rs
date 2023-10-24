@@ -108,13 +108,13 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 		let access_flags = method.access_flags;
 		
 		if access_flags & MethodAccesFlags::Native as u16 != 0 {
-			methods.insert(name.clone(), Method::new(
+			methods.insert(format!("{}{}", name.clone(), descriptor.clone()), Method::new(
 				name,
 				descriptor,
 				access_flags,
 				0,
 				0,
-				InstructionStream::new_native(&class_file.constant_pool),
+				InstructionStream::new_native(),
 				true,
 			));
 		} else {
@@ -131,12 +131,9 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 			let instruction_stream = InstructionStream::new(
 				&mut code_parser,
 				code_length.clone(),
-				max_locals.clone(),
-				max_stack.clone(),
-				&class_file.constant_pool,
 			);
 
-			methods.insert(name.clone(), Method::new(
+			methods.insert(format!("{}{}", name.clone(), descriptor.clone()), Method::new(
 				name,
 				descriptor,
 				access_flags,
