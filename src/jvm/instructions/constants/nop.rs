@@ -12,7 +12,7 @@ impl Instruction for NOP {
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
