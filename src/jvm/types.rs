@@ -54,6 +54,17 @@ impl Clone for Types {
 	}
 }
 
+pub enum ComputationalTypeCategory {
+	Type1,
+	Type2,
+}
+
+impl PartialEq for ComputationalTypeCategory {
+	fn eq(&self, other: &Self) -> bool {
+		std::mem::discriminant(self) == std::mem::discriminant(other)
+	}
+}
+
 impl Types {
 	pub fn assert_matches_type(&self, other: &Types) {
 		assert_eq!(std::mem::discriminant(self), std::mem::discriminant(other));
@@ -73,6 +84,21 @@ impl Types {
 			Types::ReturnAddress(ref mut a) if let Types::ReturnAddress(b) = other => a.set(b.get()),
 			Types::Reference(ref mut a) if let Types::Reference(b) = other => a.set(b.get()),
 			_ => panic!("Invalid types transfer")
+		}
+	}
+
+	pub fn get_computational_type_category(&self) -> ComputationalTypeCategory {
+		match self {
+			Types::Byte(_) => ComputationalTypeCategory::Type1,
+			Types::Short(_) => ComputationalTypeCategory::Type1,
+			Types::Int(_) => ComputationalTypeCategory::Type1,
+			Types::Long(_) => ComputationalTypeCategory::Type2,
+			Types::Char(_) => ComputationalTypeCategory::Type1,
+			Types::Float(_) => ComputationalTypeCategory::Type1,
+			Types::Double(_) => ComputationalTypeCategory::Type2,
+			Types::Boolean(_) => ComputationalTypeCategory::Type1,
+			Types::ReturnAddress(_) => ComputationalTypeCategory::Type1,
+			Types::Reference(_) => ComputationalTypeCategory::Type1,
 		}
 	}
 }

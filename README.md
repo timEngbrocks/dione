@@ -37,8 +37,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 80/205 Instructions</label>
-<progress id="status" value="80" max="205"></progress>
+<label for="status">Status: Finished 83/205 Instructions</label>
+<progress id="status" value="83" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -129,15 +129,15 @@ latest GNU nightly toolchain from Rust.
 | BASTORE | not implemented |
 | CASTORE | not implemented |
 | SASTORE | not implemented |
-| POP | not implemented |
-| POP2 | not implemented |
+| <span style="color:green">POP</span> | implemented |
+| <span style="color:green">POP2</span> | implemented |
 | <span style="color:green">DUP</span> | implemented |
 | <span style="color:green">DUP_X1</span> | implemented |
 | <span style="color:green">DUP_X2</span> | implemented |
 | <span style="color:green">DUP2</span> | implemented |
 | <span style="color:green">DUP2_X1</span> | implemented |
 | <span style="color:green">DUP2_X2</span> | implemented |
-| SWAP | not implemented |
+| <span style="color:green">SWAP</span> | implemented |
 | IADD | not implemented |
 | LADD | not implemented |
 | FADD | not implemented |
@@ -195,12 +195,12 @@ latest GNU nightly toolchain from Rust.
 | FCMPG | not implemented |
 | DCMPL | not implemented |
 | DCMPG | not implemented |
-| <span style="color:green">IFEQ</span> | not implemented |
-| <span style="color:green">IFNE</span> | not implemented |
-| <span style="color:green">IFLT</span> | not implemented |
-| <span style="color:green">IFGE</span> | not implemented |
-| <span style="color:green">IFGT</span> | not implemented |
-| <span style="color:green">IFLE</span> | not implemented |
+| <span style="color:green">IFEQ</span> | implemented |
+| <span style="color:green">IFNE</span> | implemented |
+| <span style="color:green">IFLT</span> | implemented |
+| <span style="color:green">IFGE</span> | implemented |
+| <span style="color:green">IFGT</span> | implemented |
+| <span style="color:green">IFLE</span> | implemented |
 | IF_ICMPEQ | not implemented |
 | IF_ICMPNE | not implemented |
 | IF_ICMPLT | not implemented |

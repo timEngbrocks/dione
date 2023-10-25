@@ -4,60 +4,6 @@ use super::{Instruction, InstructionResult};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct POP {}
-impl Instruction for POP {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::POP));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct POP2 {}
-impl Instruction for POP2 {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::POP2));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct SWAP {}
-impl Instruction for SWAP {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::SWAP));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct IADD {}
 impl Instruction for IADD {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
