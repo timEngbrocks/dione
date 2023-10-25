@@ -69,9 +69,7 @@ impl Instruction for INVOKESPECIAL {
 			return_type,
 		);
 		
-		InstructionResult {
-			call: Some(ExecutionContext::new(frame, method.instruction_stream.clone()))
-		}
+		InstructionResult::call(ExecutionContext::new(frame, method.instruction_stream.clone()))
 	}
 
 	fn length(&self) -> U2 {

@@ -37,8 +37,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 49/205 Instructions</label>
-<progress id="status" value="49" max="205"></progress>
+<label for="status">Status: Finished 80/205 Instructions</label>
+<progress id="status" value="80" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -195,12 +195,12 @@ latest GNU nightly toolchain from Rust.
 | FCMPG | not implemented |
 | DCMPL | not implemented |
 | DCMPG | not implemented |
-| IFEQ | not implemented |
-| IFNE | not implemented |
-| IFLT | not implemented |
-| IFGE | not implemented |
-| IFGT | not implemented |
-| IFLE | not implemented |
+| <span style="color:green">IFEQ</span> | not implemented |
+| <span style="color:green">IFNE</span> | not implemented |
+| <span style="color:green">IFLT</span> | not implemented |
+| <span style="color:green">IFGE</span> | not implemented |
+| <span style="color:green">IFGT</span> | not implemented |
+| <span style="color:green">IFLE</span> | not implemented |
 | IF_ICMPEQ | not implemented |
 | IF_ICMPNE | not implemented |
 | IF_ICMPLT | not implemented |

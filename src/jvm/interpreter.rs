@@ -1,3 +1,5 @@
+use crate::jvm::instructions::BranchKind;
+
 use super::{execution_context::ExecutionContext, instructions::Instruction};
 
 pub struct Interpreter {
@@ -34,6 +36,17 @@ impl Interpreter {
 				if let Some(new_execution_context) = result.call {
 					self.call_stack.push(self.current.clone().unwrap());
 					self.current = Some(new_execution_context);
+					break;
+				}
+				if let Some(branch) = result.branch {
+					match branch {
+						BranchKind::Absolute(value) => {
+							execution_context.instruction_stream.absolute_jump(value as usize);
+						},
+						BranchKind::Relative(value) => {
+							execution_context.instruction_stream.relative_jump(value as usize);
+						},
+					}
 					break;
 				}
 			} else {
