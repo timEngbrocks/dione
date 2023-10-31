@@ -15,7 +15,7 @@ pub enum FieldAccessFlags {
 
 pub type FieldAccessFlag = u16;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct FieldInfo {
     pub access_flags: FieldAccessFlag,
     pub name_index: u16,

@@ -37,8 +37,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 83/205 Instructions</label>
-<progress id="status" value="83" max="205"></progress>
+<label for="status">Status: Finished 94/205 Instructions</label>
+<progress id="status" value="94" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -138,30 +138,30 @@ latest GNU nightly toolchain from Rust.
 | <span style="color:green">DUP2_X1</span> | implemented |
 | <span style="color:green">DUP2_X2</span> | implemented |
 | <span style="color:green">SWAP</span> | implemented |
-| IADD | not implemented |
-| LADD | not implemented |
-| FADD | not implemented |
-| DADD | not implemented |
-| ISUB | not implemented |
-| LSUB | not implemented |
-| FSUB | not implemented |
-| DSUB | not implemented |
-| IMUL | not implemented |
-| LMUL | not implemented |
-| FMUL | not implemented |
-| DMUL | not implemented |
-| IDIV | not implemented |
-| LDIV | not implemented |
-| FDIV | not implemented |
-| DDIV | not implemented |
-| IREM | not implemented |
-| LREM | not implemented |
-| FREM | not implemented |
-| DREM | not implemented |
-| INEG | not implemented |
-| LNEG | not implemented |
-| FNEG | not implemented |
-| DNEG | not implemented |
+| <span style="color:yellow">IADD</span> | partially implemented |
+| <span style="color:yellow">LADD</span> | partially implemented |
+| <span style="color:yellow">FADD</span> | partially implemented |
+| <span style="color:yellow">DADD</span> | partially implemented |
+| <span style="color:yellow">ISUB</span> | partially implemented |
+| <span style="color:yellow">LSUB</span> | partially implemented |
+| <span style="color:yellow">FSUB</span> | partially implemented |
+| <span style="color:yellow">DSUB</span> | partially implemented |
+| <span style="color:yellow">IMUL</span> | partially implemented |
+| <span style="color:yellow">LMUL</span> | partially implemented |
+| <span style="color:yellow">FMUL</span> | partially implemented |
+| <span style="color:yellow">DMUL</span> | partially implemented |
+| <span style="color:yellow">IDIV</span> | partially implemented |
+| <span style="color:yellow">LDIV</span> | partially implemented |
+| <span style="color:yellow">FDIV</span> | partially implemented |
+| <span style="color:yellow">DDIV</span> | partially implemented |
+| <span style="color:yellow">IREM</span> | partially implemented |
+| <span style="color:yellow">LREM</span> | partially implemented |
+| <span style="color:yellow">FREM</span> | partially implemented |
+| <span style="color:yellow">DREM</span> | partially implemented |
+| <span style="color:yellow">INEG</span> | partially implemented |
+| <span style="color:yellow">LNEG</span> | partially implemented |
+| <span style="color:yellow">FNEG</span> | partially implemented |
+| <span style="color:yellow">DNEG</span> | partially implemented |
 | ISHL | not implemented |
 | LSHL | not implemented |
 | ISHR | not implemented |
@@ -190,23 +190,23 @@ latest GNU nightly toolchain from Rust.
 | I2B | not implemented |
 | I2C | not implemented |
 | I2S | not implemented |
-| LCMP | not implemented |
-| FCMPL | not implemented |
-| FCMPG | not implemented |
-| DCMPL | not implemented |
-| DCMPG | not implemented |
+| <span style="color:green">LCMP</span> | implemented |
+| <span style="color:green">FCMPL</span> | implemented |
+| <span style="color:green">FCMPG</span> | implemented |
+| <span style="color:green">DCMPL</span> | implemented |
+| <span style="color:green">DCMPG</span> | implemented |
 | <span style="color:green">IFEQ</span> | implemented |
 | <span style="color:green">IFNE</span> | implemented |
 | <span style="color:green">IFLT</span> | implemented |
 | <span style="color:green">IFGE</span> | implemented |
 | <span style="color:green">IFGT</span> | implemented |
 | <span style="color:green">IFLE</span> | implemented |
-| IF_ICMPEQ | not implemented |
-| IF_ICMPNE | not implemented |
-| IF_ICMPLT | not implemented |
-| IF_ICMPGE | not implemented |
-| IF_ICMPGT | not implemented |
-| IF_ICMPLE | not implemented |
+| <span style="color:green">IF_ICMPEQ</span> | implemented |
+| <span style="color:green">IF_ICMPNE</span> | implemented |
+| <span style="color:green">IF_ICMPLT</span> | implemented |
+| <span style="color:green">IF_ICMPGE</span> | implemented |
+| <span style="color:green">IF_ICMPGT</span> | implemented |
+| <span style="color:green">IF_ICMPLE</span> | implemented |
 | IF_ACMPEQ | not implemented |
 | IF_ACMPNE | not implemented |
 | GOTO | not implemented |

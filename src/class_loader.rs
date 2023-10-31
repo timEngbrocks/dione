@@ -14,8 +14,8 @@ pub fn load(path: String) -> ClassFile {
 }
 
 fn load_file(path: String) -> Vec<u8> {
-	match fs::read(path) {
+	match fs::read(path.clone()) {
 		Ok(data) => data,
-		Err(error) => panic!("{error}")
+		Err(error) => panic!("Could not read file at {}: {}", path, error),
 	}
 }

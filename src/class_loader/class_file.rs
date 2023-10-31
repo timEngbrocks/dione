@@ -36,7 +36,7 @@ pub fn compare_class_file_version_to_global(major_version: u16, minor_version: u
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ClassFile {
 	pub magic: U4,
     pub minor_version: U2,

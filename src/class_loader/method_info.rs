@@ -18,7 +18,7 @@ pub enum MethodAccessFlags {
 
 pub type MethodAccessFlag = u16;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct MethodInfo {
 	pub access_flags: MethodAccessFlag,
     pub name_index: U2,

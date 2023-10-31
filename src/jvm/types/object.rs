@@ -1,6 +1,6 @@
 use std::collections::{HashSet, HashMap};
 
-use crate::jvm::object_manager::ObjectManager;
+use crate::{jvm::object_manager::ObjectManager, class_loader::class_file::ClassFile};
 
 use super::{field::Field, method::Method};
 
@@ -26,6 +26,7 @@ pub struct Object {
     pub fields: HashMap<String, Field>,
     pub static_fields: HashMap<String, Field>,
     pub methods: HashMap<String, Method>,
+    pub class_file: ClassFile,
 }
 
 impl Object {
@@ -37,6 +38,7 @@ impl Object {
         fields: HashMap<String, Field>,
         static_fields: HashMap<String, Field>,
         methods: HashMap<String, Method>,
+        class_file: ClassFile,
     ) -> Self {
         Object {
             name,
@@ -46,6 +48,7 @@ impl Object {
             fields,
             static_fields,
             methods,
+            class_file,
         }
     }
 
@@ -56,6 +59,7 @@ impl Object {
         interfaces: HashSet<String>,
         static_fields: HashMap<String, Field>,
         methods: HashMap<String, Method>,
+        class_file: ClassFile,
     ) -> Self {
         Object {
             name,
@@ -65,6 +69,7 @@ impl Object {
             fields: HashMap::with_capacity(0),
             static_fields,
             methods,
+            class_file,
         }
     }
 
@@ -75,6 +80,30 @@ impl Object {
         } else if let Some(super_class) = &self.super_class {
             let super_class = ObjectManager::get(super_class);
             super_class.get_method(method_name, descriptor)
+        } else {
+            None
+        }
+    }
+
+    pub fn get_static_field(&self, field_name: &str, descriptor: &str) -> Option<&Field> {
+        let key = format!("{}{}", field_name, descriptor);
+        if self.static_fields.contains_key(key.as_str()) {
+            self.static_fields.get(key.as_str())
+        } else if let Some(super_class) = &self.super_class {
+            let super_class = ObjectManager::get(super_class);
+            super_class.get_static_field(field_name, descriptor)
+        } else {
+            None
+        }
+    }
+
+    pub fn get_field(&self, field_name: &str, descriptor: &str) -> Option<&Field> {
+        let key: String = format!("{}{}", field_name, descriptor);
+        if self.fields.contains_key(key.as_str()) {
+            self.fields.get(key.as_str())
+        } else if let Some(super_class) = &self.super_class {
+            let super_class = ObjectManager::get(super_class);
+            super_class.get_field(field_name, descriptor)
         } else {
             None
         }

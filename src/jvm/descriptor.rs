@@ -8,9 +8,13 @@ pub fn parse_method_descriptor(descriptor: &str) -> Option<(Vec<Types>, ReturnTy
 		let char = descriptor.chars().nth(i).unwrap();
 		if i == 0 && char != '(' {
 			panic!("Invalid method descriptor: {}", descriptor);
+		} else if i == 0 && char == '(' {
+			i += 1;
+			continue;
 		}
 		if char == ')' {
 			parsed_args = true;
+			i += 1;
 			continue;
 		}
 		if !parsed_args {
@@ -50,24 +54,8 @@ fn get_next_type_from_descriptor(descriptor: &str, is_return_type: bool) -> (Ret
 			(ReturnTypes::Type(Types::Reference(Reference::new())), j + 1)
 		},
 		'[' => {
-			// FIXME: array of type
-			let mut j = 1;
-			while let Some(c) = descriptor.chars().nth(j) {
-				match c {
-					'B' |
-					'C' |
-					'D' |
-					'F' |
-					'I' |
-					'J' |
-					'S' |
-					'Z' |
-					';' => break,
-					_ => (),
-				}
-				j += 1;
-			}
-			(ReturnTypes::Type(Types::Reference(Reference::new())), j + 1)
+			let (return_type, len) = get_next_type_from_descriptor(&descriptor[1..], is_return_type);
+			(return_type, len + 1)
 		},
 		'V' if is_return_type => (ReturnTypes::Void, 1),
 		_ => panic!("Invalid method descriptor type: {}", descriptor),

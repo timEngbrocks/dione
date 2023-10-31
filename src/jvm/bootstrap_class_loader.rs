@@ -28,14 +28,14 @@ impl BootstrapClassLoader {
 		self.jdk_base_path = jdk_base_path;
 	}
 
-	pub fn load_object(&mut self, name: &str, is_jdk_class: bool) -> Vec<Object> {
+	pub fn load_object(&mut self, name: &str) -> Vec<Object> {
 		if self.loaded.contains(name) {
 			return Vec::new();
 		}
 		let mut objects = Vec::new();
 		self.to_load.enqueue(name.to_string());
 		while let Some(name) = self.to_load.dequeue() {
-			let path = self.resolve_path(&name, is_jdk_class);
+			let path = self.resolve_path(&name);
 			let class_file = self.load_class_file(path);
 			let object = match class_file.is_class() {
 				true => self.initialize_class(class_file),
@@ -46,11 +46,12 @@ impl BootstrapClassLoader {
 		objects
 	}
 
-	fn resolve_path(&self, name: &str, is_jdk_class: bool) -> String {
-		if is_jdk_class {
+	fn resolve_path(&self, name: &str) -> String {
+		if self.is_jdk_class(name) {
 			format!("{}/{}.class", self.jdk_base_path, name)
 		} else {
-			format!("{}/{}.class", self.jdk_base_path, name)
+			println!("Loading class `{}`", name);
+			format!("./{}.class", name)
 		}
 	}
 
@@ -64,5 +65,13 @@ impl BootstrapClassLoader {
 
 	fn initialize_interface(&self, class_file: ClassFile) -> Object {
 		object_initializer::initialize_interface(class_file)
+	}
+
+	fn is_jdk_class(&self, name: &str) -> bool {
+		name.starts_with("com/") ||
+		name.starts_with("java/") ||
+		name.starts_with("javax/") ||
+		name.starts_with("jdk/") ||
+		name.starts_with("sun/")
 	}
 }

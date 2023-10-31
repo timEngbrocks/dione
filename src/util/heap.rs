@@ -2,11 +2,7 @@ use std::{rc::Rc, cell::RefCell};
 
 use crate::jvm::types::{Value, reference::Reference, ReferenceableTypes};
 
-use self::linked_list_allocator::LinkedListAllocator;
-
-use super::locked::Locked;
-
-pub(self) mod linked_list_allocator;
+use super::allocator::JVMAllocator;
 
 pub enum ReferencePtr {
 	Null,
@@ -26,24 +22,21 @@ impl ReferencePtr {
 	}
 }
 
-pub type ClassPtr = Rc<RefCell<ReferenceableTypes>, &'static Locked<LinkedListAllocator>>;
-pub type ArrayPtr = Rc<RefCell<ReferenceableTypes>, &'static Locked<LinkedListAllocator>>;
-pub type InterfacePtr = Rc<RefCell<ReferenceableTypes>, &'static Locked<LinkedListAllocator>>;
 
-static CLASS_ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllocator::new());
-static ARRAY_ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllocator::new());
-static INTERFACE_ALLOCATOR: Locked<LinkedListAllocator> = Locked::new(LinkedListAllocator::new());
+static CLASS_ALLOCATOR: JVMAllocator = JVMAllocator {};
+static ARRAY_ALLOCATOR: JVMAllocator = JVMAllocator {};
+static INTERFACE_ALLOCATOR: JVMAllocator = JVMAllocator {};
+
+pub type ClassPtr = Rc<RefCell<ReferenceableTypes>, &'static JVMAllocator>;
+pub type ArrayPtr = Rc<RefCell<ReferenceableTypes>, &'static JVMAllocator>;
+pub type InterfacePtr = Rc<RefCell<ReferenceableTypes>, &'static JVMAllocator>;
 
 static mut INSTANCE: Option<Heap> = None;
 
 const HEAP_START: usize = 0x10000000; // 256 MB
 const HEAP_SIZE: usize = 1024 * 1024; // 1 MB
 
-pub struct Heap {
-	class_allocator: &'static Locked<LinkedListAllocator>,
-	array_allocator: &'static Locked<LinkedListAllocator>,
-	interface_allocator: &'static Locked<LinkedListAllocator>,
-}
+pub struct Heap {}
 
 impl Heap {
 	pub fn initialize() {
@@ -66,35 +59,21 @@ impl Heap {
 	}
 
 	fn new() -> Self {
-		let class_allocator = &CLASS_ALLOCATOR;
-		let array_allocator = &ARRAY_ALLOCATOR;
-		let interface_allocator = &INTERFACE_ALLOCATOR;
-
-		unsafe {
-			class_allocator.lock().init(HEAP_START, HEAP_SIZE);
-			array_allocator.lock().init(HEAP_START + HEAP_SIZE, HEAP_SIZE);
-			interface_allocator.lock().init(HEAP_START + 2 * HEAP_SIZE, HEAP_SIZE);
-		}
-
-		Heap {
-			class_allocator,
-			array_allocator,
-			interface_allocator,
-		}
+		Heap {}
 	}
 
 	fn allocate_impl(&self, value: ReferenceableTypes) -> Reference {
 		match value {
 			ReferenceableTypes::Class(_) => {
-				let value = Rc::new_in(RefCell::new(value), self.class_allocator);
+				let value = Rc::new_in(RefCell::new(value), &CLASS_ALLOCATOR);
 				Reference::from_value(ReferencePtr::Class(value))
 			},
 			ReferenceableTypes::Array(_) => {
-				let value = Rc::new_in(RefCell::new(value), self.array_allocator);
+				let value = Rc::new_in(RefCell::new(value), &ARRAY_ALLOCATOR);
 				Reference::from_value(ReferencePtr::Array(value))
 			},
 			ReferenceableTypes::Interface(_) => {
-				let value = Rc::new_in(RefCell::new(value), self.interface_allocator);
+				let value = Rc::new_in(RefCell::new(value), &INTERFACE_ALLOCATOR);
 				Reference::from_value(ReferencePtr::Interface(value))
 			},
 		}

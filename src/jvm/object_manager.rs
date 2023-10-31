@@ -2,24 +2,33 @@ use std::collections::HashMap;
 
 use crate::util::heap::Heap;
 
-use super::{types::{object::Object, reference::Reference, ReferenceableTypes}, bootstrap_class_loader::BootstrapClassLoader};
+use super::{types::{object::Object, reference::Reference, ReferenceableTypes}, bootstrap_class_loader::BootstrapClassLoader, interpreter::Interpreter};
 
 static mut INSTANCE: Option<ObjectManager> = None;
 
 pub struct ObjectManager {
 	bootstrap_class_loader: BootstrapClassLoader,
 	objects: HashMap<String, Object>,
+	initialized: HashMap<String, bool>,
+	being_initialized: HashMap<String, bool>,
+	jdk_base_path: String,
 }
 
 impl ObjectManager {
 	pub fn initialize(jdk_base_path: String) {
-		let instance = ObjectManager::it();
-		instance.initialize_impl(jdk_base_path);
+		unsafe {
+			INSTANCE = Some(ObjectManager::new(jdk_base_path));
+		}
 	}
 
 	pub fn load_object(name: &str) {
 		let instance = ObjectManager::it();
-		instance.load_impl(name, ObjectManager::is_jdk_class(name));
+		instance.load_impl(name);
+	}
+
+	pub fn initialize_object(name: &str) {
+		let instance = ObjectManager::it();
+		instance.initialize_impl(name);
 	}
 
 	pub fn get(name: &str) -> &Object {
@@ -38,56 +47,76 @@ impl ObjectManager {
 			if let Some(_) = INSTANCE {
 				INSTANCE.as_mut().unwrap()
 			} else {
-				INSTANCE = Some(ObjectManager::new());
-				INSTANCE.as_mut().unwrap()
+				panic!("ObjectManager has not been initialized")
 			}
 		}
 	}
 
-	fn new() -> ObjectManager {
-		let bootstrap_class_loader = BootstrapClassLoader::new();
+	fn new(jdk_base_path: String) -> ObjectManager {
+		let mut bootstrap_class_loader = BootstrapClassLoader::new();
+		bootstrap_class_loader.initialize(jdk_base_path.clone());
 		let objects: HashMap<String, Object> = HashMap::new();
+		let initialized: HashMap<String, bool> = HashMap::new();
+		let being_initialized: HashMap<String, bool> = HashMap::new();
 
 		ObjectManager {
 			bootstrap_class_loader,
 			objects,
+			initialized,
+			being_initialized,
+			jdk_base_path,
 		}
-	}
-
-	fn initialize_impl(&mut self, jdk_base_path: String) {
-		self.bootstrap_class_loader.initialize(jdk_base_path);
-		self.load_impl("java/lang/Object", true);
-		self.load_impl("java/lang/Class", true);
-		self.load_impl("java/lang/System", true);
 	}
 
 	fn get_impl(&mut self, name: &str) -> &Object {
 		match self.objects.contains_key(name) {
-			true => self.objects.get(name).unwrap(),
-			false => {
-				self.load_impl(name, ObjectManager::is_jdk_class(name));
-				self.objects.get(name).expect(format!("ObjectManager::get_object: Could not load object: {}", name).as_str())
-			}
+			true => {
+				match self.initialized.get(name) {
+					Some(true) => {
+						self.objects.get(name).unwrap()
+					},
+					_ => panic!("Tried to get uninitialized object: {}", name),
+				}
+			},
+			false => panic!("Object not found: {}", name),
 		}
 	}
 
-	fn load_impl(&mut self, name: &str, is_jdk_class: bool) {
-		let mut objects = self.bootstrap_class_loader.load_object(name, is_jdk_class);
+	fn load_impl(&mut self, name: &str) {
+		let mut objects = self.bootstrap_class_loader.load_object(name);
 		for object in objects.drain(..) {
+			self.initialized.insert(object.name.clone(), false);
 			self.objects.insert(object.name.clone(), object);
 		}
+	}
+
+	fn initialize_impl(&mut self, name: &str) {
+		match self.objects.contains_key(name) {
+			true => {},
+			false => self.load_impl(name),
+		}
+		match self.initialized.get(name) {
+			Some(initialized) => {
+				if !initialized {
+					if let Some(true) = self.being_initialized.get(name) {
+						return;
+					}
+					self.being_initialized.insert(name.to_string(), true);
+					let object = self.objects.get(name).unwrap();
+					if let Some(_) = object.get_method("<clinit>", "()V") {
+						let mut interpreter = Interpreter::new();
+						interpreter.run(name, "<clinit>", "()V");	
+					}
+					self.initialized.insert(name.to_string(), true);
+					self.being_initialized.remove_entry(name);
+				}
+			},
+			_ => panic!("Error initializing object: {}", name),
+		};
 	}
 
 	fn instantiate_impl(&mut self, name: &str) -> Reference {
 		let object = self.get_impl(name).clone();
 		Heap::allocate(ReferenceableTypes::Class(object))
-	}
-
-	fn is_jdk_class(name: &str) -> bool {
-		name.starts_with("com/") ||
-		name.starts_with("java/") ||
-		name.starts_with("javax/") ||
-		name.starts_with("jdk/") ||
-		name.starts_with("sun/")
 	}
 }

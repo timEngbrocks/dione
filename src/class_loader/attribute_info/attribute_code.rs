@@ -16,6 +16,21 @@ pub struct AttributeCode {
     pub attribute_info: Vec<AttributeInfo>,
 }
 
+impl AttributeCode {
+	pub fn get_exception_handler_table(&self) -> ExceptionHandlerTable {
+		let mut exception_handler_table = ExceptionHandlerTable::new();
+		for exception_table_entry in &self.exception_table {
+			exception_handler_table.add(ExceptionHandler {
+				start_pc: exception_table_entry.start_pc,
+				end_pc: exception_table_entry.end_pc,
+				handler_pc: exception_table_entry.handler_pc,
+				catch_type: exception_table_entry.catch_type,
+			});
+		}
+		exception_handler_table
+	}
+}
+
 impl Attribute for AttributeCode {
 	fn new(parser: &mut Parser, constant_pool: &ConstantPool) -> AttributeCode {
 		let attribute_name_index = parser.consume_u2();

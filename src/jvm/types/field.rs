@@ -35,6 +35,10 @@ impl Field {
         }
     }
 
+    pub fn get_value(&self) -> &Option<Types> {
+        &self.value
+    }
+
     pub fn is_public(&self) -> bool {
         self.access_flags & FieldAccessFlags::Public as u16 != 0
     }

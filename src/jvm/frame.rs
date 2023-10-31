@@ -1,4 +1,4 @@
-use crate::{util::{sized_array::SizedArray, stack::Stack}, class_loader::constant_pool_info::ConstantPool, jvm::types::Types};
+use crate::{util::{sized_array::SizedArray, stack::Stack}, class_loader::class_file::ClassFile, jvm::types::Types};
 
 use super::{runtime_constant_pool::RuntimeConstantPool, types::ReturnTypes};
 
@@ -14,14 +14,14 @@ impl Frame {
 	pub fn new(
 		local_variables: SizedArray<Types>,
 		stack: Stack<Types>,
-		constant_pool: &ConstantPool,
+		class_file: &ClassFile,
 		method_name: String,
-		return_value: ReturnTypes
+		return_value: ReturnTypes,
 	) -> Frame {
 		Frame {
 			local_variables,
 			stack,
-			runtime_constant_pool: RuntimeConstantPool::new(constant_pool),
+			runtime_constant_pool: RuntimeConstantPool::new(class_file),
 			method_name,
 			return_value,
 		}
