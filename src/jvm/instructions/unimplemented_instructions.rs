@@ -1,439 +1,7 @@
-use crate::{jvm::frame::Frame, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{frame::Frame, types::{int::Int, Value}}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
 use super::{Instruction, InstructionResult};
 
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IADD {}
-impl Instruction for IADD {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IADD));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LADD {}
-impl Instruction for LADD {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LADD));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FADD {}
-impl Instruction for FADD {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FADD));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DADD {}
-impl Instruction for DADD {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DADD));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct ISUB {}
-impl Instruction for ISUB {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::ISUB));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LSUB {}
-impl Instruction for LSUB {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LSUB));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FSUB {}
-impl Instruction for FSUB {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FSUB));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DSUB {}
-impl Instruction for DSUB {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DSUB));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IMUL {}
-impl Instruction for IMUL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IMUL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LMUL {}
-impl Instruction for LMUL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LMUL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FMUL {}
-impl Instruction for FMUL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FMUL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DMUL {}
-impl Instruction for DMUL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DMUL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IDIV {}
-impl Instruction for IDIV {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IDIV));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LDIV {}
-impl Instruction for LDIV {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LDIV));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FDIV {}
-impl Instruction for FDIV {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FDIV));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DDIV {}
-impl Instruction for DDIV {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DDIV));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IREM {}
-impl Instruction for IREM {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IREM));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LREM {}
-impl Instruction for LREM {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LREM));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FREM {}
-impl Instruction for FREM {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FREM));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DREM {}
-impl Instruction for DREM {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DREM));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct INEG {}
-impl Instruction for INEG {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::INEG));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LNEG {}
-impl Instruction for LNEG {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LNEG));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FNEG {}
-impl Instruction for FNEG {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FNEG));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DNEG {}
-impl Instruction for DNEG {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DNEG));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ISHL {}
@@ -549,7 +117,7 @@ impl Instruction for IAND {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::IAND));
-		todo!("Implement");
+		IAND {}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -567,7 +135,7 @@ impl Instruction for LAND {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::LAND));
-		todo!("Implement");
+		LAND {}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -652,12 +220,20 @@ impl Instruction for LXOR {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct IINC {}
+pub struct IINC {
+	index: U1,
+	constant: U1,
+}
 impl Instruction for IINC {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::IINC));
-		todo!("Implement");
+		let index = parser.consume_u1();
+		let constant = parser.consume_u1();
+		IINC {
+			index,
+			constant,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -665,7 +241,7 @@ impl Instruction for IINC {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
@@ -940,204 +516,6 @@ impl Instruction for I2S {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct LCMP {}
-impl Instruction for LCMP {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::LCMP));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FCMPL {}
-impl Instruction for FCMPL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FCMPL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct FCMPG {}
-impl Instruction for FCMPG {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::FCMPG));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DCMPL {}
-impl Instruction for DCMPL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DCMPL));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct DCMPG {}
-impl Instruction for DCMPG {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::DCMPG));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IF_ICMPEQ {}
-impl Instruction for IF_ICMPEQ {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IF_ICMPEQ));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IF_ICMPNE {}
-impl Instruction for IF_ICMPNE {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IF_ICMPNE));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IF_ICMPLT {}
-impl Instruction for IF_ICMPLT {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IF_ICMPLT));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IF_ICMPGE {}
-impl Instruction for IF_ICMPGE {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IF_ICMPGE));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IF_ICMPGT {}
-impl Instruction for IF_ICMPGT {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IF_ICMPGT));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IF_ICMPLE {}
-impl Instruction for IF_ICMPLE {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IF_ICMPLE));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct JSR {}
 impl Instruction for JSR {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
@@ -1174,12 +552,54 @@ impl Instruction for RET {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct TABLESWITCH {}
+pub struct TABLESWITCH {
+	padding: usize,
+	default: i32,
+	low: i32,
+	high: i32,
+	jump_offsets: Vec<i32>,
+}
 impl Instruction for TABLESWITCH {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::TABLESWITCH));
-		todo!("Implement");
+		let padding = 4 - (parser.offset() % 4);
+		for _ in 0..padding {
+			parser.consume_u1();
+		}
+		let defaultbyte1 = parser.consume_u1();
+		let defaultbyte2 = parser.consume_u1();
+		let defaultbyte3 = parser.consume_u1();
+		let defaultbyte4 = parser.consume_u1();
+		let default = (defaultbyte1 as i32) << 24 | (defaultbyte2 as i32) << 16 | (defaultbyte3 as i32) << 8 | defaultbyte4 as i32;
+		let lowbyte1 = parser.consume_u1();
+		let lowbyte2 = parser.consume_u1();
+		let lowbyte3 = parser.consume_u1();
+		let lowbyte4 = parser.consume_u1();
+		let low = (lowbyte1 as i32) << 24 | (lowbyte2 as i32) << 16 | (lowbyte3 as i32) << 8 | lowbyte4 as i32;
+		let highbyte1 = parser.consume_u1();
+		let highbyte2 = parser.consume_u1();
+		let highbyte3 = parser.consume_u1();
+		let highbyte4 = parser.consume_u1();
+		let high = (highbyte1 as i32) << 24 | (highbyte2 as i32) << 16 | (highbyte3 as i32) << 8 | highbyte4 as i32;
+		assert!(high >= low);
+		let num_jump_offsets = high - low + 1;
+		let mut jump_offsets = Vec::with_capacity(num_jump_offsets as usize);
+		for _ in 0..num_jump_offsets {
+			let offsetbyte1 = parser.consume_u1();
+			let offsetbyte2 = parser.consume_u1();
+			let offsetbyte3 = parser.consume_u1();
+			let offsetbyte4 = parser.consume_u1();
+			let offset = (offsetbyte1 as i32) << 24 | (offsetbyte2 as i32) << 16 | (offsetbyte3 as i32) << 8 | offsetbyte4 as i32;
+			jump_offsets.push(offset);
+		}
+		TABLESWITCH {
+			padding,
+			default,
+			low,
+			high,
+			jump_offsets,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1187,17 +607,56 @@ impl Instruction for TABLESWITCH {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		(1 + self.padding as u32 + 12 + 4 * (self.high - self.low + 1) as u32) as u16
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct LOOKUPSWITCH {}
+pub struct LOOKUPSWITCH {
+	padding: usize,
+	default: i32,
+	npairs: i32,
+	match_offset_pairs: Vec<(Int, i32)>,
+}
 impl Instruction for LOOKUPSWITCH {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::LOOKUPSWITCH));
-		todo!("Implement");
+		let padding = 4 - (parser.offset() % 4);
+		for _ in 0..padding {
+			parser.consume_u1();
+		}
+		let defaultbyte1 = parser.consume_u1();
+		let defaultbyte2 = parser.consume_u1();
+		let defaultbyte3 = parser.consume_u1();
+		let defaultbyte4 = parser.consume_u1();
+		let default = (defaultbyte1 as i32) << 24 | (defaultbyte2 as i32) << 16 | (defaultbyte3 as i32) << 8 | defaultbyte4 as i32;
+		let npairs1 = parser.consume_u1();
+		let npairs2 = parser.consume_u1();
+		let npairs3 = parser.consume_u1();
+		let npairs4 = parser.consume_u1();
+		let npairs = (npairs1 as i32) << 24 | (npairs2 as i32) << 16 | (npairs3 as i32) << 8 | npairs4 as i32;
+		assert!(npairs >= 0);
+		let mut match_offset_pairs = Vec::with_capacity(npairs as usize);
+		for _ in 0..npairs {
+			let matchbyte1 = parser.consume_u1();
+			let matchbyte2 = parser.consume_u1();
+			let matchbyte3 = parser.consume_u1();
+			let matchbyte4 = parser.consume_u1();
+			let match_value = (matchbyte1 as i32) << 24 | (matchbyte2 as i32) << 16 | (matchbyte3 as i32) << 8 | matchbyte4 as i32;
+			let offsetbyte1 = parser.consume_u1();
+			let offsetbyte2 = parser.consume_u1();
+			let offsetbyte3 = parser.consume_u1();
+			let offsetbyte4 = parser.consume_u1();
+			let offset = (offsetbyte1 as i32) << 24 | (offsetbyte2 as i32) << 16 | (offsetbyte3 as i32) << 8 | offsetbyte4 as i32;
+			match_offset_pairs.push((Int::from_value(match_value), offset));
+		}
+		LOOKUPSWITCH {
+			padding,
+			default,
+			npairs,
+			match_offset_pairs,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1205,7 +664,7 @@ impl Instruction for LOOKUPSWITCH {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		(1 + self.padding as u32 + 8 + 8 * std::cmp::max(self.npairs, 0) as u32) as u16
 	}
 }
 #[derive(Clone)]
@@ -1246,12 +705,20 @@ impl Instruction for MULTIANEWARRAY {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct IFNULL {}
+pub struct IFNULL {
+	branchbyte1: U1,
+	branchbyte2: U1,
+}
 impl Instruction for IFNULL {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::IFNULL));
-		todo!("Implement");
+		let branchbyte1 = parser.consume_u1();
+		let branchbyte2 = parser.consume_u1();
+		IFNULL {
+			branchbyte1,
+			branchbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1259,17 +726,25 @@ impl Instruction for IFNULL {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct IFNONNULL {}
+pub struct IFNONNULL {
+	branchbyte1: U1,
+	branchbyte2: U1,
+}
 impl Instruction for IFNONNULL {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::IFNONNULL));
-		todo!("Implement");
+		let branchbyte1 = parser.consume_u1();
+		let branchbyte2 = parser.consume_u1();
+		IFNONNULL {
+			branchbyte1,
+			branchbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1277,7 +752,7 @@ impl Instruction for IFNONNULL {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
@@ -1372,30 +847,20 @@ impl Instruction for IMPDEP2 {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct GETSTATIC {}
-impl Instruction for GETSTATIC {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::GETSTATIC));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
+pub struct PUTSTATIC {
+	indexbyte1: U1,
+	indexbyte2: U1,
 }
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct PUTSTATIC {}
 impl Instruction for PUTSTATIC {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::PUTSTATIC));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		PUTSTATIC {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1403,17 +868,25 @@ impl Instruction for PUTSTATIC {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct GETFIELD {}
+pub struct GETFIELD {
+	indexbyte1: U1,
+	indexbyte2: U1,
+}
 impl Instruction for GETFIELD {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::GETFIELD));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		GETFIELD {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1421,17 +894,25 @@ impl Instruction for GETFIELD {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct PUTFIELD {}
+pub struct PUTFIELD {
+	indexbyte1: U1,
+	indexbyte2: U1,
+}
 impl Instruction for PUTFIELD {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::PUTFIELD));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		PUTFIELD {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1439,17 +920,30 @@ impl Instruction for PUTFIELD {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct INVOKEINTERFACE {}
+pub struct INVOKEINTERFACE {
+	indexbyte1: U1,
+	indexbyte2: U1,
+	count: U1,
+}
 impl Instruction for INVOKEINTERFACE {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::INVOKEINTERFACE));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		let count = parser.consume_u1();
+		let byte4 = parser.consume_u1();
+		assert_eq!(byte4, 0);
+		INVOKEINTERFACE {
+			indexbyte1,
+			indexbyte2,
+			count,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1457,17 +951,29 @@ impl Instruction for INVOKEINTERFACE {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		5
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct INVOKEDYNAMIC {}
+pub struct INVOKEDYNAMIC {
+	indexbyte1: U1,
+	indexbyte2: U1,
+}
 impl Instruction for INVOKEDYNAMIC {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::INVOKEDYNAMIC));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		let byte3 = parser.consume_u1();
+		assert_eq!(byte3, 0);
+		let byte4 = parser.consume_u1();
+		assert_eq!(byte4, 0);
+		INVOKEDYNAMIC {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1475,7 +981,7 @@ impl Instruction for INVOKEDYNAMIC {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		5
 	}
 }
 #[derive(Clone)]
@@ -1498,12 +1004,20 @@ impl Instruction for NEWARRAY {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct ANEWARRAY {}
+pub struct ANEWARRAY {
+	indexbyte1: U1,
+	indexbyte2: U1,
+}
 impl Instruction for ANEWARRAY {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::ANEWARRAY));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		ANEWARRAY {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1511,7 +1025,7 @@ impl Instruction for ANEWARRAY {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
@@ -1521,7 +1035,7 @@ impl Instruction for ARRAYLENGTH {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::ARRAYLENGTH));
-		todo!("Implement");
+		ARRAYLENGTH {}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1534,30 +1048,20 @@ impl Instruction for ARRAYLENGTH {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct ATHROW {}
-impl Instruction for ATHROW {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::ATHROW));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
+pub struct CHECKCAST {
+	indexbyte1: U1,
+	indexbyte2: U1,
 }
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct CHECKCAST {}
 impl Instruction for CHECKCAST {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::CHECKCAST));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		CHECKCAST {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1565,17 +1069,25 @@ impl Instruction for CHECKCAST {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct INSTANCEOF {}
+pub struct INSTANCEOF {
+	indexbyte1: U1,
+	indexbyte2: U1,
+}
 impl Instruction for INSTANCEOF {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::INSTANCEOF));
-		todo!("Implement");
+		let indexbyte1 = parser.consume_u1();
+		let indexbyte2 = parser.consume_u1();
+		INSTANCEOF {
+			indexbyte1,
+			indexbyte2,
+		}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1583,7 +1095,7 @@ impl Instruction for INSTANCEOF {
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
 #[derive(Clone)]
@@ -1593,7 +1105,7 @@ impl Instruction for MONITORENTER {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::MONITORENTER));
-		todo!("Implement");
+		MONITORENTER {}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
@@ -1611,7 +1123,7 @@ impl Instruction for MONITOREXIT {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {
 		let opcode = parser.consume_u1();
 		assert_eq!(opcode, opcodes!(Instructions::MONITOREXIT));
-		todo!("Implement");
+		MONITOREXIT {}
 	}
 
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {

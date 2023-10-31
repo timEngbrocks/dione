@@ -11,7 +11,7 @@ impl Instruction for ALOAD_0 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 1);
+		assert!(execution_context.local_variables.len() >= 1);
 		match execution_context.local_variables.get(0) {
 			Types::ReturnAddress(value) => {
 				execution_context.stack.push(Types::ReturnAddress(value.clone()));
@@ -39,7 +39,7 @@ impl Instruction for ALOAD_1 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 2);
+		assert!(execution_context.local_variables.len() >= 2);
 		match execution_context.local_variables.get(1) {
 			Types::ReturnAddress(value) => {
 				execution_context.stack.push(Types::ReturnAddress(value.clone()));
@@ -67,7 +67,7 @@ impl Instruction for ALOAD_2 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 3);
+		assert!(execution_context.local_variables.len() >= 3);
 		match execution_context.local_variables.get(2) {
 			Types::ReturnAddress(value) => {
 				execution_context.stack.push(Types::ReturnAddress(value.clone()));
@@ -95,7 +95,7 @@ impl Instruction for ALOAD_3 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 4);
+		assert!(execution_context.local_variables.len() >= 4);
 		match execution_context.local_variables.get(3) {
 			Types::ReturnAddress(value) => {
 				execution_context.stack.push(Types::ReturnAddress(value.clone()));

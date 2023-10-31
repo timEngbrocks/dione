@@ -1,4 +1,4 @@
-use crate::{jvm::{types::Types, frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::{RuntimeConstants, sym_ref_method_of_class::SymRefMethodOfClass, sym_ref_method_of_interface::SymRefMethodOfInterface}, object_manager::ObjectManager, descriptor::parse_method_descriptor, execution_context::ExecutionContext}, class_loader::{parser::{Parser, U2, U1}, constant_pool_info::ConstantPool}, opcodes, util::{sized_array::SizedArray, stack::Stack}};
+use crate::{jvm::{types::Types, frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::{RuntimeConstants, sym_ref_method_of_class::SymRefMethodOfClass, sym_ref_method_of_interface::SymRefMethodOfInterface}, object_manager::ObjectManager, descriptor::parse_method_descriptor, execution_context::ExecutionContext}, class_loader::parser::{Parser, U2, U1}, opcodes, util::{sized_array::SizedArray, stack::Stack}};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -20,7 +20,7 @@ impl Instruction for INVOKESPECIAL {
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
-		let (_, method) = match execution_context.runtime_constant_pool.get(index) {
+		let (object, method) = match execution_context.runtime_constant_pool.get(index) {
 			RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass { name, descriptor, class_ref }) => {
 				let object = ObjectManager::get(class_ref.name.as_str());
 				object.get_method(name.as_str(), descriptor.as_str()).unwrap()
@@ -63,8 +63,7 @@ impl Instruction for INVOKESPECIAL {
 		let frame = Frame::new(
 			local_variables,
 			stack,
-			// FIXME: Constant Pool
-			&ConstantPool::new(vec![]),
+			&object.class_file,
 			method.name.clone(),
 			return_type,
 		);

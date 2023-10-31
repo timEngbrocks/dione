@@ -11,7 +11,7 @@ impl Instruction for DLOAD_0 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 2);
+		assert!(execution_context.local_variables.len() >= 2);
 		match execution_context.local_variables.get(0) {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Double(value.clone()));
@@ -36,7 +36,7 @@ impl Instruction for DLOAD_1 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 3);
+		assert!(execution_context.local_variables.len() >= 3);
 		match execution_context.local_variables.get(1) {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Double(value.clone()));
@@ -61,7 +61,7 @@ impl Instruction for DLOAD_2 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 4);
+		assert!(execution_context.local_variables.len() >= 4);
 		match execution_context.local_variables.get(2) {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Double(value.clone()));
@@ -86,7 +86,7 @@ impl Instruction for DLOAD_3 {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.stack.len() >= 5);
+		assert!(execution_context.local_variables.len() >= 5);
 		match execution_context.local_variables.get(3) {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Double(value.clone()));
