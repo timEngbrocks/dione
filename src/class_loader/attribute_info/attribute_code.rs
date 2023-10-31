@@ -1,8 +1,8 @@
-use crate::class_loader::{parser::{U4, U2, U1, Parser}, constant_pool_info::ConstantPool};
+use crate::{class_loader::{parser::{U4, U2, U1, Parser}, constant_pool_info::ConstantPool}, jvm::exception_handler::{ExceptionHandlerTable, ExceptionHandler}};
 
 use super::{AttributeInfo, Attribute};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeCode {
 	pub attribute_name_index: U2,
     pub attribute_length: U4,
@@ -53,7 +53,7 @@ impl Attribute for AttributeCode {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ExceptionTableEntry {
 	pub start_pc: U2,
 	pub end_pc: U2,

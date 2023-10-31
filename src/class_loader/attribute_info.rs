@@ -24,7 +24,7 @@ pub mod attribute_enclosing_method;
 pub mod attribute_annotation_default;
 pub mod attribute_runtime_invisible_annotations;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum AttributeInfo {
 	ConstantValue(AttributeConstantValue),
 	Code(AttributeCode),

@@ -4,7 +4,7 @@ use crate::class_loader::{parser::{U4, U2, U1, Parser}, constant_pool_info::Cons
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeRuntimeVisibleAnnotations {
 	pub attribute_name_index: U2,
     pub attribute_length: U4,
@@ -31,7 +31,7 @@ impl Attribute for AttributeRuntimeVisibleAnnotations {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Annotation {
 	pub type_index: U2,
 	pub num_element_value_pairs: U2,
@@ -55,7 +55,7 @@ impl Annotation {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ElementValuePair {
 	pub element_name_index: U2,
 	pub value: ElementValue,
@@ -73,7 +73,7 @@ impl ElementValuePair {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ElementValue {
 	pub tag: U1,
 	pub value: Value
@@ -91,7 +91,7 @@ impl ElementValue {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Value {
 	Constant(ValueConstant),
 	Enum(ValueEnum),
@@ -123,7 +123,7 @@ impl Value {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ValueConstant {
 	pub const_value_index: U2,
 }
@@ -138,7 +138,7 @@ impl ValueConstant {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ValueEnum {
 	pub type_name_index: U2,
 	pub const_name_index: U2,
@@ -156,7 +156,7 @@ impl ValueEnum {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ValueClass {
 	pub class_info_index: U2,
 }
@@ -171,7 +171,7 @@ impl ValueClass {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ValueArray {
 	pub num_values: U2,
 	pub values: Vec<ElementValue>,

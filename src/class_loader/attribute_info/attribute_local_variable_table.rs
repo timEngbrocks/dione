@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{Parser, U4, U2}, constant_pool_info::Constant
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeLocalVariableTable {
 	pub attribute_name_index: U2,
 	pub attribute_length: U4,
@@ -29,7 +29,7 @@ impl Attribute for AttributeLocalVariableTable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct LocalVariableTableEntry {
 	pub start_pc: U2,
 	pub length: U2,

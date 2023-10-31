@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{U4, U2, Parser}, constant_pool_info::Constant
 
 use super::{Attribute, AttributeInfo};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeRecord {
 	pub attribute_name_index: U2,
     pub attribute_length: U4,
@@ -29,7 +29,7 @@ impl Attribute for AttributeRecord {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct RecordComponentInfo {
 	pub name_index: U2,
 	pub descriptor_index: U2,

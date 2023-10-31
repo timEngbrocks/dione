@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{Parser, U2, U4, U1}, constant_pool_info::Cons
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeStackMapTable {
 	pub attribute_name_index: U2,
     pub attribute_length: U4,
@@ -29,7 +29,7 @@ impl Attribute for AttributeStackMapTable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum StackMapFrameTypes {
 	Same(StackMapFrameSame),
 	SameLocal1StackItem(StackMapFrameSameLocal1StackItem),
@@ -56,7 +56,7 @@ impl StackMapFrameTypes {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameSame {
 	pub frame_type: U1,
 }
@@ -71,7 +71,7 @@ impl StackMapFrameSame {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameSameLocal1StackItem {
 	pub frame_type: U1,
 	pub stack: Vec<VerificationTypes>,
@@ -89,7 +89,7 @@ impl StackMapFrameSameLocal1StackItem {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameSameLocal1StackItemFrameExtended {
 	pub frame_type: U1,
 	pub offset_delta: U2,
@@ -110,7 +110,7 @@ impl StackMapFrameSameLocal1StackItemFrameExtended {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameChop {
 	pub frame_type: U1,
 	pub offset_delta: U2,
@@ -128,7 +128,7 @@ impl StackMapFrameChop {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameSameFrameExtended {
 	pub frame_type: U1,
 	pub offset_delta: U2,
@@ -146,7 +146,7 @@ impl StackMapFrameSameFrameExtended {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameAppend {
 	pub frame_type: U1,
 	pub offset_delta: U2,
@@ -170,7 +170,7 @@ impl StackMapFrameAppend {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StackMapFrameFull {
 	pub frame_type: U1,
 	pub offset_delta: U2,
@@ -206,7 +206,7 @@ impl StackMapFrameFull {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum VerificationTypes {
 	ItemTop(VerificationTypeTopVariable),
 	ItemInteger(VerificationTypeIntegerVariable),
@@ -237,7 +237,7 @@ impl VerificationTypes {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeTopVariable {
 	pub tag: U1,
 }
@@ -252,7 +252,7 @@ impl VerificationTypeTopVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeIntegerVariable {
 	pub tag: U1,
 }
@@ -267,7 +267,7 @@ impl VerificationTypeIntegerVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeFloatVariable {
 	pub tag: U1,
 }
@@ -282,7 +282,7 @@ impl VerificationTypeFloatVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeLongVariable {
 	pub tag: U1,
 }
@@ -297,7 +297,7 @@ impl VerificationTypeLongVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeDoubleVariable {
 	pub tag: U1,
 }
@@ -312,7 +312,7 @@ impl VerificationTypeDoubleVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeNullVariable {
 	pub tag: U1,
 }
@@ -327,7 +327,7 @@ impl VerificationTypeNullVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeUninitializedThisVariable {
 	pub tag: U1,
 }
@@ -342,7 +342,7 @@ impl VerificationTypeUninitializedThisVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeObjectVariable {
 	pub tag: U1,
 	pub cpool_index: U2,
@@ -360,7 +360,7 @@ impl VerificationTypeObjectVariable {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VerificationTypeUninitializedVariable {
 	pub tag: U1,
 	pub offset: U2,

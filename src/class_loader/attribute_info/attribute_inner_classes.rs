@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{Parser, U2, U4}, constant_pool_info::Constant
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeInnerClasses {
 	pub attribute_name_index: U2,
 	pub attribute_length: U4,
@@ -29,7 +29,7 @@ impl Attribute for AttributeInnerClasses {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct InnerClassesListEntry {
 	pub inner_class_info_index: U2,
 	pub outer_class_info_index: U2,

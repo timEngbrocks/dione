@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{U4, U2, Parser}, constant_pool_info::Constant
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeDeprecated {
 	pub attribute_name_index: U2,
     pub attribute_length: U4,

@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{U4, U2, Parser, U1}, constant_pool_info::Cons
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeMethodParameters {
 	pub attribute_name_index: U2,
     pub attribute_length: U4,
@@ -29,7 +29,7 @@ impl Attribute for AttributeMethodParameters {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct MethodParameter {
 	pub name_index: U2,
     pub access_flags: U2,

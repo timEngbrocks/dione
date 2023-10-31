@@ -2,7 +2,7 @@ use crate::class_loader::{parser::{Parser, U2, U4}, constant_pool_info::Constant
 
 use super::Attribute;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AttributeSourceFile {
 	pub attribute_name_index: U2,
 	pub attribute_length: U4,
