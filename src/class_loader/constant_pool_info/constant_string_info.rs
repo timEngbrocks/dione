@@ -2,6 +2,7 @@ use crate::class_loader::parser::Parser;
 
 use super::{ConstantPoolInfo, super::parser::{U1, U2}};
 
+#[derive(Clone)]
 pub struct ConstantStringInfo {
 	pub tag: U1,
 	pub string_index: U2,

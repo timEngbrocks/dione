@@ -2,6 +2,7 @@ use crate::class_loader::parser::Parser;
 
 use super::{ConstantPoolInfo, super::parser::{U1, U2}};
 
+#[derive(Clone)]
 pub struct ConstantDynamicInfo {
 	pub tag: U1,
 	pub bootstrap_method_attr_index: U2,

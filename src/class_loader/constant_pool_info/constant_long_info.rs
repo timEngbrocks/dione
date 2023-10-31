@@ -2,6 +2,7 @@ use crate::class_loader::parser::Parser;
 
 use super::{ConstantPoolInfo, super::parser::{U1, U4}};
 
+#[derive(Clone)]
 pub struct ConstantLongInfo {
 	pub tag: U1,
 	pub high_bytes: U4,

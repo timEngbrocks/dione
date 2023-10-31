@@ -45,6 +45,7 @@ impl ConstantMethodHandleKind {
 	}
 }
 
+#[derive(Clone)]
 pub struct ConstantMethodHandleInfo {
 	pub tag: U1,
 	pub reference_kind: U1,

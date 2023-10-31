@@ -2,6 +2,7 @@ use crate::class_loader::parser::Parser;
 
 use super::{ConstantPoolInfo, super::parser::{U1, U2}};
 
+#[derive(Clone)]
 pub struct ConstantFieldrefInfo {
 	pub tag: U1,
 	pub class_index: U2,

@@ -23,6 +23,7 @@ pub mod constant_module_info;
 pub mod constant_package_info;
 
 #[repr(u8)]
+#[derive(Clone)]
 pub enum ConstantPoolInfoType {
 	EmptyItem(ConstantEmptyItem) = 0,
 	Utf8(ConstantUtf8Info) = 1,
@@ -124,6 +125,7 @@ impl ConstantPoolInfo for ConstantPoolInfoType {
 	}
 }
 
+#[derive(Clone)]
 pub struct ConstantPool {
 	constants: Vec<ConstantPoolInfoType>
 }
@@ -152,6 +154,7 @@ impl ConstantPool {
 	}
 }
 
+#[derive(Clone)]
 pub struct ConstantEmptyItem {
 	pub tag: U1,
 }
