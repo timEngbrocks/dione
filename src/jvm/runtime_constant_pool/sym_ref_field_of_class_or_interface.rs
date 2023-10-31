@@ -1,4 +1,4 @@
-use crate::{resolve_constant, class_loader::constant_pool_info::ConstantPoolInfoType};
+use crate::{resolve_constant, class_loader::{constant_pool_info::ConstantPoolInfoType, class_file::ClassFile}};
 
 use super::{RuntimeConstant, sym_ref_class_or_interface::SymRefClassOrInterface};
 
@@ -10,12 +10,12 @@ pub struct SymRefFieldOfClassOrInterface {
 }
 
 impl RuntimeConstant for SymRefFieldOfClassOrInterface {
-    fn resolve(index: u16, constant_pool: &crate::class_loader::constant_pool_info::ConstantPool) -> Self {
-		let field = resolve_constant!(ConstantPoolInfoType::Fieldref, index, constant_pool);
-		let name_and_type = resolve_constant!(ConstantPoolInfoType::NameAndType, field.name_and_type_index, constant_pool);
-		let name = resolve_constant!(ConstantPoolInfoType::Utf8, name_and_type.name_index, constant_pool).to_string();
-		let descriptor = resolve_constant!(ConstantPoolInfoType::Utf8, name_and_type.descriptor_index, constant_pool).to_string();
-		let class_ref = SymRefClassOrInterface::resolve(field.class_index, constant_pool);
+    fn resolve(index: u16, class_file: &ClassFile) -> Self {
+		let field = resolve_constant!(ConstantPoolInfoType::Fieldref, index, class_file.constant_pool);
+		let name_and_type = resolve_constant!(ConstantPoolInfoType::NameAndType, field.name_and_type_index, class_file.constant_pool);
+		let name = resolve_constant!(ConstantPoolInfoType::Utf8, name_and_type.name_index, class_file.constant_pool).to_string();
+		let descriptor = resolve_constant!(ConstantPoolInfoType::Utf8, name_and_type.descriptor_index, class_file.constant_pool).to_string();
+		let class_ref = SymRefClassOrInterface::resolve(field.class_index, class_file);
 
 		SymRefFieldOfClassOrInterface {
 			name,

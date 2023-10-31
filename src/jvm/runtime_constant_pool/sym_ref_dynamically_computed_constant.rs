@@ -1,4 +1,4 @@
-use crate::class_loader::constant_pool_info::ConstantPool;
+use crate::class_loader::class_file::ClassFile;
 
 use super::{RuntimeConstant, sym_ref_method_handle::SymRefMethodHandle, RuntimeConstants};
 
@@ -11,7 +11,7 @@ pub struct SymRefDynamicallyComputedConstant {
 }
 
 impl RuntimeConstant for SymRefDynamicallyComputedConstant {
-	fn resolve(_: u16, _: &ConstantPool) -> Self {
+	fn resolve(_: u16, _: &ClassFile) -> Self {
 		unimplemented!("SymRefDynamicallyComputedConstant::resolve")
 	}
 }

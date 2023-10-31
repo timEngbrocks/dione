@@ -1,4 +1,4 @@
-use crate::{class_loader::constant_pool_info::{ConstantPool, ConstantPoolInfoType}, jvm::types::{int::Int, float::Float, long::Long, double::Double, Value}};
+use crate::{class_loader::{constant_pool_info::ConstantPoolInfoType, class_file::ClassFile}, jvm::types::{int::Int, float::Float, long::Long, double::Double, Value}};
 
 use super::RuntimeConstant;
 
@@ -16,8 +16,8 @@ pub struct NumericConstant {
 }
 
 impl RuntimeConstant for NumericConstant {
-	fn resolve(index: u16, constant_pool: &ConstantPool) -> Self {
-		match constant_pool.get(index) {
+	fn resolve(index: u16, class_file: &ClassFile) -> Self {
+		match class_file.constant_pool.get(index) {
 			ConstantPoolInfoType::Integer(value) => {
 				NumericConstant {
 					value: NumericConstantKind::Integer(Int::from_value(value.to_i32())),

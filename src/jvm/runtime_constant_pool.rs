@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::class_loader::constant_pool_info::{ConstantPool, ConstantPoolInfo};
+use crate::class_loader::{constant_pool_info::ConstantPoolInfo, class_file::ClassFile};
 
 use self::{sym_ref_class_or_interface::SymRefClassOrInterface, sym_ref_field_of_class_or_interface::SymRefFieldOfClassOrInterface, sym_ref_method_of_class::SymRefMethodOfClass, sym_ref_method_of_interface::SymRefMethodOfInterface, sym_ref_method_handle::SymRefMethodHandle, sym_ref_method_type::SymRefMethodType, string_constant::StringConstant, numeric_constant::NumericConstant, sym_ref_dynamically_computed_constant::SymRefDynamicallyComputedConstant, sym_ref_dynamically_computed_call_site::SymRefDynamicallyComputedCallSite};
 
@@ -36,7 +36,7 @@ pub trait Loadable {
 }
 
 pub trait RuntimeConstant {
-	fn resolve(index: u16, constant_pool: &ConstantPool) -> Self;
+	fn resolve(index: u16, class_file: &ClassFile) -> Self;
 }
 
 pub struct RuntimeConstantPool {
@@ -45,28 +45,35 @@ pub struct RuntimeConstantPool {
 }
 
 impl RuntimeConstantPool {
-	pub fn new(constant_pool: &ConstantPool) -> Self {
+	pub fn new(class_file: &ClassFile) -> Self {
 		let mut constants: HashMap<u16, RuntimeConstants> = HashMap::new();
-		for i in 1..=constant_pool.len() {
-			let constant = match constant_pool.get(i).get_tag() {
-				7 => RuntimeConstants::SymRefClassOrInterface(SymRefClassOrInterface::resolve(i, constant_pool)),
-				9 => RuntimeConstants::SymRefFieldOfClassOrInterface(SymRefFieldOfClassOrInterface::resolve(i, constant_pool)),
-				10 => RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass::resolve(i, constant_pool)),
-				11 => RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface::resolve(i, constant_pool)),
-				15 => RuntimeConstants::SymRefMethodHandle(SymRefMethodHandle::resolve(i, constant_pool)),
-				16 => RuntimeConstants::SymRefMethodType(SymRefMethodType::resolve(i, constant_pool)),
-				17 => RuntimeConstants::SymRefDynamicallyComputedConstant(SymRefDynamicallyComputedConstant::resolve(i, constant_pool)),
-				18 => RuntimeConstants::SymRefDynamicallyComputedCallSite(SymRefDynamicallyComputedCallSite::resolve(i, constant_pool)),
-				8 => RuntimeConstants::StringConstant(StringConstant::resolve(i, constant_pool)),
-				3 | 4 | 5 | 6 => RuntimeConstants::NumericConstant(NumericConstant::resolve(i, constant_pool)),
-				_ => continue,
+		for i in 1..=class_file.constant_pool.len() {
+			let constant = match RuntimeConstantPool::resolve(i, class_file) {
+				Some(constant) => constant,
+				None => continue,
 			};
 			constants.insert(i as u16, constant);
 		}
 
 		RuntimeConstantPool {
 			constants,
-			length: constant_pool.len() as u16,
+			length: class_file.constant_pool.len() as u16,
+		}
+	}
+
+	pub fn resolve(index: u16, class_file: &ClassFile) -> Option<RuntimeConstants> {
+		match class_file.constant_pool.get(index).get_tag() {
+			7 => Some(RuntimeConstants::SymRefClassOrInterface(SymRefClassOrInterface::resolve(index, &class_file))),
+			9 => Some(RuntimeConstants::SymRefFieldOfClassOrInterface(SymRefFieldOfClassOrInterface::resolve(index, &class_file))),
+			10 => Some(RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass::resolve(index, &class_file))),
+			11 => Some(RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface::resolve(index, &class_file))),
+			15 => Some(RuntimeConstants::SymRefMethodHandle(SymRefMethodHandle::resolve(index, &class_file))),
+			16 => Some(RuntimeConstants::SymRefMethodType(SymRefMethodType::resolve(index, &class_file))),
+			17 => Some(RuntimeConstants::SymRefDynamicallyComputedConstant(SymRefDynamicallyComputedConstant::resolve(index, &class_file))),
+			18 => Some(RuntimeConstants::SymRefDynamicallyComputedCallSite(SymRefDynamicallyComputedCallSite::resolve(index, &class_file))),
+			8 => Some(RuntimeConstants::StringConstant(StringConstant::resolve(index, &class_file))),
+			3 | 4 | 5 | 6 => Some(RuntimeConstants::NumericConstant(NumericConstant::resolve(index, &class_file))),
+			_ => None,
 		}
 	}
 
@@ -78,7 +85,7 @@ impl RuntimeConstantPool {
 	}
 
 	pub fn get(&self, index: u16) -> &RuntimeConstants {
-		match self.constants.get(&(index - 1)) {
+		match self.constants.get(&index) {
 			Some(constant) => constant,
 			None => panic!("{index}"),
 		}

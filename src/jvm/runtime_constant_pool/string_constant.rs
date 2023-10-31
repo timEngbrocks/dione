@@ -1,4 +1,4 @@
-use crate::{class_loader::constant_pool_info::{ConstantPool, ConstantPoolInfoType}, resolve_constant, jvm::types::reference::Reference};
+use crate::{class_loader::{constant_pool_info::ConstantPoolInfoType, class_file::ClassFile}, resolve_constant, jvm::types::reference::Reference};
 
 use super::RuntimeConstant;
 
@@ -14,9 +14,9 @@ impl StringConstant {
 }
 
 impl RuntimeConstant for StringConstant {
-	fn resolve(index: u16, constant_pool: &ConstantPool) -> Self {
-		let string = resolve_constant!(ConstantPoolInfoType::String, index, constant_pool);
-		let text = resolve_constant!(ConstantPoolInfoType::Utf8, string.string_index, constant_pool).to_string();
+	fn resolve(index: u16, class_file: &ClassFile) -> Self {
+		let string = resolve_constant!(ConstantPoolInfoType::String, index, class_file.constant_pool);
+		let text = resolve_constant!(ConstantPoolInfoType::Utf8, string.string_index, class_file.constant_pool).to_string();
 
 		StringConstant {
 			text,
