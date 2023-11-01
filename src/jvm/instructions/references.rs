@@ -4,3 +4,4 @@ pub mod invokespecial;
 pub mod invokevirtual;
 pub mod invokestatic;
 pub mod athrow;
+pub mod newarray;

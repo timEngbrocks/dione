@@ -1,6 +1,6 @@
 use crate::class_loader::parser::U2;
 
-use self::{byte::Byte, short::Short, int::Int, long::Long, char::Char, float::Float, double::Double, boolean::Boolean, return_address::ReturnAddress, reference::Reference, array::Array, object::Object};
+use self::{byte::Byte, short::Short, int::Int, long::Long, char::Char, float::Float, double::Double, boolean::Boolean, return_address::ReturnAddress, reference::Reference};
 
 pub mod byte;
 pub mod short;
@@ -66,6 +66,21 @@ impl PartialEq for ComputationalTypeCategory {
 }
 
 impl Types {
+	pub fn new(&self) -> Self {
+		match self {
+			Types::Byte(_) => Types::Byte(Byte::new()),
+			Types::Short(_) => Types::Short(Short::new()),
+			Types::Int(_) => Types::Int(Int::new()),
+			Types::Long(_) => Types::Long(Long::new()),
+			Types::Char(_) => Types::Char(Char::new()),
+			Types::Float(_) => Types::Float(Float::new()),
+			Types::Double(_) => Types::Double(Double::new()),
+			Types::Boolean(_) => Types::Boolean(Boolean::new()),
+			Types::ReturnAddress(_) => Types::ReturnAddress(ReturnAddress::new()),
+			Types::Reference(_) => Types::Reference(Reference::new()),
+		}
+	}
+
 	pub fn assert_matches_type(&self, other: &Types) {
 		assert_eq!(std::mem::discriminant(self), std::mem::discriminant(other));
 	}
@@ -151,10 +166,4 @@ impl Width for Types {
 			Types::Reference(reference) => reference.width(),
 		}
 	}
-}
-
-pub enum ReferenceableTypes{
-	Class(Object),
-	Array(Array),
-	Interface(Object),
 }

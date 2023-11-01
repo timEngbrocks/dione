@@ -37,8 +37,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 109/205 Instructions</label>
-<progress id="status" value="109" max="205"></progress>
+<label for="status">Status: Finished 123/205 Instructions</label>
+<progress id="status" value="123" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -230,7 +230,7 @@ latest GNU nightly toolchain from Rust.
 | INVOKEINTERFACE | not implemented |
 | INVOKEDYNAMIC | not implemented |
 | NEW | not implemented |
-| NEWARRAY | not implemented |
+| <span style="color:green">NEWARRAY</span> | implemented |
 | ANEWARRAY | not implemented |
 | ARRAYLENGTH | not implemented |
 | ATHROW | not implemented |

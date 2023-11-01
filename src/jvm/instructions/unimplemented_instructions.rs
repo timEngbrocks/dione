@@ -474,24 +474,6 @@ impl Instruction for INVOKEDYNAMIC {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct NEWARRAY {}
-impl Instruction for NEWARRAY {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::NEWARRAY));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct ANEWARRAY {
 	indexbyte1: U1,
 	indexbyte2: U1,

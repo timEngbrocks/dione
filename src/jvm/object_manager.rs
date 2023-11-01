@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::util::heap::Heap;
 
-use super::{types::{object::Object, reference::Reference, ReferenceableTypes}, bootstrap_class_loader::BootstrapClassLoader, interpreter::Interpreter};
+use super::{types::{object::Object, reference::Reference}, bootstrap_class_loader::BootstrapClassLoader, interpreter::Interpreter};
 
 static mut INSTANCE: Option<ObjectManager> = None;
 
@@ -71,11 +71,18 @@ impl ObjectManager {
 	fn get_impl(&mut self, name: &str) -> &Object {
 		match self.objects.contains_key(name) {
 			true => {
-				match self.initialized.get(name) {
-					Some(true) => {
+				match self.initialized.contains_key(name) {
+					true => {
 						self.objects.get(name).unwrap()
 					},
-					_ => panic!("Tried to get uninitialized object: {}", name),
+					false => {
+						match self.being_initialized.contains_key(name) {
+							true => {
+								self.objects.get(name).unwrap()
+							},
+							false => panic!("Object not initialized or being initialized: {}", name)
+						}
+					}
 				}
 			},
 			false => panic!("Object not found: {}", name),
@@ -117,6 +124,13 @@ impl ObjectManager {
 
 	fn instantiate_impl(&mut self, name: &str) -> Reference {
 		let object = self.get_impl(name).clone();
-		Heap::allocate(ReferenceableTypes::Class(object))
+		match object.fields.capacity() {
+			0 => {
+				Heap::allocate_interface(object)
+			},
+			_ => {
+				Heap::allocate_class(object)
+			},
+		}
 	}
 }

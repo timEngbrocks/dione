@@ -1,9 +1,10 @@
 use std::{rc::Rc, cell::RefCell};
 
-use crate::jvm::types::{Value, reference::Reference, ReferenceableTypes};
+use crate::jvm::types::{Value, reference::Reference, object::Object, array::{PrimitiveArray, ReferenceArray}};
 
 use super::allocator::JVMAllocator;
 
+#[derive(Clone)]
 pub enum ReferencePtr {
 	Null,
 	Class(ClassPtr),
@@ -11,12 +12,21 @@ pub enum ReferencePtr {
 	Interface(InterfacePtr),
 }
 
+#[derive(Clone)]
+pub enum ArrayPtr {
+	Primitive(PrimitiveArrayPtr),
+	Reference(ReferenceArrayPtr),
+}
+
 impl ReferencePtr {
 	pub fn clone(&self) -> ReferencePtr {
 		match self {
 			ReferencePtr::Null => ReferencePtr::Null,
 			ReferencePtr::Class(value) => ReferencePtr::Class(Rc::clone(value)),
-			ReferencePtr::Array(value) => ReferencePtr::Array(Rc::clone(value)),
+			ReferencePtr::Array(value) => match value {
+				ArrayPtr::Primitive(value) => ReferencePtr::Array(ArrayPtr::Primitive(Rc::clone(value))),
+				ArrayPtr::Reference(value) => ReferencePtr::Array(ArrayPtr::Reference(Rc::clone(value))),
+			},
 			ReferencePtr::Interface(value) => ReferencePtr::Interface(Rc::clone(value)),
 		}
 	}
@@ -24,17 +34,16 @@ impl ReferencePtr {
 
 
 static CLASS_ALLOCATOR: JVMAllocator = JVMAllocator {};
-static ARRAY_ALLOCATOR: JVMAllocator = JVMAllocator {};
+static PRIMITIVE_ARRAY_ALLOCATOR: JVMAllocator = JVMAllocator {};
+static REFERENCE_ARRAY_ALLOCATOR: JVMAllocator = JVMAllocator {};
 static INTERFACE_ALLOCATOR: JVMAllocator = JVMAllocator {};
 
-pub type ClassPtr = Rc<RefCell<ReferenceableTypes>, &'static JVMAllocator>;
-pub type ArrayPtr = Rc<RefCell<ReferenceableTypes>, &'static JVMAllocator>;
-pub type InterfacePtr = Rc<RefCell<ReferenceableTypes>, &'static JVMAllocator>;
+pub type ClassPtr = Rc<RefCell<Object>, &'static JVMAllocator>;
+pub type PrimitiveArrayPtr = Rc<RefCell<PrimitiveArray>, &'static JVMAllocator>;
+pub type ReferenceArrayPtr = Rc<RefCell<ReferenceArray>, &'static JVMAllocator>;
+pub type InterfacePtr = Rc<RefCell<Object>, &'static JVMAllocator>;
 
 static mut INSTANCE: Option<Heap> = None;
-
-const HEAP_START: usize = 0x10000000; // 256 MB
-const HEAP_SIZE: usize = 1024 * 1024; // 1 MB
 
 pub struct Heap {}
 
@@ -43,8 +52,8 @@ impl Heap {
 		Self::it();
 	}
 
-	pub fn allocate(value: ReferenceableTypes) -> Reference {
-		Self::it().allocate_impl(value)
+	fn new() -> Self {
+		Heap {}
 	}
 
 	fn it() -> &'static Self {
@@ -58,24 +67,39 @@ impl Heap {
 		}
 	}
 
-	fn new() -> Self {
-		Heap {}
+	pub fn allocate_class(object: Object) -> Reference {
+		Heap::it().allocate_class_impl(object)
 	}
 
-	fn allocate_impl(&self, value: ReferenceableTypes) -> Reference {
-		match value {
-			ReferenceableTypes::Class(_) => {
-				let value = Rc::new_in(RefCell::new(value), &CLASS_ALLOCATOR);
-				Reference::from_value(ReferencePtr::Class(value))
-			},
-			ReferenceableTypes::Array(_) => {
-				let value = Rc::new_in(RefCell::new(value), &ARRAY_ALLOCATOR);
-				Reference::from_value(ReferencePtr::Array(value))
-			},
-			ReferenceableTypes::Interface(_) => {
-				let value = Rc::new_in(RefCell::new(value), &INTERFACE_ALLOCATOR);
-				Reference::from_value(ReferencePtr::Interface(value))
-			},
-		}
+	fn allocate_class_impl(&self, object: Object) -> Reference {
+		let value = Rc::new_in(RefCell::new(object), &CLASS_ALLOCATOR);
+		Reference::from_value(ReferencePtr::Class(value))
+	}
+
+	pub fn allocate_primitive_array(array: PrimitiveArray) -> Reference {
+		Heap::it().allocate_primitive_array_impl(array)
+	}
+
+	fn allocate_primitive_array_impl(&self, array: PrimitiveArray) -> Reference {
+		let value = Rc::new_in(RefCell::new(array), &PRIMITIVE_ARRAY_ALLOCATOR);
+		Reference::from_value(ReferencePtr::Array(ArrayPtr::Primitive(value)))
+	}
+
+	pub fn allocate_reference_array(array: ReferenceArray) -> Reference {
+		Heap::it().allocate_reference_array_impl(array)
+	}
+
+	fn allocate_reference_array_impl(&self, array: ReferenceArray) -> Reference {
+		let value = Rc::new_in(RefCell::new(array), &REFERENCE_ARRAY_ALLOCATOR);
+		Reference::from_value(ReferencePtr::Array(ArrayPtr::Reference(value)))
+	}
+
+	pub fn allocate_interface(object: Object) -> Reference {
+		Heap::it().allocate_interface_impl(object)
+	}
+
+	fn allocate_interface_impl(&self, object: Object) -> Reference {
+		let value = Rc::new_in(RefCell::new(object), &INTERFACE_ALLOCATOR);
+		Reference::from_value(ReferencePtr::Interface(value))
 	}
 }
