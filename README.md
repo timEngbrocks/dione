@@ -162,19 +162,19 @@ latest GNU nightly toolchain from Rust.
 | <span style="color:yellow">LNEG</span> | partially implemented |
 | <span style="color:yellow">FNEG</span> | partially implemented |
 | <span style="color:yellow">DNEG</span> | partially implemented |
-| ISHL | not implemented |
-| LSHL | not implemented |
-| ISHR | not implemented |
-| LSHR | not implemented |
-| IUSHR | not implemented |
-| LUSHR | not implemented |
-| IAND | not implemented |
-| LAND | not implemented |
-| IOR | not implemented |
-| LOR | not implemented |
-| IXOR | not implemented |
-| LXOR | not implemented |
-| IINC | not implemented |
+| <span style="color:green">ISHL</span> | implemented |
+| <span style="color:green">LSHL</span> | implemented |
+| <span style="color:green">ISHR</span> | implemented |
+| <span style="color:green">LSHR</span> | implemented |
+| <span style="color:green">IUSHR</span> | implemented |
+| <span style="color:green">LUSHR</span> | implemented |
+| <span style="color:green">IAND</span> | implemented |
+| <span style="color:green">LAND</span> | implemented |
+| <span style="color:green">IOR</span> | implemented |
+| <span style="color:green">LOR</span> | implemented |
+| <span style="color:green">IXOR</span> | implemented |
+| <span style="color:green">LXOR</span> | implemented |
+| <span style="color:green">IINC</span> | implemented |
 | <span style="color:green">I2L</span> | implemented |
 | <span style="color:green">I2F</span> | implemented |
 | <span style="color:green">I2D</span> | implemented |
