@@ -37,8 +37,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 94/205 Instructions</label>
-<progress id="status" value="94" max="205"></progress>
+<label for="status">Status: Finished 109/205 Instructions</label>
+<progress id="status" value="109" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -175,21 +175,21 @@ latest GNU nightly toolchain from Rust.
 | IXOR | not implemented |
 | LXOR | not implemented |
 | IINC | not implemented |
-| I2L | not implemented |
-| I2F | not implemented |
-| I2D | not implemented |
-| L2I | not implemented |
-| L2F | not implemented |
-| L2D | not implemented |
-| F2I | not implemented |
-| F2L | not implemented |
-| F2D | not implemented |
-| D2I | not implemented |
-| D2L | not implemented |
-| D2F | not implemented |
-| I2B | not implemented |
-| I2C | not implemented |
-| I2S | not implemented |
+| <span style="color:green">I2L</span> | implemented |
+| <span style="color:green">I2F</span> | implemented |
+| <span style="color:green">I2D</span> | implemented |
+| <span style="color:green">L2I</span> | implemented |
+| <span style="color:green">L2F</span> | implemented |
+| <span style="color:green">L2D</span> | implemented |
+| <span style="color:green">F2I</span> | implemented |
+| <span style="color:green">F2L</span> | implemented |
+| <span style="color:green">F2D</span> | implemented |
+| <span style="color:green">D2I</span> | implemented |
+| <span style="color:green">D2L</span> | implemented |
+| <span style="color:green">D2F</span> | implemented |
+| <span style="color:green">I2B</span> | implemented |
+| <span style="color:green">I2C</span> | implemented |
+| <span style="color:green">I2S</span> | implemented |
 | <span style="color:green">LCMP</span> | implemented |
 | <span style="color:green">FCMPL</span> | implemented |
 | <span style="color:green">FCMPG</span> | implemented |
