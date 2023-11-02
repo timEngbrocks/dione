@@ -156,3 +156,31 @@ impl Array for ReferenceArray {
 		&self.kind
 	}
 }
+
+impl ReferenceArray {
+	pub fn new_preinitialized(kind: ReferenceArrayKind, length: usize) -> Self where Self: Sized {
+		let mut data = Vec::with_capacity(length);
+		match kind {
+			ReferenceArrayKind::Class(ref class_ref, ref reference) => {
+				for _ in 0..length {
+					data.push(ReferenceArrayKind::Class(class_ref.clone(), reference.clone()));
+				}
+			},
+			ReferenceArrayKind::Array(ref class_ref, ref reference) => {
+				for _ in 0..length {
+					data.push(ReferenceArrayKind::Array(class_ref.clone(), reference.clone()));
+				}
+			},
+			ReferenceArrayKind::Interface(ref class_ref, ref reference) => {
+				for _ in 0..length {
+					data.push(ReferenceArrayKind::Interface(class_ref.clone(), reference.clone()));
+				}
+			},
+		}
+		Self {
+			kind,
+			length,
+			data,
+		}
+	}
+}

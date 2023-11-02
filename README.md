@@ -44,8 +44,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 132/205 Instructions</label>
-<progress id="status" value="132" max="205"></progress>
+<label for="status">Status: Finished 133/205 Instructions</label>
+<progress id="status" value="133" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -246,7 +246,7 @@ latest GNU nightly toolchain from Rust.
 | MONITORENTER | not implemented |
 | MONITOREXIT | not implemented |
 | WIDE | not implemented |
-| MULTIANEWARRAY | not implemented |
+| <span style="color:green">MULTIANEWARRAY</span> | implemented |
 | IFNULL | not implemented |
 | IFNONNULL | not implemented |
 | GOTO_W | not implemented |
