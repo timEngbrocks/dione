@@ -1,4 +1,4 @@
-use crate::{jvm::{frame::Frame, types::{Value, float::Float, double::Double, int::Int}, instructions::{Instruction, InstructionResult}, types::{Types, long::Long}}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{frame::Frame, types::{Value, float::Float, double::Double, int::Int, byte::Byte, char::Char, short::Short}, instructions::{Instruction, InstructionResult}, types::{Types, long::Long}}, class_loader::parser::{Parser, U2}, opcodes};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -14,7 +14,7 @@ impl Instruction for I2L {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// Note: Rust's as cast uses sign extension
-				execution_context.stack.push(Types::Long(Long::from_value(value.get() as i64)));
+				execution_context.stack.push(Types::Long(i2l(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int on top of stack")
@@ -25,6 +25,7 @@ impl Instruction for I2L {
 		1
 	}
 }
+
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct I2F {}
@@ -39,7 +40,7 @@ impl Instruction for I2F {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
-				execution_context.stack.push(Types::Float(Float::from_value(value.get() as f32)));
+				execution_context.stack.push(Types::Float(i2f(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int on top of stack")
@@ -63,7 +64,7 @@ impl Instruction for I2D {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
-				execution_context.stack.push(Types::Long(Long::from_value(value.get() as i64)));
+				execution_context.stack.push(Types::Double(i2d(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int on top of stack")
@@ -87,7 +88,7 @@ impl Instruction for L2I {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
-				execution_context.stack.push(Types::Int(Int::from_value((value.get() & 0xFFFFFFFF) as i32)));
+				execution_context.stack.push(Types::Int(l2i(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Long on top of stack")
@@ -112,7 +113,7 @@ impl Instruction for L2F {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
-				execution_context.stack.push(Types::Float(Float::from_value(value.get() as f32)));
+				execution_context.stack.push(Types::Float(l2f(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Long on top of stack")
@@ -137,7 +138,7 @@ impl Instruction for L2D {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
-				execution_context.stack.push(Types::Double(Double::from_value(value.get() as f64)));
+				execution_context.stack.push(Types::Double(l2d(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Long on top of stack")
@@ -161,18 +162,7 @@ impl Instruction for F2I {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
-				let x = value.get();
-				if x.is_nan() {
-					execution_context.stack.push(Types::Int(Int::from_value(0)));
-				} else if !x.is_infinite() {
-					execution_context.stack.push(Types::Int(Int::from_value(x.trunc() as i32)));
-				} else if (x.is_finite() && x >= i32::MAX as f32) || (x.is_infinite() && x > 0.0) {
-					execution_context.stack.push(Types::Int(Int::from_value(i32::MAX)));
-				} else if (x.is_finite() && x <= -i32::MAX as f32) || (x.is_infinite() && x < 0.0) {
-					execution_context.stack.push(Types::Int(Int::from_value(-i32::MAX)));
-				} else {
-					panic!("Unexpected float value, don't know how to convert to int")
-				}
+				execution_context.stack.push(Types::Int(f2i(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Float on top of stack")
@@ -196,18 +186,7 @@ impl Instruction for F2L {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
-				let x = value.get();
-				if x.is_nan() {
-					execution_context.stack.push(Types::Long(Long::from_value(0)));
-				} else if !x.is_infinite() {
-					execution_context.stack.push(Types::Long(Long::from_value(x.trunc() as i64)));
-				} else if (x.is_finite() && x >= i64::MAX as f32) || (x.is_infinite() && x > 0.0) {
-					execution_context.stack.push(Types::Long(Long::from_value(i64::MAX)));
-				} else if (x.is_finite() && x <= -i64::MAX as f32) || (x.is_infinite() && x < 0.0) {
-					execution_context.stack.push(Types::Long(Long::from_value(-i64::MAX)));
-				} else {
-					panic!("Unexpected float value, don't know how to convert to long")
-				}
+				execution_context.stack.push(Types::Long(f2l(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Float on top of stack")
@@ -231,7 +210,7 @@ impl Instruction for F2D {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
-				execution_context.stack.push(Types::Double(Double::from_value(value.get() as f64)));
+				execution_context.stack.push(Types::Double(f2d(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Float on top of stack")
@@ -255,18 +234,7 @@ impl Instruction for D2I {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
-				let x = value.get();
-				if x.is_nan() {
-					execution_context.stack.push(Types::Int(Int::from_value(0)));
-				} else if !x.is_infinite() {
-					execution_context.stack.push(Types::Int(Int::from_value(x.trunc() as i32)));
-				} else if (x.is_finite() && x >= i32::MAX as f64) || (x.is_infinite() && x > 0.0) {
-					execution_context.stack.push(Types::Int(Int::from_value(i32::MAX)));
-				} else if (x.is_finite() && x <= -i32::MAX as f64) || (x.is_infinite() && x < 0.0) {
-					execution_context.stack.push(Types::Int(Int::from_value(-i32::MAX)));
-				} else {
-					panic!("Unexpected double value, don't know how to convert to int")
-				}
+				execution_context.stack.push(Types::Int(d2i(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Double on top of stack")
@@ -290,18 +258,7 @@ impl Instruction for D2L {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
-				let x = value.get();
-				if x.is_nan() {
-					execution_context.stack.push(Types::Long(Long::from_value(0)));
-				} else if !x.is_infinite() {
-					execution_context.stack.push(Types::Long(Long::from_value(x.trunc() as i64)));
-				} else if (x.is_finite() && x >= i64::MAX as f64) || (x.is_infinite() && x > 0.0) {
-					execution_context.stack.push(Types::Long(Long::from_value(i64::MAX)));
-				} else if (x.is_finite() && x <= -i64::MAX as f64) || (x.is_infinite() && x < 0.0) {
-					execution_context.stack.push(Types::Long(Long::from_value(-i64::MAX)));
-				} else {
-					panic!("Unexpected double value, don't know how to convert to long")
-				}
+				execution_context.stack.push(Types::Long(d2l(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Double on top of stack")
@@ -325,16 +282,7 @@ impl Instruction for D2F {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
-				let x = value.get();
-				if x.is_nan() {
-					execution_context.stack.push(Types::Float(Float::from_value(f32::NAN)));
-				} else if x.is_finite() && x.abs() < f32::MIN as f64 {
-					execution_context.stack.push(Types::Float(Float::from_value(x.signum() as f32 * 0.0)));
-				} else if x.is_finite() && x.abs() > f32::MAX as f64 {
-					execution_context.stack.push(Types::Float(Float::from_value(x.signum() as f32 * f32::INFINITY)));
-				} else {
-					execution_context.stack.push(Types::Float(Float::from_value(value.get() as f32)));
-				}
+				execution_context.stack.push(Types::Float(d2f(value)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Double on top of stack")
@@ -358,7 +306,7 @@ impl Instruction for I2B {
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
-				execution_context.stack.push(Types::Int(Int::from_value(((value.get() & 0xFF) as i8) as i32)));
+				execution_context.stack.push(Types::Int(i2b(value).to_int()));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int on top of stack")
@@ -383,7 +331,7 @@ impl Instruction for I2C {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses zero extension in this case.
-				execution_context.stack.push(Types::Int(Int::from_value(((value.get() & 0xFFFF) as i16) as i32)));
+				execution_context.stack.push(Types::Int(i2c(value).to_int()));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int on top of stack")
@@ -408,7 +356,7 @@ impl Instruction for I2S {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses zero extension in this case.
-				execution_context.stack.push(Types::Int(Int::from_value(((value.get() & 0xFFFF) as i16) as i32)));
+				execution_context.stack.push(Types::Int(i2s(value).to_int()));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int on top of stack")
@@ -418,4 +366,117 @@ impl Instruction for I2S {
 	fn length(&self) -> U2 {
 		1
 	}
+}
+
+pub fn i2l(value: Int) -> Long {
+	Long::from_value(value.get() as i64)
+}
+
+pub fn i2f(value: Int) -> Float {
+	Float::from_value(value.get() as f32)
+}
+
+pub fn i2d(value: Int) -> Double {
+	Double::from_value(value.get() as f64)
+}
+
+pub fn l2i(value: Long) -> Int {
+	Int::from_value((value.get() & 0xFFFFFFFF) as i32)
+}
+
+pub fn l2f(value: Long) -> Float {
+	Float::from_value(value.get() as f32)
+}
+
+pub fn l2d(value: Long) -> Double {
+	Double::from_value(value.get() as f64)
+}
+
+pub fn f2i(value: Float) -> Int {
+	let x = value.get();
+	if x.is_nan() {
+		Int::from_value(0)
+	} else if !x.is_infinite() {
+		Int::from_value(x.trunc() as i32)
+	} else if (x.is_finite() && x >= i32::MAX as f32) || (x.is_infinite() && x > 0.0) {
+		Int::from_value(i32::MAX)
+	} else if (x.is_finite() && x <= -i32::MAX as f32) || (x.is_infinite() && x < 0.0) {
+		Int::from_value(-i32::MAX)
+	} else {
+		panic!("Unexpected float value, don't know how to convert to int")
+	}
+}
+
+pub fn f2l(value: Float) -> Long {
+	let x = value.get();
+	if x.is_nan() {
+		Long::from_value(0)
+	} else if !x.is_infinite() {
+		Long::from_value(x.trunc() as i64)
+	} else if (x.is_finite() && x >= i64::MAX as f32) || (x.is_infinite() && x > 0.0) {
+		Long::from_value(i64::MAX)
+	} else if (x.is_finite() && x <= -i64::MAX as f32) || (x.is_infinite() && x < 0.0) {
+		Long::from_value(-i64::MAX)
+	} else {
+		panic!("Unexpected float value, don't know how to convert to long")
+	}
+}
+
+pub fn f2d(value: Float) -> Double {
+	Double::from_value(value.get() as f64)
+}
+
+pub fn d2i(value: Double) -> Int {
+	let x = value.get();
+	if x.is_nan() {
+		Int::from_value(0)
+	} else if !x.is_infinite() {
+		Int::from_value(x.trunc() as i32)
+	} else if (x.is_finite() && x >= i32::MAX as f64) || (x.is_infinite() && x > 0.0) {
+		Int::from_value(i32::MAX)
+	} else if (x.is_finite() && x <= -i32::MAX as f64) || (x.is_infinite() && x < 0.0) {
+		Int::from_value(-i32::MAX)
+	} else {
+		panic!("Unexpected double value, don't know how to convert to int")
+	}
+}
+
+pub fn d2l(value: Double) -> Long {
+	let x = value.get();
+	if x.is_nan() {
+		Long::from_value(0)
+	} else if !x.is_infinite() {
+		Long::from_value(x.trunc() as i64)
+	} else if (x.is_finite() && x >= i64::MAX as f64) || (x.is_infinite() && x > 0.0) {
+		Long::from_value(i64::MAX)
+	} else if (x.is_finite() && x <= -i64::MAX as f64) || (x.is_infinite() && x < 0.0) {
+		Long::from_value(-i64::MAX)
+	} else {
+		panic!("Unexpected double value, don't know how to convert to long")
+	}
+}
+
+pub fn d2f(value: Double) -> Float {
+	let x = value.get();
+	if x.is_nan() {
+		Float::from_value(f32::NAN)
+	} else if x.is_finite() && x.abs() < f32::MIN as f64 {
+		Float::from_value(x.signum() as f32 * 0.0)
+	} else if x.is_finite() && x.abs() > f32::MAX as f64 {
+		Float::from_value(x.signum() as f32 * f32::INFINITY)
+	} else {
+		Float::from_value(value.get() as f32)
+	}
+}
+
+pub fn i2b(value: Int) -> Byte {
+	Byte::from_value((value.get() & 0xFF) as i8)
+}
+
+pub fn i2c(value: Int) -> Char {
+	Char::from_value((value.get() & 0xFFFF) as u16)
+}
+
+pub fn i2s(value: Int) -> Short {
+	Short::from_value((value.get() & 0xFFFF) as i16)
 }

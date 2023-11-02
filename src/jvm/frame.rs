@@ -27,12 +27,11 @@ impl Frame {
 		}
 	}
 
-	pub fn get_return_value(&self) -> &ReturnTypes {
-		&self.return_value
-	}
-
-	pub fn set_return_from_called_method(&mut self, return_value: ReturnTypes) {
-		self.return_value = return_value;
+	pub fn assert_matches_return_type(&self, return_value: &Types) {
+		match &self.return_value {
+			ReturnTypes::Void => panic!("Expected void return type"),
+			ReturnTypes::Type(t) => t.assert_matches_type(return_value),
+		}
 	}
 }
 
