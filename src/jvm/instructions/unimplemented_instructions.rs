@@ -195,28 +195,6 @@ impl Instruction for WIDE {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct MULTIANEWARRAY {}
-impl Instruction for MULTIANEWARRAY {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::MULTIANEWARRAY));
-		todo!("Implement");
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		1
-	}
-
-	fn to_string(&self) -> String {
-		unimplemented!("MULTIANEWARRAY")
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct IFNULL {
 	branchbyte1: U1,
 	branchbyte2: U1,

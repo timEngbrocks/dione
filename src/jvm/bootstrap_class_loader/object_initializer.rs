@@ -110,7 +110,7 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 		let descriptor = resolve_constant!(ConstantPoolInfoType::Utf8, method.descriptor_index, &class_file.constant_pool).to_string();
 		let access_flags = method.access_flags;
 		
-		if access_flags & MethodAccesFlags::Native as u16 != 0 {
+		if access_flags & MethodAccesFlags::Native as u16 != 0 || access_flags & MethodAccesFlags::Abstract as u16 != 0 {
 			methods.insert(format!("{}{}", name.clone(), descriptor.clone()), Method::new(
 				name,
 				descriptor,

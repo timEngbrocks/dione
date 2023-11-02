@@ -7,3 +7,4 @@ pub mod invokestatic;
 pub mod athrow;
 pub mod newarray;
 pub mod anewarray;
+pub mod multianewarray;

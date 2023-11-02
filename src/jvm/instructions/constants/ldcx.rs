@@ -1,4 +1,4 @@
-use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::{RuntimeConstants, numeric_constant::{NumericConstant, NumericConstantKind}}, types::Types}, class_loader::parser::{Parser, U2, U1}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::{RuntimeConstants, numeric_constant::{NumericConstant, NumericConstantKind}}, types::Types, object_manager::ObjectManager}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -119,9 +119,9 @@ fn ldc_impl(execution_context: &mut Frame, index: u16) {
 			// TODO: Push reference to the above instance
 			unimplemented!("LDC::execute: String");
 		},
-		RuntimeConstants::SymRefClassOrInterface(_) => {
-			// TODO: Resolve named Class/Interface and push reference to it
-			unimplemented!("LDC::execute: Class");
+		RuntimeConstants::SymRefClassOrInterface(class_ref) => {
+			let reference = ObjectManager::instantiate(&class_ref.name);
+			execution_context.stack.push(Types::Reference(reference));
 		},
 		// TODO: method type, method handle, dynamically computed constant
 		_ => {
