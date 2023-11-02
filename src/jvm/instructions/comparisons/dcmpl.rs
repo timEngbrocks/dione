@@ -10,6 +10,7 @@ impl Instruction for DCMPL {
 		DCMPL {}
 	}
 
+	#[allow(clippy::if_same_then_else)]
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value2) => {

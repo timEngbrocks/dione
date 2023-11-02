@@ -81,6 +81,7 @@ pub struct InstructionStream {
     exception_handler_table: ExceptionHandlerTable,
 }
 
+#[allow(clippy::should_implement_trait)]
 impl InstructionStream {
     pub fn new_native() -> InstructionStream {
         InstructionStream {

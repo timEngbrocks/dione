@@ -4,7 +4,6 @@ use crate::jvm::types::{Value, reference::Reference, object::Object, array::{Pri
 
 use super::allocator::JVMAllocator;
 
-#[derive(Clone)]
 pub enum ReferencePtr {
 	Null,
 	Class(ClassPtr),
@@ -18,8 +17,8 @@ pub enum ArrayPtr {
 	Reference(ReferenceArrayPtr),
 }
 
-impl ReferencePtr {
-	pub fn clone(&self) -> ReferencePtr {
+impl Clone for ReferencePtr {
+	fn clone(&self) -> ReferencePtr {
 		match self {
 			ReferencePtr::Null => ReferencePtr::Null,
 			ReferencePtr::Class(value) => ReferencePtr::Class(Rc::clone(value)),

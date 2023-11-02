@@ -45,10 +45,7 @@ impl ObjectManager {
 		if name.starts_with('[') {
 			return false;
 		}
-		match ObjectManager::get(name).fields.capacity() {
-			0 => false,
-			_ => true,
-		}
+		!matches!(ObjectManager::get(name).fields.capacity(), 0)
 	}
 
 	pub fn is_array_class(name: &str) -> bool {
@@ -62,15 +59,12 @@ impl ObjectManager {
 		if name.starts_with('[') {
 			return false;
 		}
-		match ObjectManager::get(name).fields.capacity() {
-			0 => true,
-			_ => false,
-		}
+		matches!(ObjectManager::get(name).fields.capacity(), 0)
 	}
 
 	fn it() -> &'static mut ObjectManager {
 		unsafe {
-			if let Some(_) = INSTANCE {
+			if INSTANCE.is_some() {
 				INSTANCE.as_mut().unwrap()
 			} else {
 				panic!("ObjectManager has not been initialized")

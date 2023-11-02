@@ -10,6 +10,7 @@ impl Instruction for LCMP {
 		LCMP {}
 	}
 
+	#[allow(clippy::if_same_then_else)]
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value2) => {
@@ -17,12 +18,10 @@ impl Instruction for LCMP {
 					Types::Long(value1) => {
 						let value1 = value1.get();
 						let value2 = value2.get();
-						let result = if value1 > value2 {
-							1
-						} else if value1 == value2 {
-							0
-						} else {
-							-1
+						let result = match value1.cmp(&value2) {
+							std::cmp::Ordering::Greater => 1,
+							std::cmp::Ordering::Equal => 0,
+							std::cmp::Ordering::Less => -1,
 						};
 						execution_context.stack.push(Types::Int(Int::from_value(result)));
 						InstructionResult::empty()

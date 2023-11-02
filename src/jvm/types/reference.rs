@@ -51,30 +51,18 @@ impl Value for Reference {
 
 impl Reference {
 	pub fn is_null(&self) -> bool {
-		match self.reference {
-			ReferencePtr::Null => true,
-			_ => false,
-		}
+		matches!(self.reference, ReferencePtr::Null)
 	}
 
 	pub fn is_class(&self) -> bool {
-		match self.reference {
-			ReferencePtr::Class(_) => true,
-			_ => false,
-		}
+		matches!(self.reference, ReferencePtr::Class(_))
 	}
 
 	pub fn is_array(&self) -> bool {
-		match self.reference {
-			ReferencePtr::Array(_) => true,
-			_ => false,
-		}
+		matches!(self.reference, ReferencePtr::Array(_))
 	}
 
 	pub fn is_interface(&self) -> bool {
-		match self.reference {
-			ReferencePtr::Interface(_) => true,
-			_ => false,
-		}
+		matches!(self.reference, ReferencePtr::Interface(_))
 	}
 }

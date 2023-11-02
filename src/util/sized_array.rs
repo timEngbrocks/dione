@@ -99,4 +99,8 @@ where T: Width
 	pub fn len(&self) -> U2 {
 		self.size
 	}
+
+	pub fn is_empty(&self) -> bool {
+		self.size == 0
+	}
 }

@@ -77,13 +77,6 @@ impl RuntimeConstantPool {
 		}
 	}
 
-	pub fn clone(&self) -> RuntimeConstantPool {
-		RuntimeConstantPool {
-			constants: self.constants.clone(),
-			length: self.length,
-		}
-	}
-
 	pub fn get(&self, index: u16) -> &RuntimeConstants {
 		match self.constants.get(&index) {
 			Some(constant) => constant,
@@ -93,5 +86,14 @@ impl RuntimeConstantPool {
 
 	pub fn len(&self) -> u16 {
 		self.length
+	}
+}
+
+impl Clone for RuntimeConstantPool {
+	fn clone(&self) -> RuntimeConstantPool {
+		RuntimeConstantPool {
+			constants: self.constants.clone(),
+			length: self.length,
+		}
 	}
 }

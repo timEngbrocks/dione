@@ -59,8 +59,8 @@ impl Instruction for INVOKESTATIC {
 		}
 
 		let mut local_variables = SizedArray::<Types>::new(method.max_locals);
-		for i in 0..arg_types.len() {
-			local_variables.set(i as u16, arg_types[i].clone());
+		for (index, arg) in arg_types.iter().enumerate() {
+			local_variables.set(index as u16, arg.clone());
 		}
 		let stack = Stack::<Types>::new(method.max_stack);
 		let frame = Frame::new(

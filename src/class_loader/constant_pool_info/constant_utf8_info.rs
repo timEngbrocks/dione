@@ -9,6 +9,7 @@ pub struct ConstantUtf8Info {
 	pub bytes: Vec<U1>,
 }
 
+#[allow(clippy::inherent_to_string)]
 impl ConstantUtf8Info {
 	pub fn to_string(&self) -> String {
 		match String::from_utf8(self.bytes.clone()) {

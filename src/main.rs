@@ -6,6 +6,8 @@
 #![feature(let_chains)]
 #![feature(if_let_guard)]
 
+#![allow(clippy::len_without_is_empty, clippy::too_many_arguments, clippy::len_zero, clippy::cast_enum_constructor, clippy::fn_to_numeric_cast_with_truncation)]
+
 use getopts::Occur;
 use args::{ArgsError, Args};
 

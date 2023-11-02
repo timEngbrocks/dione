@@ -42,6 +42,10 @@ where T: Width
 		self.elements
 	}
 
+	pub fn is_empty(&self) -> bool {
+		self.elements == 0
+	}
+
 	pub fn max_size(&self) -> U2 {
 		self.size
 	}

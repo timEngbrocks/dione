@@ -79,29 +79,13 @@ pub fn parse_field_descriptor(descriptor: &str) -> Option<Types> {
 }
 
 pub fn field_descriptor_is_primitive(descriptor: &str) -> bool {
-	match descriptor {
-		"B" => true,
-		"C" => true,
-		"D" => true,
-		"F" => true,
-		"I" => true,
-		"J" => true,
-		"S" => true,
-		"Z" => true,
-		_ => false,
-	}
+	matches!(descriptor, "B" | "C" | "D" | "F" | "I" | "J" | "S" | "Z")
 }
 
 pub fn field_descriptor_is_object(descriptor: &str) -> bool {
-	match descriptor {
-		descriptor if descriptor.starts_with('L') => true,
-		_ => false,
-	}
+	matches!(descriptor, descriptor if descriptor.starts_with('L'))
 }
 
 pub fn field_descriptor_is_array(descriptor: &str) -> bool {
-	match descriptor {
-		descriptor if descriptor.starts_with('[') => true,
-		_ => false,
-	}
+	matches!(descriptor, descriptor if descriptor.starts_with('['))
 }

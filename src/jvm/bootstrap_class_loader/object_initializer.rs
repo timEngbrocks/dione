@@ -122,10 +122,7 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 			));
 		} else {
 			let attr_code = match method.attributes.iter().find(|attribute| {
-				match attribute {
-					AttributeInfo::Code { .. } => true,
-					_ => false,
-				}
+				matches!(attribute, AttributeInfo::Code(_))
 			}) {
 				Some(AttributeInfo::Code(attr_code)) => attr_code,
 				_ => panic!("Method `{}` does not have a Code attribute!", name),

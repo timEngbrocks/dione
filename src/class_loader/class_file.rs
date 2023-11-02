@@ -73,14 +73,11 @@ impl ClassFile {
         let constant_pool_count = parser.consume_u2();
         let mut constants: Vec<ConstantPoolInfoType> = Vec::with_capacity((constant_pool_count - 1) as usize);
         for _ in 0..(constant_pool_count - 1) {
-            match constants.last() {
-                Some(c) => {
-                    if c.get_tag() == &5 || c.get_tag() == &6 {
-                        constants.push(ConstantPoolInfoType::EmptyItem(ConstantEmptyItem::new(&mut parser)));
-                        continue;
-                    }
-                },
-                None => {},
+            if let Some(c) = constants.last() {
+                if c.get_tag() == &5 || c.get_tag() == &6 {
+                    constants.push(ConstantPoolInfoType::EmptyItem(ConstantEmptyItem::new(&mut parser)));
+                    continue;
+                }
             }
             constants.push(ConstantPoolInfoType::new(&mut parser));
         }

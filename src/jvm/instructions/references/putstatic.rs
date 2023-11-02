@@ -46,9 +46,8 @@ impl Instruction for PUTSTATIC {
 		if field_descriptor_is_object(&field_ref.descriptor) {
 			match &value {
 				Types::Reference(reference) => {
-					match reference.get() {
-						ReferencePtr::Array(_) => panic!("Expected ReferencePtr::Class/Interface/Null"),
-						_ => (),
+					if let ReferencePtr::Array(_) = reference.get() {
+						panic!("Expected ReferencePtr::Class/Interface/Null");
 					}
 				},
 				_ => panic!("Expected Reference"),
