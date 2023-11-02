@@ -59,6 +59,7 @@ impl Instruction for INVOKESTATIC {
 			local_variables,
 			stack,
 			&object.class_file,
+			object.name.clone(),
 			method.name.clone(),
 			return_type,
 		);

@@ -55,7 +55,7 @@ impl Interpreter {
 				break;
 			}
 			let instruction = execution_context.instruction_stream.next();
-			trace!("{:?}", instruction);
+			trace!("{}.{} -> {:?}", execution_context.frame.object_name ,execution_context.frame.method_name, instruction);
 			let result = instruction.execute(&mut execution_context.frame);
 			global_exception = result.exception;
 			if let Some(new_execution_context) = result.call {
@@ -101,6 +101,7 @@ impl Interpreter {
 				SizedArray::<Types>::new(method.max_locals),
 				Stack::<Types>::new(method.max_stack),
 				&object.class_file,
+				object.name.clone(),
 				method.name.clone(),
 				return_type,
 			);

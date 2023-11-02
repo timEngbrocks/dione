@@ -56,6 +56,7 @@ impl Instruction for INVOKEVIRTUAL {
 			local_variables,
 			stack,
 			&object.class_file,
+			object.name.clone(),
 			method.name.clone(),
 			return_type,
 		);
