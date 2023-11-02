@@ -1,12 +1,18 @@
 use crate::class_loader::parser::U2;
 
-use super::{Value, IntegralTypes};
+use super::{Value, IntegralTypes, int::Int};
 
 pub struct Byte {
 	value: i8,
 }
 
 impl IntegralTypes for Byte {}
+
+impl Byte {
+    pub fn to_int(&self) -> Int {
+        Int::from_value(self.value as i32)
+    }
+}
 
 impl Value for Byte {
     type Type = i8;

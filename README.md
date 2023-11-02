@@ -44,8 +44,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 126/205 Instructions</label>
-<progress id="status" value="126" max="205"></progress>
+<label for="status">Status: Finished 132/205 Instructions</label>
+<progress id="status" value="132" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -221,12 +221,12 @@ latest GNU nightly toolchain from Rust.
 | RET | not implemented |
 | TABLESWITCH | not implemented |
 | LOOKUPSWITCH | not implemented |
-| IRETURN | not implemented |
-| LRETURN | not implemented |
-| FRETURN | not implemented |
-| DRETURN | not implemented |
-| ARETURN | not implemented |
-| RETURN | not implemented |
+| <span style="color:green">IRETURN</span> | implemented |
+| <span style="color:green">LRETURN</span> | implemented |
+| <span style="color:green">FRETURN</span> | implemented |
+| <span style="color:green">DRETURN</span> | implemented |
+| <span style="color:green">ARETURN</span> | implemented |
+| <span style="color:green">RETURN</span> | implemented |
 | GETSTATIC | not implemented |
 | <span style="color:green">PUTSTATIC</span> | implemented |
 | GETFIELD | not implemented |

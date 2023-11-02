@@ -1,9 +1,15 @@
 use crate::class_loader::parser::U2;
 
-use super::{Value, IntegralTypes};
+use super::{Value, IntegralTypes, int::Int};
 
 pub struct Short {
 	value: i16,
+}
+
+impl Short {
+    pub fn to_int(&self) -> Int {
+        Int::from_value(self.value as i32)
+    }
 }
 
 impl IntegralTypes for Short {}

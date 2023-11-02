@@ -1,4 +1,4 @@
-use crate::{jvm::instructions::BranchKind, util::{sized_array::SizedArray, stack::Stack}};
+use crate::{jvm::instructions::{BranchKind, ReturnKind}, util::{sized_array::SizedArray, stack::Stack}};
 
 use super::{execution_context::ExecutionContext, instructions::Instruction, types::Types, frame::Frame, object_manager::ObjectManager, descriptor::parse_method_descriptor};
 
@@ -51,14 +51,13 @@ impl Interpreter {
 				if self.call_stack.is_empty() {
 					break;
 				}
-				let return_value = execution_context.frame.get_return_value().clone();
 				self.current = self.call_stack.pop();
-				self.current.as_mut().unwrap().frame.set_return_from_called_method(return_value);
 				break;
 			}
 			let instruction = execution_context.instruction_stream.next();
 			trace!("{:?}", instruction);
 			let result = instruction.execute(&mut execution_context.frame);
+			global_exception = result.exception;
 			if let Some(new_execution_context) = result.call {
 				self.call_stack.push(self.current.clone().unwrap());
 				self.current = Some(new_execution_context);
@@ -75,7 +74,19 @@ impl Interpreter {
 				}
 				break;
 			}
-			global_exception = result.exception;
+			if let Some(ret) = result.ret {
+				match ret {
+					ReturnKind::Value(value) => {
+						self.current.as_ref().unwrap().frame.assert_matches_return_type(&value);
+						self.current = self.call_stack.pop();
+						self.current.as_mut().unwrap().frame.stack.push(value);
+					},
+					ReturnKind::Void => {
+						self.current = self.call_stack.pop();
+					},
+				}
+				break;
+			}
 		}
 	}
 

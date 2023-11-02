@@ -1,4 +1,4 @@
-use crate::{jvm::{instructions::{Instruction, InstructionResult}, frame::Frame}, class_loader::parser::{Parser, U2}, opcodes};
+use crate::{jvm::{instructions::{Instruction, InstructionResult, conversions::x2y::{i2b, i2c, i2s}}, frame::Frame, types::{Types, ReturnTypes, boolean::{Boolean, BooleanValue}, Value}}, class_loader::parser::{Parser, U2}, opcodes};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -10,8 +10,26 @@ impl Instruction for IRETURN {
 		IRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("IRETURN::execute")
+	// TODO: Monitor update
+	// TODO: Exception handling
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+		match execution_context.stack.pop() {
+			Types::Int(value) => {
+				let return_value = match &execution_context.return_value {
+					ReturnTypes::Type(t) => match t {
+						Types::Byte(_) => Types::Byte(i2b(value)),
+						Types::Char(_) => Types::Char(i2c(value)),
+						Types::Short(_) => Types::Short(i2s(value)),
+						Types::Boolean(_) => Types::Boolean(Boolean::from_value(BooleanValue::from_value(value.get() & 1))),
+						Types::Int(_) => Types::Int(value),
+						_ => panic!("Expected Int return type"),
+					},
+					ReturnTypes::Void => panic!("Expected Int return type"),
+				};
+				InstructionResult::return_value(return_value)
+			},
+			_ => panic!("Expected Int"),
+		}
 	}
 
 	fn length(&self) -> U2 {
@@ -28,8 +46,13 @@ impl Instruction for LRETURN {
 		LRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("LRETURN::execute")
+	// TODO: Monitor update
+	// TODO: Exception handling
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+		match execution_context.stack.pop() {
+			Types::Long(value) => InstructionResult::return_value(Types::Long(value)),
+			_ => panic!("Expected Long"),
+		}
 	}
 
 	fn length(&self) -> U2 {
@@ -46,8 +69,13 @@ impl Instruction for FRETURN {
 		FRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("FRETURN::execute")
+	// TODO: Monitor update
+	// TODO: Exception handling
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+		match execution_context.stack.pop() {
+			Types::Float(value) => InstructionResult::return_value(Types::Float(value)),
+			_ => panic!("Expected Float"),
+		}
 	}
 
 	fn length(&self) -> U2 {
@@ -64,8 +92,13 @@ impl Instruction for DRETURN {
 		DRETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("DRETURN::execute")
+	// TODO: Monitor update
+	// TODO: Exception handling
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+		match execution_context.stack.pop() {
+			Types::Double(value) => InstructionResult::return_value(Types::Double(value)),
+			_ => panic!("Expected Double"),
+		}
 	}
 
 	fn length(&self) -> U2 {
@@ -82,8 +115,14 @@ impl Instruction for ARETURN {
 		ARETURN {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("ARETURN::execute")
+	// TODO: Monitor update
+	// TODO: Exception handling
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+		match execution_context.stack.pop() {
+			// FIXME: Check that the reference on the stack and the return type are assignment compatible
+			Types::Reference(value) => InstructionResult::return_value(Types::Reference(value)),
+			_ => panic!("Expected Reference"),
+		}
 	}
 
 	fn length(&self) -> U2 {
@@ -100,8 +139,10 @@ impl Instruction for RETURN {
 		RETURN {}
 	}
 
+	// TODO: Monitor update
+	// TODO: Exception handling
 	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("RETURN::execute")
+		InstructionResult::return_void()
 	}
 
 	fn length(&self) -> U2 {
