@@ -13,6 +13,7 @@ pub mod interpreter;
 pub mod execution_context;
 pub mod descriptor;
 pub mod exception_handler;
+pub mod native;
 
 static mut INSTANCE: Option<JVM> = None;
 
