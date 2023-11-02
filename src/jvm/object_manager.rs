@@ -105,7 +105,10 @@ impl ObjectManager {
 					}
 				}
 			},
-			false => panic!("Object not found: {}", name),
+			false => {
+				self.load_impl(name);
+				self.get_impl(name)
+			}
 		}
 	}
 

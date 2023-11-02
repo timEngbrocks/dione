@@ -28,6 +28,7 @@ impl Instruction for ANEWARRAY {
 			RuntimeConstants::SymRefClassOrInterface(value) => value,
 			_ => panic!("Expected SymRefClassOrInterface"),
 		};
+		
 		let array = match class_ref.clone() {
 			class_ref if ObjectManager::is_class(&class_ref.name) => {
 				ReferenceArray::new(ReferenceArrayKind::Class(class_ref, Reference::new()), count)
@@ -40,6 +41,7 @@ impl Instruction for ANEWARRAY {
 			},
 			_ => panic!("Invalid class reference"),
 		};
+
 		let reference = Heap::allocate_reference_array(array);
 		execution_context.stack.push(Types::Reference(reference));
 		InstructionResult::empty()

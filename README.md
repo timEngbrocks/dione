@@ -20,12 +20,15 @@ latest GNU nightly toolchain from Rust.
 
 ## Crates used
 
+- anyhow: Needed by Logging
 - args: CLI argument parsing
-- getopts: CLI argument parsing
 - bitutils: i32 sign extension
+- getopts: CLI argument parsing
 - itertools: Join Vec to String
+- libc: malloc/free
+- log: Logging
+- log4rs: Logging
 - nom: parsing of bit streams
-- spin: Mutex for Heap implementation
 
 ## Useful Links
 
