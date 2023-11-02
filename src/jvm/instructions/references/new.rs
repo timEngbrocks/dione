@@ -1,4 +1,4 @@
-use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}}, class_loader::parser::{Parser, U2, U1}, opcodes};
+use crate::{jvm::{frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstants, object_manager::ObjectManager, types::Types}, class_loader::parser::{Parser, U2, U1}, opcodes};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -18,11 +18,18 @@ impl Instruction for NEW {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!("NEW::execute")
+	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+		let index = ((self.indexbyte1 as u16) << 8) | (self.indexbyte2 as u16);
+		let class_ref = match execution_context.runtime_constant_pool.get(index) {
+			RuntimeConstants::SymRefClassOrInterface(class) => class,
+			_ => panic!("Expected SymRefClassOrInterface"),
+		};
+		let reference = ObjectManager::instantiate(&class_ref.name);
+		execution_context.stack.push(Types::Reference(reference));
+		InstructionResult::empty()
 	}
 
 	fn length(&self) -> U2 {
-		1
+		3
 	}
 }
