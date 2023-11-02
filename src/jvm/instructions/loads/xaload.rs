@@ -17,6 +17,10 @@ impl Instruction for IALOAD {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iaload")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -34,6 +38,10 @@ impl Instruction for LALOAD {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("laload")
 	}
 }
 #[derive(Clone)]
@@ -53,6 +61,10 @@ impl Instruction for FALOAD {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("faload")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -70,6 +82,10 @@ impl Instruction for DALOAD {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("daload")
 	}
 }
 #[derive(Clone)]
@@ -89,6 +105,10 @@ impl Instruction for AALOAD {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("aaload")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -106,6 +126,10 @@ impl Instruction for BALOAD {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("baload")
 	}
 }
 #[derive(Clone)]
@@ -125,6 +149,10 @@ impl Instruction for CALOAD {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("caload")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -142,5 +170,9 @@ impl Instruction for SALOAD {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("saload")
 	}
 }

@@ -19,6 +19,10 @@ impl Instruction for ICONST_M1 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_m1")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -39,6 +43,10 @@ impl Instruction for ICONST_0 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_0")
 	}
 }
 #[derive(Clone)]
@@ -61,6 +69,10 @@ impl Instruction for ICONST_1 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_1")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -81,6 +93,10 @@ impl Instruction for ICONST_2 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_2")
 	}
 }
 #[derive(Clone)]
@@ -103,6 +119,10 @@ impl Instruction for ICONST_3 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_3")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -124,6 +144,10 @@ impl Instruction for ICONST_4 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_4")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -144,5 +168,9 @@ impl Instruction for ICONST_5 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("iconst_5")
 	}
 }

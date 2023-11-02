@@ -28,6 +28,10 @@ impl Instruction for IOR {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("ior")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -56,5 +60,9 @@ impl Instruction for LOR {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lor")
 	}
 }

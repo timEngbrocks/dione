@@ -19,6 +19,10 @@ impl Instruction for LCONST_0 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("lconst_0")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -38,5 +42,9 @@ impl Instruction for LCONST_1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lconst_1")
 	}
 }

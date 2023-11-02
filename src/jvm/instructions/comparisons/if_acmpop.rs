@@ -25,6 +25,10 @@ impl Instruction for IF_ACMPEQ {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("if_acmpeq: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -50,5 +54,9 @@ impl Instruction for IF_ACMPNE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("if_acmpne: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }

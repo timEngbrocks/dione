@@ -23,6 +23,10 @@ impl Instruction for INEG {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("ineg")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -46,6 +50,10 @@ impl Instruction for LNEG {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lneg")
 	}
 }
 #[derive(Clone)]
@@ -71,6 +79,10 @@ impl Instruction for FNEG {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fneg")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -94,5 +106,9 @@ impl Instruction for DNEG {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dneg")
 	}
 }

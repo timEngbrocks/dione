@@ -18,4 +18,8 @@ impl Instruction for NOP {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("nop")
+	}
 }

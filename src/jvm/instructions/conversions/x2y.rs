@@ -24,6 +24,10 @@ impl Instruction for I2L {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("i2l")
+	}
 }
 
 #[derive(Clone)]
@@ -50,6 +54,10 @@ impl Instruction for I2F {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("i2f")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -74,6 +82,10 @@ impl Instruction for I2D {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("i2d")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -97,6 +109,10 @@ impl Instruction for L2I {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("l2i")
 	}
 }
 #[derive(Clone)]
@@ -123,6 +139,10 @@ impl Instruction for L2F {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("l2f")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -148,6 +168,10 @@ impl Instruction for L2D {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("l2d")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -171,6 +195,10 @@ impl Instruction for F2I {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("f2i")
 	}
 }
 #[derive(Clone)]
@@ -196,6 +224,10 @@ impl Instruction for F2L {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("f2l")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -219,6 +251,10 @@ impl Instruction for F2D {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("f2d")
 	}
 }
 #[derive(Clone)]
@@ -244,6 +280,10 @@ impl Instruction for D2I {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("d2i")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -267,6 +307,10 @@ impl Instruction for D2L {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("d2l")
 	}
 }
 #[derive(Clone)]
@@ -292,6 +336,10 @@ impl Instruction for D2F {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("d2f")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -315,6 +363,10 @@ impl Instruction for I2B {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("i2b")
 	}
 }
 #[derive(Clone)]
@@ -341,6 +393,10 @@ impl Instruction for I2C {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("i2c")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -365,6 +421,10 @@ impl Instruction for I2S {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("i2s")
 	}
 }
 

@@ -39,4 +39,8 @@ impl Instruction for NEWARRAY {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("newarray {}", self.atype)
+	}
 }

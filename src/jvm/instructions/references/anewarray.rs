@@ -50,4 +50,8 @@ impl Instruction for ANEWARRAY {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("anewarray: {}, {}", self.indexbyte1, self.indexbyte2)
+	}
 }

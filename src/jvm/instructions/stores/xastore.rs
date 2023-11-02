@@ -17,6 +17,10 @@ impl Instruction for IASTORE {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iastore")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -34,6 +38,10 @@ impl Instruction for LASTORE {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lastore")
 	}
 }
 #[derive(Clone)]
@@ -53,6 +61,10 @@ impl Instruction for FASTORE {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fastore")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -70,6 +82,10 @@ impl Instruction for DASTORE {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dastore")
 	}
 }
 #[derive(Clone)]
@@ -89,6 +105,10 @@ impl Instruction for AASTORE {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("aastore")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -106,6 +126,10 @@ impl Instruction for BASTORE {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("bastore")
 	}
 }
 #[derive(Clone)]
@@ -125,6 +149,10 @@ impl Instruction for CASTORE {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("castore")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -142,5 +170,9 @@ impl Instruction for SASTORE {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("sastore")
 	}
 }

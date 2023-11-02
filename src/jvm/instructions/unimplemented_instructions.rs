@@ -19,6 +19,10 @@ impl Instruction for JSR {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("JSR")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -36,6 +40,10 @@ impl Instruction for RET {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("RET")
 	}
 }
 #[derive(Clone)]
@@ -97,6 +105,10 @@ impl Instruction for TABLESWITCH {
 	fn length(&self) -> U2 {
 		(1 + self.padding as u32 + 12 + 4 * (self.high - self.low + 1) as u32) as u16
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("TABLESWITCH")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -154,6 +166,10 @@ impl Instruction for LOOKUPSWITCH {
 	fn length(&self) -> U2 {
 		(1 + self.padding as u32 + 8 + 8 * std::cmp::max(self.npairs, 0) as u32) as u16
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("LOOKUPSWITCH")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -172,6 +188,10 @@ impl Instruction for WIDE {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("WIDE")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -189,6 +209,10 @@ impl Instruction for MULTIANEWARRAY {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("MULTIANEWARRAY")
 	}
 }
 #[derive(Clone)]
@@ -216,6 +240,10 @@ impl Instruction for IFNULL {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("IFNULL")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -242,6 +270,10 @@ impl Instruction for IFNONNULL {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("IFNONNULL")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -259,6 +291,10 @@ impl Instruction for GOTO_W {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("GOTO_W")
 	}
 }
 #[derive(Clone)]
@@ -278,6 +314,10 @@ impl Instruction for JSR_W {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("JSR_W")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -295,6 +335,10 @@ impl Instruction for BREAKPOINT {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("BREAKPOINT")
 	}
 }
 #[derive(Clone)]
@@ -314,6 +358,10 @@ impl Instruction for IMPDEP1 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("IMPDEP1")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -331,6 +379,10 @@ impl Instruction for IMPDEP2 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("IMPDEP2")
 	}
 }
 #[derive(Clone)]
@@ -358,6 +410,10 @@ impl Instruction for GETFIELD {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("GETFIELD")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -383,6 +439,10 @@ impl Instruction for PUTFIELD {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("PUTFIELD")
 	}
 }
 #[derive(Clone)]
@@ -415,6 +475,10 @@ impl Instruction for INVOKEINTERFACE {
 	fn length(&self) -> U2 {
 		5
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("INVOKEINTERFACE")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -445,6 +509,10 @@ impl Instruction for INVOKEDYNAMIC {
 	fn length(&self) -> U2 {
 		5
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("INVOKEDYNAMIC")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -462,6 +530,10 @@ impl Instruction for ARRAYLENGTH {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("ARRAYLENGTH")
 	}
 }
 #[derive(Clone)]
@@ -489,6 +561,10 @@ impl Instruction for CHECKCAST {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("CHECKCAST")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -515,6 +591,10 @@ impl Instruction for INSTANCEOF {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("INSTANCEOF")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -533,6 +613,10 @@ impl Instruction for MONITORENTER {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("MONITORENTER")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -550,5 +634,9 @@ impl Instruction for MONITOREXIT {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		unimplemented!("MONITOREXIT")
 	}
 }

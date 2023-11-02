@@ -25,6 +25,10 @@ impl Instruction for DUP {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("dup")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -52,6 +56,10 @@ impl Instruction for DUP_X1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dup_x1")
 	}
 }
 #[derive(Clone)]
@@ -93,6 +101,10 @@ impl Instruction for DUP_X2 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("dup_x2")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -129,6 +141,10 @@ impl Instruction for DUP2 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dup2")
 	}
 }
 #[derive(Clone)]
@@ -179,6 +195,10 @@ impl Instruction for DUP2_X1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dup2_x1")
 	}
 }
 #[derive(Clone)]
@@ -253,5 +273,9 @@ impl Instruction for DUP2_X2 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dup2_x2")
 	}
 }

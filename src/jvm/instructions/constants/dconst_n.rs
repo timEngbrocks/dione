@@ -19,6 +19,10 @@ impl Instruction for DCONST_0 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("dconst_0")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -38,5 +42,9 @@ impl Instruction for DCONST_1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dconst_1")
 	}
 }

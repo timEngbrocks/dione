@@ -42,6 +42,10 @@ impl Instruction for IF_ICMPEQ {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("if_icmpeq: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -84,6 +88,10 @@ impl Instruction for IF_ICMPNE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("if_icmpne: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }
 #[derive(Clone)]
@@ -128,6 +136,10 @@ impl Instruction for IF_ICMPLT {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("if_icmplt: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -170,6 +182,10 @@ impl Instruction for IF_ICMPGE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("if_icmpge: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }
 #[derive(Clone)]
@@ -214,6 +230,10 @@ impl Instruction for IF_ICMPGT {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("if_icmpgt: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -256,5 +276,9 @@ impl Instruction for IF_ICMPLE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("if_icmple: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }

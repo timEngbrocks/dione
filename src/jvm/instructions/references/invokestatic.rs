@@ -77,4 +77,8 @@ impl Instruction for INVOKESTATIC {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("invokestatic: {}, {}", self.indexbyte1, self.indexbyte2)
+	}
 }

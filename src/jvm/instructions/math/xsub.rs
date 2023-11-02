@@ -31,6 +31,10 @@ impl Instruction for ISUB {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("isub")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -62,6 +66,10 @@ impl Instruction for LSUB {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lsub")
 	}
 }
 #[derive(Clone)]
@@ -95,6 +103,10 @@ impl Instruction for FSUB {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fsub")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -126,5 +138,9 @@ impl Instruction for DSUB {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dsub")
 	}
 }

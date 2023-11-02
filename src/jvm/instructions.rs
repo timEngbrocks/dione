@@ -22,10 +22,7 @@ pub trait Instruction {
     fn new(parser: &mut Parser) -> Self where Self: Sized;
     fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult;
     fn length(&self) -> U2;
-    
-    fn to_string(&self) -> String {
-        format!("Unimplemented to_string for instruction of length: {:?}", self.length())
-    }
+    fn to_string(&self) -> String;
 }
 
 pub enum BranchKind {

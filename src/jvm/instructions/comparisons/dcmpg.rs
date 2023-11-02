@@ -39,4 +39,8 @@ impl Instruction for DCMPG {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("dcmpg")
+	}
 }

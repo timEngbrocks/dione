@@ -31,6 +31,10 @@ impl Instruction for IADD {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iadd")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -62,6 +66,10 @@ impl Instruction for LADD {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("ladd")
 	}
 }
 #[derive(Clone)]
@@ -95,6 +103,10 @@ impl Instruction for FADD {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fadd")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -126,5 +138,9 @@ impl Instruction for DADD {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dadd")
 	}
 }

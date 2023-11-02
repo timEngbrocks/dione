@@ -27,6 +27,10 @@ impl Instruction for ALOAD_0 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("aload_0")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -54,6 +58,10 @@ impl Instruction for ALOAD_1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("aload_1")
 	}
 }
 #[derive(Clone)]
@@ -83,6 +91,10 @@ impl Instruction for ALOAD_2 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("aload_2")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -110,5 +122,9 @@ impl Instruction for ALOAD_3 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("aload_3")
 	}
 }
