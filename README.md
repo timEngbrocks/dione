@@ -2,7 +2,7 @@
 
 ## Docs
 
-[Current documentation](./docs/doc/dione/index.html)
+[Current documentation](https://timengbrocks.github.io/dione/doc/dione/)
 
 ## Usage
 
