@@ -1,6 +1,6 @@
 use core::panic;
 
-use crate::{jvm::{types::Types, frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::{RuntimeConstants, sym_ref_method_of_class::SymRefMethodOfClass, sym_ref_method_of_interface::SymRefMethodOfInterface}, object_manager::ObjectManager, descriptor::parse_method_descriptor, execution_context::ExecutionContext}, class_loader::parser::{Parser, U2, U1}, opcodes, util::{sized_array::SizedArray, stack::Stack}};
+use crate::{jvm::{types::Types, frame::Frame, instructions::{Instruction, InstructionResult}, runtime_constant_pool::{RuntimeConstants, sym_ref_method_of_class::SymRefMethodOfClass, sym_ref_method_of_interface::SymRefMethodOfInterface}, object_manager::ObjectManager, descriptor::parse_method_descriptor, execution_context::ExecutionContext, native::native_call}, class_loader::parser::{Parser, U2, U1}, opcodes, util::{sized_array::SizedArray, stack::Stack}};
 
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -50,26 +50,26 @@ impl Instruction for INVOKESTATIC {
 
 		// FIXME: Initialize class if not already initialized
 
-		if method.is_synchronized() {
-			unimplemented!("INVOKESTATIC: synchronized")
-		}
-
-		if method.is_native() {
-			unimplemented!("INVOKESTATIC: native -> {}.{}{}", object.name, method.name, method.descriptor);
-		}
-
 		let mut local_variables = SizedArray::<Types>::new(method.max_locals);
 		for (index, arg) in arg_types.iter().enumerate() {
 			local_variables.set(index as u16, arg.clone());
 		}
 		let stack = Stack::<Types>::new(method.max_stack);
-		let frame = Frame::new(
+		let mut frame = Frame::new(
 			local_variables,
 			stack,
 			&object.class_file,
 			method.name.clone(),
 			return_type,
 		);
+
+		if method.is_synchronized() {
+			unimplemented!("INVOKESTATIC: synchronized")
+		}
+
+		if method.is_native() {
+			return native_call(&object.name, &method.name, &method.descriptor, &mut frame, object);
+		}
 		
 		InstructionResult::call(ExecutionContext::new(frame, method.instruction_stream.clone()))
 	}
