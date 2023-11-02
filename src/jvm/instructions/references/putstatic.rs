@@ -82,4 +82,8 @@ impl Instruction for PUTSTATIC {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("putstatic {} {}", self.indexbyte1, self.indexbyte2)
+	}
 }

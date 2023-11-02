@@ -74,4 +74,8 @@ impl Instruction for INVOKESPECIAL {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("invokespecial: {}, {}", self.indexbyte1, self.indexbyte2)
+	}
 }

@@ -25,6 +25,10 @@ impl Instruction for FSTORE_0 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fstore_0")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -50,6 +54,10 @@ impl Instruction for FSTORE_1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("fstore_1")
 	}
 }
 #[derive(Clone)]
@@ -77,6 +85,10 @@ impl Instruction for FSTORE_2 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fstore_2")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -102,5 +114,9 @@ impl Instruction for FSTORE_3 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("fstore_3")
 	}
 }

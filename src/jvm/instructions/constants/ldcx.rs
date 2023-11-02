@@ -23,6 +23,10 @@ impl Instruction for LDC {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("ldc: {}", self.index)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -50,6 +54,10 @@ impl Instruction for LDC_W {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("ldc_w: {}, {}", self.indexbyte1, self.indexbyte2)
 	}
 }
 #[derive(Clone)]
@@ -90,6 +98,10 @@ impl Instruction for LDC2_W {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("ldc2_w: {}, {}", self.indexbyte1, self.indexbyte2)
 	}
 }
 

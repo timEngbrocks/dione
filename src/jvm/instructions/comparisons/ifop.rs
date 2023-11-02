@@ -35,6 +35,10 @@ impl Instruction for IFEQ {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("ifeq: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -70,6 +74,10 @@ impl Instruction for IFNE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("ifne: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }
 #[derive(Clone)]
@@ -107,6 +115,10 @@ impl Instruction for IFLT {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("iflt: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -142,6 +154,10 @@ impl Instruction for IFGE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("ifge: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }
 #[derive(Clone)]
@@ -179,6 +195,10 @@ impl Instruction for IFGT {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("ifgt: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -214,5 +234,9 @@ impl Instruction for IFLE {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("ifle: {}, {}", self.branchbyte1, self.branchbyte2)
 	}
 }

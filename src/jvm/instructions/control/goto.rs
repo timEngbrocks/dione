@@ -25,4 +25,8 @@ impl Instruction for GOTO {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("goto: {}, {}", self.branchbyte1, self.branchbyte2)
+	}
 }

@@ -29,6 +29,10 @@ impl Instruction for ISTORE {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("istore {}", self.index)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -58,6 +62,10 @@ impl Instruction for LSTORE {
 
 	fn length(&self) -> U2 {
 		2
+	}
+
+	fn to_string(&self) -> String {
+		format!("lstore {}", self.index)
 	}
 }
 #[derive(Clone)]
@@ -89,6 +97,10 @@ impl Instruction for FSTORE {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("fstore {}", self.index)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -118,6 +130,10 @@ impl Instruction for DSTORE {
 
 	fn length(&self) -> U2 {
 		2
+	}
+
+	fn to_string(&self) -> String {
+		format!("dstore {}", self.index)
 	}
 }
 #[derive(Clone)]
@@ -152,5 +168,9 @@ impl Instruction for ASTORE {
 
 	fn length(&self) -> U2 {
 		2
+	}
+
+	fn to_string(&self) -> String {
+		format!("astore {}", self.index)
 	}
 }

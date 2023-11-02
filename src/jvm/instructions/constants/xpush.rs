@@ -24,6 +24,10 @@ impl Instruction for BIPUSH {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("bipush {}", self.byte)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -52,5 +56,9 @@ impl Instruction for SIPUSH {
 
 	fn length(&self) -> U2 {
 		3
+	}
+
+	fn to_string(&self) -> String {
+		format!("sipush {}, {}", self.byte1, self.byte2)
 	}
 }

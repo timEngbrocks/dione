@@ -29,6 +29,10 @@ impl Instruction for ILOAD {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("iload {}", self.index)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -58,6 +62,10 @@ impl Instruction for LLOAD {
 
 	fn length(&self) -> U2 {
 		2
+	}
+
+	fn to_string(&self) -> String {
+		format!("lload {}", self.index)
 	}
 }
 #[derive(Clone)]
@@ -89,6 +97,10 @@ impl Instruction for FLOAD {
 	fn length(&self) -> U2 {
 		2
 	}
+
+	fn to_string(&self) -> String {
+		format!("fload {}", self.index)
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -118,6 +130,10 @@ impl Instruction for DLOAD {
 
 	fn length(&self) -> U2 {
 		2
+	}
+
+	fn to_string(&self) -> String {
+		format!("dload {}", self.index)
 	}
 }
 #[derive(Clone)]
@@ -151,5 +167,9 @@ impl Instruction for ALOAD {
 
 	fn length(&self) -> U2 {
 		2
+	}
+
+	fn to_string(&self) -> String {
+		format!("aload {}", self.index)
 	}
 }

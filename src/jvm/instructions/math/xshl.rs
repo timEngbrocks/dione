@@ -29,6 +29,10 @@ impl Instruction for ISHL {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("ishl")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -58,5 +62,9 @@ impl Instruction for LSHL {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lshl")
 	}
 }

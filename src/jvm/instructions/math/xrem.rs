@@ -31,6 +31,10 @@ impl Instruction for IREM {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("irem")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -62,6 +66,10 @@ impl Instruction for LREM {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lrem")
 	}
 }
 #[derive(Clone)]
@@ -95,6 +103,10 @@ impl Instruction for FREM {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("frem")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -126,5 +138,9 @@ impl Instruction for DREM {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("drem")
 	}
 }

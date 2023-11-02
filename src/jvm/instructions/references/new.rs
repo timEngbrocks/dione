@@ -32,4 +32,8 @@ impl Instruction for NEW {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("new: {}, {}", self.indexbyte1, self.indexbyte2)
+	}
 }

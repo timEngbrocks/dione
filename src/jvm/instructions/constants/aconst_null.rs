@@ -19,4 +19,8 @@ impl Instruction for ACONST_NULL {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("aconst_null")
+	}
 }

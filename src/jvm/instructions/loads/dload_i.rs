@@ -24,6 +24,10 @@ impl Instruction for DLOAD_0 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("dload_0")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -48,6 +52,10 @@ impl Instruction for DLOAD_1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dload_1")
 	}
 }
 #[derive(Clone)]
@@ -74,6 +82,10 @@ impl Instruction for DLOAD_2 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("dload_2")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -98,5 +110,9 @@ impl Instruction for DLOAD_3 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dload_3")
 	}
 }

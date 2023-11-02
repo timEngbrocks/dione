@@ -34,6 +34,10 @@ impl Instruction for IUSHR {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("iushr")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -68,5 +72,9 @@ impl Instruction for LUSHR {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lushr")
 	}
 }

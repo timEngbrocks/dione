@@ -29,6 +29,10 @@ impl Instruction for ASTORE_0 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("astore_0")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -58,6 +62,10 @@ impl Instruction for ASTORE_1 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("astore_1")
 	}
 }
 #[derive(Clone)]
@@ -89,6 +97,10 @@ impl Instruction for ASTORE_2 {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("astore_2")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -118,5 +130,9 @@ impl Instruction for ASTORE_3 {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("astore_3")
 	}
 }

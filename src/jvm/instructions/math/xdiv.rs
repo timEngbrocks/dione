@@ -31,6 +31,10 @@ impl Instruction for IDIV {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("idiv")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -62,6 +66,10 @@ impl Instruction for LDIV {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("ldiv")
 	}
 }
 #[derive(Clone)]
@@ -95,6 +103,10 @@ impl Instruction for FDIV {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fdiv")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -126,5 +138,9 @@ impl Instruction for DDIV {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("ddiv")
 	}
 }

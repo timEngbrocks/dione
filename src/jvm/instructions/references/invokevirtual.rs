@@ -78,4 +78,8 @@ impl Instruction for INVOKEVIRTUAL {
 	fn length(&self) -> U2 {
 		3
 	}
+
+	fn to_string(&self) -> String {
+		format!("invokevirtual: {}, {}", self.indexbyte1, self.indexbyte2)
+	}
 }

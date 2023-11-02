@@ -31,6 +31,10 @@ impl Instruction for IMUL {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("imul")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -62,6 +66,10 @@ impl Instruction for LMUL {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("lmul")
 	}
 }
 #[derive(Clone)]
@@ -95,6 +103,10 @@ impl Instruction for FMUL {
 	fn length(&self) -> U2 {
 		1
 	}
+
+	fn to_string(&self) -> String {
+		String::from("fmul")
+	}
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -126,5 +138,9 @@ impl Instruction for DMUL {
 
 	fn length(&self) -> U2 {
 		1
+	}
+
+	fn to_string(&self) -> String {
+		String::from("dmul")
 	}
 }
