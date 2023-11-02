@@ -19,7 +19,7 @@ impl Value for Short {
 
     fn from_value(value: i16) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
 
@@ -39,7 +39,7 @@ impl Value for Short {
 impl Clone for Short {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

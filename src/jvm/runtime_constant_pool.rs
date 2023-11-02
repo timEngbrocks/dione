@@ -52,27 +52,27 @@ impl RuntimeConstantPool {
 				Some(constant) => constant,
 				None => continue,
 			};
-			constants.insert(i as u16, constant);
+			constants.insert(i, constant);
 		}
 
 		RuntimeConstantPool {
 			constants,
-			length: class_file.constant_pool.len() as u16,
+			length: class_file.constant_pool.len(),
 		}
 	}
 
 	pub fn resolve(index: u16, class_file: &ClassFile) -> Option<RuntimeConstants> {
 		match class_file.constant_pool.get(index).get_tag() {
-			7 => Some(RuntimeConstants::SymRefClassOrInterface(SymRefClassOrInterface::resolve(index, &class_file))),
-			9 => Some(RuntimeConstants::SymRefFieldOfClassOrInterface(SymRefFieldOfClassOrInterface::resolve(index, &class_file))),
-			10 => Some(RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass::resolve(index, &class_file))),
-			11 => Some(RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface::resolve(index, &class_file))),
-			15 => Some(RuntimeConstants::SymRefMethodHandle(SymRefMethodHandle::resolve(index, &class_file))),
-			16 => Some(RuntimeConstants::SymRefMethodType(SymRefMethodType::resolve(index, &class_file))),
-			17 => Some(RuntimeConstants::SymRefDynamicallyComputedConstant(SymRefDynamicallyComputedConstant::resolve(index, &class_file))),
-			18 => Some(RuntimeConstants::SymRefDynamicallyComputedCallSite(SymRefDynamicallyComputedCallSite::resolve(index, &class_file))),
-			8 => Some(RuntimeConstants::StringConstant(StringConstant::resolve(index, &class_file))),
-			3 | 4 | 5 | 6 => Some(RuntimeConstants::NumericConstant(NumericConstant::resolve(index, &class_file))),
+			7 => Some(RuntimeConstants::SymRefClassOrInterface(SymRefClassOrInterface::resolve(index, class_file))),
+			9 => Some(RuntimeConstants::SymRefFieldOfClassOrInterface(SymRefFieldOfClassOrInterface::resolve(index, class_file))),
+			10 => Some(RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass::resolve(index, class_file))),
+			11 => Some(RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface::resolve(index, class_file))),
+			15 => Some(RuntimeConstants::SymRefMethodHandle(SymRefMethodHandle::resolve(index, class_file))),
+			16 => Some(RuntimeConstants::SymRefMethodType(SymRefMethodType::resolve(index, class_file))),
+			17 => Some(RuntimeConstants::SymRefDynamicallyComputedConstant(SymRefDynamicallyComputedConstant::resolve(index, class_file))),
+			18 => Some(RuntimeConstants::SymRefDynamicallyComputedCallSite(SymRefDynamicallyComputedCallSite::resolve(index, class_file))),
+			8 => Some(RuntimeConstants::StringConstant(StringConstant::resolve(index, class_file))),
+			3..=6 => Some(RuntimeConstants::NumericConstant(NumericConstant::resolve(index, class_file))),
 			_ => None,
 		}
 	}

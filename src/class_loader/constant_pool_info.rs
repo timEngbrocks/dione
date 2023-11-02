@@ -132,7 +132,7 @@ pub struct ConstantPool {
 
 impl fmt::Debug for ConstantPool {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		let tags: Vec<u8> = self.constants.iter().map::<u8, _>(|constant| constant.get_tag().clone()).collect();
+		let tags: Vec<u8> = self.constants.iter().map::<u8, _>(|constant| *constant.get_tag()).collect();
 		write!(f, "Constants: [{}]", itertools::join(&mut tags.iter(), ", "))
     }
 }

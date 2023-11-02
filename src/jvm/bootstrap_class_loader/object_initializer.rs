@@ -134,7 +134,7 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 			let mut code_parser = Parser::new(attr_code.code.clone());
 			let instruction_stream = InstructionStream::new(
 				&mut code_parser,
-				attr_code.code_length.clone(),
+				attr_code.code_length,
 				exception_handler_table,
 			);
 
@@ -142,8 +142,8 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 				name,
 				descriptor,
 				access_flags,
-				attr_code.max_locals.clone(),
-				attr_code.max_stack.clone(),
+				attr_code.max_locals,
+				attr_code.max_stack,
 				instruction_stream,
 				false,
 			));

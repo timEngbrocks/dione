@@ -39,8 +39,8 @@ fn main() {
 
 }
 
-const PROGRAM_DESC: &'static str = "A JVM written in Rust";
-const PROGRAM_NAME: &'static str = "dione";
+const PROGRAM_DESC: &str = "A JVM written in Rust";
+const PROGRAM_NAME: &str = "dione";
 
 fn parse(input: &Vec<String>) -> Result<Option<(String, String)>, ArgsError> {
 

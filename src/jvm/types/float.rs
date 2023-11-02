@@ -19,7 +19,7 @@ impl Value for Float {
 
     fn from_value(value: f32) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
 
@@ -39,7 +39,7 @@ impl Value for Float {
 impl Clone for Float {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

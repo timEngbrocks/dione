@@ -9,6 +9,12 @@ pub struct Interpreter {
 	current: Option<ExecutionContext>,
 }
 
+impl Default for Interpreter {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Interpreter {
 	pub fn new() -> Self {
 		Interpreter {

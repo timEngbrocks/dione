@@ -11,6 +11,12 @@ pub struct ExceptionHandlerTable {
 	exception_handler: Vec<ExceptionHandler>,
 }
 
+impl Default for ExceptionHandlerTable {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl ExceptionHandlerTable {
 	pub fn new() -> Self {
 		ExceptionHandlerTable {

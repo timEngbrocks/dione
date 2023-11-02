@@ -61,7 +61,7 @@ impl Value for Boolean {
 impl Clone for Boolean {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

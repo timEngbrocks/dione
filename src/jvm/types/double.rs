@@ -19,7 +19,7 @@ impl Value for Double {
 
     fn from_value(value: f64) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
 
@@ -40,7 +40,7 @@ impl Value for Double {
 impl Clone for Double {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

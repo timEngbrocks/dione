@@ -46,7 +46,7 @@ impl Instruction for LLOAD {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.local_variables.len() >= self.index as u16 + 1);
+		assert!(execution_context.local_variables.len() > self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::Long(value) => {
 				execution_context.stack.push(Types::Long(value.clone()));
@@ -106,7 +106,7 @@ impl Instruction for DLOAD {
 	}
 
 	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
-		assert!(execution_context.local_variables.len() >= self.index as u16 + 1);
+		assert!(execution_context.local_variables.len() > self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Double(value.clone()));

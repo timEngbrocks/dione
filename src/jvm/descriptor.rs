@@ -34,7 +34,7 @@ pub fn parse_method_descriptor(descriptor: &str) -> Option<(Vec<Types>, ReturnTy
 }
 
 fn get_next_type_from_descriptor(descriptor: &str, is_return_type: bool) -> (ReturnTypes, usize) {
-	match descriptor.chars().nth(0).unwrap() {
+	match descriptor.chars().next().unwrap() {
 		'B' => (ReturnTypes::Type(Types::Byte(Byte::new())), 1),
 		'C' => (ReturnTypes::Type(Types::Char(Char::new())), 1),
 		'D' => (ReturnTypes::Type(Types::Double(Double::new())), 1),
@@ -72,8 +72,8 @@ pub fn parse_field_descriptor(descriptor: &str) -> Option<Types> {
 		"J" => Some(Types::Long(Long::new())),
 		"S" => Some(Types::Short(Short::new())),
 		"Z" => Some(Types::Boolean(Boolean::new())),
-		descriptor if descriptor.chars().nth(0).unwrap() == 'L' => Some(Types::Reference(Reference::new())),
-		descriptor if descriptor.chars().nth(0).unwrap() == '[' => Some(Types::Reference(Reference::new())),
+		descriptor if descriptor.starts_with('L') => Some(Types::Reference(Reference::new())),
+		descriptor if descriptor.starts_with('[') => Some(Types::Reference(Reference::new())),
 		_ => None,
 	}
 }
@@ -94,14 +94,14 @@ pub fn field_descriptor_is_primitive(descriptor: &str) -> bool {
 
 pub fn field_descriptor_is_object(descriptor: &str) -> bool {
 	match descriptor {
-		descriptor if descriptor.chars().nth(0).unwrap() == 'L' => true,
+		descriptor if descriptor.starts_with('L') => true,
 		_ => false,
 	}
 }
 
 pub fn field_descriptor_is_array(descriptor: &str) -> bool {
 	match descriptor {
-		descriptor if descriptor.chars().nth(0).unwrap() == '[' => true,
+		descriptor if descriptor.starts_with('[') => true,
 		_ => false,
 	}
 }

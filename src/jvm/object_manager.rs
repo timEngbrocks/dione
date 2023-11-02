@@ -42,7 +42,7 @@ impl ObjectManager {
 	}
 
 	pub fn is_class(name: &str) -> bool {
-		if name.starts_with("[") {
+		if name.starts_with('[') {
 			return false;
 		}
 		match ObjectManager::get(name).fields.capacity() {
@@ -52,14 +52,14 @@ impl ObjectManager {
 	}
 
 	pub fn is_array_class(name: &str) -> bool {
-		if name.starts_with("[") {
+		if name.starts_with('[') {
 			return true;
 		}
 		false
 	}
 
 	pub fn is_interface(name: &str) -> bool {
-		if name.starts_with("[") {
+		if name.starts_with('[') {
 			return false;
 		}
 		match ObjectManager::get(name).fields.capacity() {
@@ -136,7 +136,7 @@ impl ObjectManager {
 					}
 					self.being_initialized.insert(name.to_string(), true);
 					let object = self.objects.get(name).unwrap();
-					if let Some(_) = object.get_method("<clinit>", "()V") {
+					if object.get_method("<clinit>", "()V").is_some() {
 						let mut interpreter = Interpreter::new();
 						interpreter.run(name, "<clinit>", "()V");	
 					}

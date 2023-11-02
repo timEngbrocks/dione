@@ -19,7 +19,7 @@ impl Value for Char {
 
     fn from_value(value: u16) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
 
@@ -39,7 +39,7 @@ impl Value for Char {
 impl Clone for Char {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

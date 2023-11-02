@@ -12,6 +12,12 @@ pub struct BootstrapClassLoader {
 	jdk_base_path: String,
 }
 
+impl Default for BootstrapClassLoader {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl BootstrapClassLoader {
 	pub fn new() -> Self {
 		let to_load = Queue::new(true);

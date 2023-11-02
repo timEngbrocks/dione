@@ -22,7 +22,7 @@ impl Instruction for IINC {
 		let constant = self.constant as i32;
 		match execution_context.local_variables.get(self.index as u16).clone() {
 			Types::Int(value) => {
-				execution_context.local_variables.set(self.index as u16, Types::Int(Int::from_value(value.get().clone() + constant)));
+				execution_context.local_variables.set(self.index as u16, Types::Int(Int::from_value(value.get() + constant)));
 				InstructionResult::empty()
 			},
 			_ => panic!("Expected Int"),

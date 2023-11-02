@@ -40,7 +40,7 @@ impl Value for Int {
 impl Clone for Int {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

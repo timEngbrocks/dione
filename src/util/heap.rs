@@ -58,7 +58,7 @@ impl Heap {
 
 	fn it() -> &'static Self {
 		unsafe {
-			if let Some(_) = INSTANCE {
+			if INSTANCE.is_some() {
 				INSTANCE.as_ref().unwrap()
 			} else {
 				INSTANCE = Some(Heap::new());

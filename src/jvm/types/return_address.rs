@@ -17,7 +17,7 @@ impl Value for ReturnAddress {
 
     fn from_value(value: usize) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
 
@@ -37,7 +37,7 @@ impl Value for ReturnAddress {
 impl Clone for ReturnAddress {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }

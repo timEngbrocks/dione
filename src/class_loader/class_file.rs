@@ -25,14 +25,12 @@ pub fn compare_class_file_version_to_global(major_version: u16, minor_version: u
         Ordering::Greater
     } else if major_version < global_major_version {
         Ordering::Less
+    } else if minor_version > global_minor_version {
+        Ordering::Greater
+    } else if minor_version < global_minor_version {
+        Ordering::Less
     } else {
-        if minor_version > global_minor_version {
-            Ordering::Greater
-        } else if minor_version < global_minor_version {
-            Ordering::Less
-        } else {
-            Ordering::Equal
-        }
+        Ordering::Equal
     }
 }
 
@@ -65,10 +63,10 @@ impl ClassFile {
 
         unsafe {
             if GLOBAL_CLASS_FILE_MAJOR_VERSION == 0xFF {
-                GLOBAL_CLASS_FILE_MAJOR_VERSION = major_version.clone();
+                GLOBAL_CLASS_FILE_MAJOR_VERSION = major_version;
             }
             if GLOBAL_CLASS_FILE_MINOR_VERSION == 0xFF {
-                GLOBAL_CLASS_FILE_MINOR_VERSION = minor_version.clone();
+                GLOBAL_CLASS_FILE_MINOR_VERSION = minor_version;
             }
         }
 

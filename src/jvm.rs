@@ -102,43 +102,43 @@ impl JVM {
 	}
 
 	fn initialize_java_lang_classes(&self) {
-		ObjectManager::initialize_object(&"java/lang/String");
-		ObjectManager::initialize_object(&"java/lang/System");
-		ObjectManager::initialize_object(&"java/lang/Class");
+		ObjectManager::initialize_object("java/lang/String");
+		ObjectManager::initialize_object("java/lang/System");
+		ObjectManager::initialize_object("java/lang/Class");
 
 		// FIXME: create initial thread group -> VMUniverse
-		ObjectManager::initialize_object(&"java/lang/ThreadGroup");
+		ObjectManager::initialize_object("java/lang/ThreadGroup");
 		// FIXME: create initial thread
-		ObjectManager::initialize_object(&"java/lang/Thread");
+		ObjectManager::initialize_object("java/lang/Thread");
 
-		ObjectManager::initialize_object(&"java/lang/Module");
+		ObjectManager::initialize_object("java/lang/Module");
 
 		// FIXME: set unsafe constants
-		ObjectManager::initialize_object(&"jdk/internal/misc/UnsafeConstants");
-		ObjectManager::initialize_object(&"java/lang/reflect/Method");
-		ObjectManager::initialize_object(&"java/lang/ref/Finalizer");
+		ObjectManager::initialize_object("jdk/internal/misc/UnsafeConstants");
+		ObjectManager::initialize_object("java/lang/reflect/Method");
+		ObjectManager::initialize_object("java/lang/ref/Finalizer");
 
 		// FIXME: System.initPhase1()
 
-		ObjectManager::initialize_object(&"java/lang/OutOfMemoryError");
-		ObjectManager::initialize_object(&"java/lang/NullPointerException");
-		ObjectManager::initialize_object(&"java/lang/ClassCastException");
-		ObjectManager::initialize_object(&"java/lang/ArrayStoreException");
-		ObjectManager::initialize_object(&"java/lang/ArithmeticException");
-		ObjectManager::initialize_object(&"java/lang/StackOverflowError");
-		ObjectManager::initialize_object(&"java/lang/IllegalMonitorStateException");
-		ObjectManager::initialize_object(&"java/lang/IllegalArgumentException");
+		ObjectManager::initialize_object("java/lang/OutOfMemoryError");
+		ObjectManager::initialize_object("java/lang/NullPointerException");
+		ObjectManager::initialize_object("java/lang/ClassCastException");
+		ObjectManager::initialize_object("java/lang/ArrayStoreException");
+		ObjectManager::initialize_object("java/lang/ArithmeticException");
+		ObjectManager::initialize_object("java/lang/StackOverflowError");
+		ObjectManager::initialize_object("java/lang/IllegalMonitorStateException");
+		ObjectManager::initialize_object("java/lang/IllegalArgumentException");
 	}
 
 	fn initialize_jsr292_classes(&self) {
-		ObjectManager::initialize_object(&"java/lang/invoke/MethodHandle");
-		ObjectManager::initialize_object(&"java/lang/invoke/ResolvedMethodName");
-		ObjectManager::initialize_object(&"java/lang/invoke/MemberName");
-		ObjectManager::initialize_object(&"java/lang/invoke/MethodHandleNatives");
+		ObjectManager::initialize_object("java/lang/invoke/MethodHandle");
+		ObjectManager::initialize_object("java/lang/invoke/ResolvedMethodName");
+		ObjectManager::initialize_object("java/lang/invoke/MemberName");
+		ObjectManager::initialize_object("java/lang/invoke/MethodHandleNatives");
 	}
 
 	fn call_post_vm_init_hook(&self) {
-		ObjectManager::initialize_object(&"jdk/internal/vm/PostVMInitHook");
+		ObjectManager::initialize_object("jdk/internal/vm/PostVMInitHook");
 		
 		// FIXME: call static: run -> ()V
 	}

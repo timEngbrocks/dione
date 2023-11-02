@@ -19,7 +19,7 @@ impl Value for Byte {
 
     fn from_value(value: i8) -> Self {
         Self {
-            value: value,
+            value,
         }
     }
     
@@ -40,7 +40,7 @@ impl Value for Byte {
 impl Clone for Byte {
     fn clone(&self) -> Self {
         Self {
-            value: self.value.clone(),
+            value: self.value,
         }
     }
 }
