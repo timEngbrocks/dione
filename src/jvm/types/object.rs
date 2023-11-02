@@ -85,10 +85,10 @@ impl Object {
         }
     }
 
-    pub fn get_static_field(&self, field_name: &str, descriptor: &str) -> Option<&Field> {
+    pub fn get_static_field(&mut self, field_name: &str, descriptor: &str) -> Option<&mut Field> {
         let key = format!("{}{}", field_name, descriptor);
         if self.static_fields.contains_key(key.as_str()) {
-            self.static_fields.get(key.as_str())
+            self.static_fields.get_mut(key.as_str())
         } else if let Some(super_class) = &self.super_class {
             let super_class = ObjectManager::get(super_class);
             super_class.get_static_field(field_name, descriptor)

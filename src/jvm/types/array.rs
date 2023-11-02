@@ -1,3 +1,5 @@
+use crate::jvm::runtime_constant_pool::sym_ref_class_or_interface::SymRefClassOrInterface;
+
 use super::{reference::Reference, Types, Value};
 
 pub struct PrimitiveArray {
@@ -6,10 +8,42 @@ pub struct PrimitiveArray {
 	data: Vec<Types>,
 }
 
+pub enum ReferenceArrayKind {
+	Class(SymRefClassOrInterface, Reference),
+	Array(SymRefClassOrInterface, Reference),
+	Interface(SymRefClassOrInterface, Reference),
+}
+
+impl ReferenceArrayKind {
+	pub fn new(&self) -> Self {
+		match self {
+			ReferenceArrayKind::Class(class_ref, _) => ReferenceArrayKind::Class(class_ref.clone(), Reference::new()),
+			ReferenceArrayKind::Array(class_ref, _) => ReferenceArrayKind::Array(class_ref.clone(), Reference::new()),
+			ReferenceArrayKind::Interface(class_ref, _) => ReferenceArrayKind::Interface(class_ref.clone(), Reference::new()),
+		}
+	}
+
+	pub fn class_ref(&self) -> &SymRefClassOrInterface {
+		match self {
+			ReferenceArrayKind::Class(class_ref, _) => class_ref,
+			ReferenceArrayKind::Array(class_ref, _) => class_ref,
+			ReferenceArrayKind::Interface(class_ref, _) => class_ref,
+		}
+	}
+
+	pub fn reference(&self) -> &Reference {
+		match self {
+			ReferenceArrayKind::Class(_, reference) => reference,
+			ReferenceArrayKind::Array(_, reference) => reference,
+			ReferenceArrayKind::Interface(_, reference) => reference,
+		}
+	}
+}
+
 pub struct ReferenceArray {
-	kind: Reference,
+	kind: ReferenceArrayKind,
 	length: usize,
-	data: Vec<Reference>,
+	data: Vec<ReferenceArrayKind>,
 }
 
 pub trait Array {
@@ -70,12 +104,26 @@ impl Array for PrimitiveArray {
 }
 
 impl Array for ReferenceArray {
-	type Type = Reference;
+	type Type = ReferenceArrayKind;
 
 	fn new(kind: Self::Type, length: usize) -> Self where Self: Sized {
 		let mut data = Vec::with_capacity(length);
-		for _ in 0..length {
-			data.push(Reference::new());
+		match kind {
+			ReferenceArrayKind::Class(ref class_ref, _) => {
+				for _ in 0..length {
+					data.push(ReferenceArrayKind::Class(class_ref.clone(), Reference::new()));
+				}
+			},
+			ReferenceArrayKind::Array(ref class_ref, _) => {
+				for _ in 0..length {
+					data.push(ReferenceArrayKind::Array(class_ref.clone(), Reference::new()));
+				}
+			},
+			ReferenceArrayKind::Interface(ref class_ref, _) => {
+				for _ in 0..length {
+					data.push(ReferenceArrayKind::Interface(class_ref.clone(), Reference::new()));
+				}
+			},
 		}
 		Self {
 			kind,

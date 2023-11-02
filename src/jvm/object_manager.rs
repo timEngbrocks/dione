@@ -31,7 +31,7 @@ impl ObjectManager {
 		instance.initialize_impl(name);
 	}
 
-	pub fn get(name: &str) -> &Object {
+	pub fn get(name: &str) -> &mut Object {
 		let instance = ObjectManager::it();
 		instance.get_impl(name)
 	}
@@ -41,6 +41,32 @@ impl ObjectManager {
 		instance.instantiate_impl(name)
 	}
 
+	pub fn is_class(name: &str) -> bool {
+		if name.starts_with("[") {
+			return false;
+		}
+		match ObjectManager::get(name).fields.capacity() {
+			0 => false,
+			_ => true,
+		}
+	}
+
+	pub fn is_array_class(name: &str) -> bool {
+		if name.starts_with("[") {
+			return true;
+		}
+		false
+	}
+
+	pub fn is_interface(name: &str) -> bool {
+		if name.starts_with("[") {
+			return false;
+		}
+		match ObjectManager::get(name).fields.capacity() {
+			0 => true,
+			_ => false,
+		}
+	}
 
 	fn it() -> &'static mut ObjectManager {
 		unsafe {
@@ -68,17 +94,17 @@ impl ObjectManager {
 		}
 	}
 
-	fn get_impl(&mut self, name: &str) -> &Object {
+	fn get_impl(&mut self, name: &str) -> &mut Object {
 		match self.objects.contains_key(name) {
 			true => {
 				match self.initialized.contains_key(name) {
 					true => {
-						self.objects.get(name).unwrap()
+						self.objects.get_mut(name).unwrap()
 					},
 					false => {
 						match self.being_initialized.contains_key(name) {
 							true => {
-								self.objects.get(name).unwrap()
+								self.objects.get_mut(name).unwrap()
 							},
 							false => panic!("Object not initialized or being initialized: {}", name)
 						}

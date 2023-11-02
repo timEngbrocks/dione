@@ -335,32 +335,6 @@ impl Instruction for IMPDEP2 {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct PUTSTATIC {
-	indexbyte1: U1,
-	indexbyte2: U1,
-}
-impl Instruction for PUTSTATIC {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::PUTSTATIC));
-		let indexbyte1 = parser.consume_u1();
-		let indexbyte2 = parser.consume_u1();
-		PUTSTATIC {
-			indexbyte1,
-			indexbyte2,
-		}
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		3
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct GETFIELD {
 	indexbyte1: U1,
 	indexbyte2: U1,
@@ -470,32 +444,6 @@ impl Instruction for INVOKEDYNAMIC {
 
 	fn length(&self) -> U2 {
 		5
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct ANEWARRAY {
-	indexbyte1: U1,
-	indexbyte2: U1,
-}
-impl Instruction for ANEWARRAY {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::ANEWARRAY));
-		let indexbyte1 = parser.consume_u1();
-		let indexbyte2 = parser.consume_u1();
-		ANEWARRAY {
-			indexbyte1,
-			indexbyte2,
-		}
-	}
-
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		3
 	}
 }
 #[derive(Clone)]

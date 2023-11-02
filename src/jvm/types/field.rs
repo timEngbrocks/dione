@@ -39,6 +39,10 @@ impl Field {
         &self.value
     }
 
+    pub fn set_value(&mut self, value: Option<Types>) {
+        self.value = value;
+    }
+
     pub fn is_public(&self) -> bool {
         self.access_flags & FieldAccessFlags::Public as u16 != 0
     }

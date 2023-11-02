@@ -37,8 +37,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 123/205 Instructions</label>
-<progress id="status" value="123" max="205"></progress>
+<label for="status">Status: Finished 125/205 Instructions</label>
+<progress id="status" value="125" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -221,7 +221,7 @@ latest GNU nightly toolchain from Rust.
 | ARETURN | not implemented |
 | RETURN | not implemented |
 | GETSTATIC | not implemented |
-| PUTSTATIC | not implemented |
+| <span style="color:green">PUTSTATIC</span> | implemented |
 | GETFIELD | not implemented |
 | PUTFIELD | not implemented |
 | <span style="color:yellow">INVOKEVIRTUAL</span> | partially implemented |
@@ -231,7 +231,7 @@ latest GNU nightly toolchain from Rust.
 | INVOKEDYNAMIC | not implemented |
 | NEW | not implemented |
 | <span style="color:green">NEWARRAY</span> | implemented |
-| ANEWARRAY | not implemented |
+| <span style="color:green">ANEWARRAY</span> | implemented |
 | ARRAYLENGTH | not implemented |
 | ATHROW | not implemented |
 | CHECKCAST | not implemented |

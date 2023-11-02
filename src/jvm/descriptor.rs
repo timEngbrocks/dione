@@ -61,3 +61,47 @@ fn get_next_type_from_descriptor(descriptor: &str, is_return_type: bool) -> (Ret
 		_ => panic!("Invalid method descriptor type: {}", descriptor),
 	}
 }
+
+pub fn parse_field_descriptor(descriptor: &str) -> Option<Types> {
+	match descriptor {
+		"B" => Some(Types::Byte(Byte::new())),
+		"C" => Some(Types::Char(Char::new())),
+		"D" => Some(Types::Double(Double::new())),
+		"F" => Some(Types::Float(Float::new())),
+		"I" => Some(Types::Int(Int::new())),
+		"J" => Some(Types::Long(Long::new())),
+		"S" => Some(Types::Short(Short::new())),
+		"Z" => Some(Types::Boolean(Boolean::new())),
+		descriptor if descriptor.chars().nth(0).unwrap() == 'L' => Some(Types::Reference(Reference::new())),
+		descriptor if descriptor.chars().nth(0).unwrap() == '[' => Some(Types::Reference(Reference::new())),
+		_ => None,
+	}
+}
+
+pub fn field_descriptor_is_primitive(descriptor: &str) -> bool {
+	match descriptor {
+		"B" => true,
+		"C" => true,
+		"D" => true,
+		"F" => true,
+		"I" => true,
+		"J" => true,
+		"S" => true,
+		"Z" => true,
+		_ => false,
+	}
+}
+
+pub fn field_descriptor_is_object(descriptor: &str) -> bool {
+	match descriptor {
+		descriptor if descriptor.chars().nth(0).unwrap() == 'L' => true,
+		_ => false,
+	}
+}
+
+pub fn field_descriptor_is_array(descriptor: &str) -> bool {
+	match descriptor {
+		descriptor if descriptor.chars().nth(0).unwrap() == '[' => true,
+		_ => false,
+	}
+}

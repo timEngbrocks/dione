@@ -16,6 +16,16 @@ pub enum BooleanValue {
     True = 1
 }
 
+impl BooleanValue {
+    pub fn from_value(value: i32) -> Self {
+        match value {
+            0 => BooleanValue::False,
+            1 => BooleanValue::True,
+            _ => panic!("Invalid boolean value: {}", value)
+        }
+    }
+}
+
 impl Value for Boolean {
     type Type = BooleanValue;
 
