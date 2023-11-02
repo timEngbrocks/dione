@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["field_descriptor_is_array","field_descriptor_is_object","field_descriptor_is_primitive","get_next_type_from_descriptor","parse_field_descriptor","parse_method_descriptor"]};

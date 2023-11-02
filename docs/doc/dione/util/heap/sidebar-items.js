@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ArrayPtr","ReferencePtr"],"static":["CLASS_ALLOCATOR","INSTANCE","INTERFACE_ALLOCATOR","PRIMITIVE_ARRAY_ALLOCATOR","REFERENCE_ARRAY_ALLOCATOR"],"struct":["Heap"],"type":["ClassPtr","InterfacePtr","PrimitiveArrayPtr","ReferenceArrayPtr"]};

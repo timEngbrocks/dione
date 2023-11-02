@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"dione":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html\" title=\"trait core::cmp::PartialEq\">PartialEq</a>&lt;<a class=\"enum\" href=\"dione/jvm/types/enum.ComputationalTypeCategory.html\" title=\"enum dione::jvm::types::ComputationalTypeCategory\">ComputationalTypeCategory</a>&gt; for <a class=\"enum\" href=\"dione/jvm/types/enum.ComputationalTypeCategory.html\" title=\"enum dione::jvm::types::ComputationalTypeCategory\">ComputationalTypeCategory</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

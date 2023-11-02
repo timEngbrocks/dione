@@ -1,5 +1,9 @@
 # DIONE - A Rust based JVM
 
+## Docs
+
+[Current documentation](./docs/doc/dione/index.html)
+
 ## Usage
 
 ### run.sh
