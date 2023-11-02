@@ -2,6 +2,8 @@ use crate::{jvm::instructions::BranchKind, util::{sized_array::SizedArray, stack
 
 use super::{execution_context::ExecutionContext, instructions::Instruction, types::Types, frame::Frame, object_manager::ObjectManager, descriptor::parse_method_descriptor};
 
+use log::trace;
+
 pub struct Interpreter {
 	call_stack: Vec<ExecutionContext>,
 	current: Option<ExecutionContext>,
@@ -50,6 +52,7 @@ impl Interpreter {
 					break;
 				}
 				let instruction = execution_context.instruction_stream.next();
+				trace!("{:?}", instruction);
 				let result = instruction.execute(&mut execution_context.frame);
 				if let Some(new_execution_context) = result.call {
 					self.call_stack.push(self.current.clone().unwrap());

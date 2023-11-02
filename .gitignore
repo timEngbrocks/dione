@@ -1,4 +1,5 @@
 /target
 /jdk
+.log
 .vscode
 rust*.txt
