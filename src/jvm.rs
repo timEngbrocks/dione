@@ -81,8 +81,6 @@ impl JVM {
 
 		// FIXME: SystemDictonary::compute_java_loaders
 
-		self.call_post_vm_init_hook();
-
 		// FIXME: Start WatcherThread
 	}
 
@@ -136,12 +134,6 @@ impl JVM {
 		ObjectManager::initialize_object("java/lang/invoke/ResolvedMethodName");
 		ObjectManager::initialize_object("java/lang/invoke/MemberName");
 		ObjectManager::initialize_object("java/lang/invoke/MethodHandleNatives");
-	}
-
-	fn call_post_vm_init_hook(&self) {
-		ObjectManager::initialize_object("jdk/internal/vm/PostVMInitHook");
-		
-		// FIXME: call static: run -> ()V
 	}
 
 	fn genesis(&self) {
