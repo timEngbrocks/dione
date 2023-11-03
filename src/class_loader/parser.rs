@@ -80,6 +80,17 @@ impl Parser {
         self.cursor
     }
 
+    pub fn align(&mut self, alignment: usize) -> usize {
+        let padding = alignment - (self.cursor % alignment);
+        if padding == alignment {
+            return 0;
+        }
+        for _ in 0..padding {
+            self.consume_u1();
+        }
+        padding
+    }
+
     fn current_data(&self) -> &[u8] {
         &self.data[self.cursor..self.length()]
     }

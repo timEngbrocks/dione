@@ -2,6 +2,7 @@ use crate::class_loader::parser::U2;
 
 use super::{Value, IntegralTypes};
 
+#[derive(Debug)]
 pub struct Int {
 	value: i32,
 }
