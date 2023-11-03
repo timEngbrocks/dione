@@ -76,8 +76,8 @@ impl JVM {
 
 		self.initialize_jsr292_classes();
 
-		// FIXME: System.initPhase2()
-		// FIXME: System.initPhase3()
+		self.call_system_init_phase2();
+		self.call_system_init_phase3();
 
 		// FIXME: SystemDictonary::compute_java_loaders
 
@@ -100,7 +100,7 @@ impl JVM {
 		self.genesis();
 	}
 
-	fn initialize_java_lang_classes(&self) {
+	fn initialize_java_lang_classes(&mut self) {
 		ObjectManager::initialize_object("java/lang/String");
 		ObjectManager::initialize_object("java/lang/System");
 		ObjectManager::initialize_object("java/lang/Class");
@@ -117,7 +117,7 @@ impl JVM {
 		ObjectManager::initialize_object("java/lang/reflect/Method");
 		ObjectManager::initialize_object("java/lang/ref/Finalizer");
 
-		// FIXME: System.initPhase1()
+		self.call_system_init_phase1();
 
 		ObjectManager::initialize_object("java/lang/OutOfMemoryError");
 		ObjectManager::initialize_object("java/lang/NullPointerException");
@@ -138,6 +138,21 @@ impl JVM {
 
 	fn genesis(&self) {
 		// FIXME: Initialize basic types: [Ljdk/internal/vm/FillerArray;, [Z, [C, [F, [D, [B, [S, [I, [J, [java/lang/Object;
+	}
+
+	fn call_system_init_phase1(&mut self) {
+		let mut temporary_interpreter = Interpreter::new();
+		temporary_interpreter.run("java/lang/System", "initPhase1", "()V");
+	}
+
+	fn call_system_init_phase2(&mut self) {
+		let mut temporary_interpreter = Interpreter::new();
+		temporary_interpreter.run("java/lang/System", "initPhase2", "(ZZ)I");
+	}
+
+	fn call_system_init_phase3(&mut self) {
+		let mut temporary_interpreter = Interpreter::new();
+		temporary_interpreter.run("java/lang/System", "initPhase3", "()V");
 	}
 
 	fn setup_logging() {

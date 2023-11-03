@@ -164,6 +164,14 @@ impl InstructionStream {
         }
         false
     }
+
+    pub fn len(&self) -> &usize {
+        &self.length
+    }
+
+    pub fn cursor(&self) -> &usize {
+        &self.cursor
+    }
 }
 
 #[derive(Clone)]

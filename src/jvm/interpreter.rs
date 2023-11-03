@@ -4,9 +4,12 @@ use super::{execution_context::ExecutionContext, instructions::Instruction, type
 
 use log::trace;
 
+static mut INTERPRETER_COUNT: usize = 0;
+
 pub struct Interpreter {
 	call_stack: Vec<ExecutionContext>,
 	current: Option<ExecutionContext>,
+	identifier: usize,
 }
 
 impl Default for Interpreter {
@@ -20,6 +23,10 @@ impl Interpreter {
 		Interpreter {
 			call_stack: Vec::new(),
 			current: None,
+			identifier: unsafe {
+				INTERPRETER_COUNT += 1;
+				INTERPRETER_COUNT
+			},
 		}
 	}
 
@@ -31,6 +38,7 @@ impl Interpreter {
 		let execution_context = self.setup_method_execution(class_name, method_name, descriptor);
 		let mut global_exception: Option<()> = None;
 		self.current = Some(execution_context);
+
 		while self.current.is_some()  {
 			let execution_context = self.current.as_mut().unwrap();
 
@@ -52,17 +60,26 @@ impl Interpreter {
 					break;
 				}
 				self.current = self.call_stack.pop();
-				break;
+				continue;
 			}
+
+			let context = execution_context.clone();
+			let cursor = context.instruction_stream.cursor();
+			let len = context.instruction_stream.len();
+
 			let instruction = execution_context.instruction_stream.next();
-			trace!("{}.{} -> {:?}", execution_context.frame.object_name ,execution_context.frame.method_name, instruction);
+			
+			trace!("({} - {}/{}) {}.{} -> {:?}", self.identifier, cursor, len, execution_context.frame.object_name ,execution_context.frame.method_name, instruction);
+
 			let result = instruction.execute(&mut execution_context.frame);
 			global_exception = result.exception;
+
 			if let Some(new_execution_context) = result.call {
 				self.call_stack.push(self.current.clone().unwrap());
 				self.current = Some(new_execution_context);
-				break;
+				continue;
 			}
+
 			if let Some(branch) = result.branch {
 				match branch {
 					BranchKind::Absolute(value) => {
@@ -72,8 +89,9 @@ impl Interpreter {
 						execution_context.instruction_stream.relative_jump(value as usize);
 					},
 				}
-				break;
+				continue;
 			}
+
 			if let Some(ret) = result.ret {
 				match ret {
 					ReturnKind::Value(value) => {
@@ -85,7 +103,7 @@ impl Interpreter {
 						self.current = self.call_stack.pop();
 					},
 				}
-				break;
+				continue;
 			}
 		}
 	}
