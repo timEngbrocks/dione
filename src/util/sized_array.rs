@@ -65,6 +65,16 @@ where
 
     fn set_impl(&mut self, index: U2, value: T) {
         let w = value.width();
+        if self.size == U2::MAX {
+            if self.data.len() < (index + w) as usize {
+                self.data.reserve((index + w) as usize - self.data.len());
+            }
+            for i in 0..(index + w) {
+                if self.data.get(i as usize).is_none() {
+                    self.data.push(DataType::Null);
+                }
+            }
+        }
         self.data[index as usize] = DataType::Value(value);
         for i in 1..w {
             self.data[(index + i) as usize] = DataType::Blocked;
