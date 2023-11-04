@@ -1,5 +1,5 @@
 use super::types::{
-    boolean::Boolean, byte::Byte, char::Char, double::Double, float::Float, int::Int, long::Long,
+    byte::Byte, char::Char, double::Double, float::Float, int::Int, long::Long,
     reference::Reference, short::Short, ReturnTypes, Types, Value,
 };
 
@@ -45,7 +45,7 @@ fn get_next_type_from_descriptor(descriptor: &str, is_return_type: bool) -> (Ret
         'I' => (ReturnTypes::Type(Types::Int(Int::new())), 1),
         'J' => (ReturnTypes::Type(Types::Long(Long::new())), 1),
         'S' => (ReturnTypes::Type(Types::Short(Short::new())), 1),
-        'Z' => (ReturnTypes::Type(Types::Boolean(Boolean::new())), 1),
+        'Z' => (ReturnTypes::Type(Types::Int(Int::new())), 1),
         'L' => {
             let mut j = 1;
             while let Some(c) = descriptor.chars().nth(j) {
@@ -75,7 +75,7 @@ pub fn parse_field_descriptor(descriptor: &str) -> Option<Types> {
         "I" => Some(Types::Int(Int::new())),
         "J" => Some(Types::Long(Long::new())),
         "S" => Some(Types::Short(Short::new())),
-        "Z" => Some(Types::Boolean(Boolean::new())),
+        "Z" => Some(Types::Int(Int::new())),
         descriptor if descriptor.starts_with('L') => Some(Types::Reference(Reference::new())),
         descriptor if descriptor.starts_with('[') => Some(Types::Reference(Reference::new())),
         _ => None,

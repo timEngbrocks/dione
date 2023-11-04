@@ -69,8 +69,8 @@ impl Interpreter {
                 continue;
             }
 
-            let cursor = execution_context.instruction_stream.cursor().clone();
-            let len = execution_context.instruction_stream.len().clone();
+            let cursor = *execution_context.instruction_stream.cursor();
+            let len = *execution_context.instruction_stream.len();
 
             let instruction = execution_context.instruction_stream.next();
 

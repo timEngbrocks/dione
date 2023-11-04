@@ -82,7 +82,7 @@ impl Instruction for IFNE {
                     InstructionResult::empty()
                 }
             }
-            _ => panic!("IFNE: Expected a Int"),
+            _ => panic!("IFNE: Expected an Int"),
         }
     }
 

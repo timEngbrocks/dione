@@ -7,8 +7,8 @@ use crate::{
             Instruction, InstructionResult,
         },
         types::{
-            boolean::{Boolean, BooleanValue},
-            ReturnTypes, Types, Value,
+            double::Double, float::Float, int::Int, long::Long, reference::Reference, ReturnTypes,
+            Types, Value,
         },
     },
     opcodes,
@@ -31,22 +31,7 @@ impl Instruction for IRETURN {
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match execution_context.stack.pop() {
-            Types::Int(value) => {
-                let return_value = match &execution_context.return_value {
-                    ReturnTypes::Type(t) => match t {
-                        Types::Byte(_) => Types::Byte(i2b(value)),
-                        Types::Char(_) => Types::Char(i2c(value)),
-                        Types::Short(_) => Types::Short(i2s(value)),
-                        Types::Boolean(_) => Types::Boolean(Boolean::from_value(
-                            BooleanValue::from_value(value.get() & 1),
-                        )),
-                        Types::Int(_) => Types::Int(value),
-                        _ => panic!("Expected Int return type"),
-                    },
-                    ReturnTypes::Void => panic!("Expected Int return type"),
-                };
-                InstructionResult::return_value(return_value)
-            }
+            Types::Int(value) => ireturn(value, &execution_context.return_value),
             _ => panic!("Expected Int"),
         }
     }
@@ -59,6 +44,22 @@ impl Instruction for IRETURN {
         String::from("ireturn")
     }
 }
+
+pub fn ireturn(value: Int, return_type: &ReturnTypes) -> InstructionResult {
+    let return_value = match return_type {
+        ReturnTypes::Type(t) => match t {
+            Types::Byte(_) => Types::Byte(i2b(value)),
+            Types::Char(_) => Types::Char(i2c(value)),
+            Types::Short(_) => Types::Short(i2s(value)),
+            Types::Boolean(_) => Types::Int(Int::from_value(value.get() & 1)),
+            Types::Int(_) => Types::Int(value),
+            _ => panic!("Expected Int return type"),
+        },
+        ReturnTypes::Void => panic!("Expected Int return type"),
+    };
+    InstructionResult::return_value(return_value)
+}
+
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct LRETURN {}
@@ -76,7 +77,7 @@ impl Instruction for LRETURN {
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match execution_context.stack.pop() {
-            Types::Long(value) => InstructionResult::return_value(Types::Long(value)),
+            Types::Long(value) => lreturn(value, &execution_context.return_value),
             _ => panic!("Expected Long"),
         }
     }
@@ -89,6 +90,11 @@ impl Instruction for LRETURN {
         String::from("lreturn")
     }
 }
+
+pub fn lreturn(value: Long, _: &ReturnTypes) -> InstructionResult {
+    InstructionResult::return_value(Types::Long(value))
+}
+
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct FRETURN {}
@@ -106,7 +112,7 @@ impl Instruction for FRETURN {
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match execution_context.stack.pop() {
-            Types::Float(value) => InstructionResult::return_value(Types::Float(value)),
+            Types::Float(value) => freturn(value, &execution_context.return_value),
             _ => panic!("Expected Float"),
         }
     }
@@ -119,6 +125,11 @@ impl Instruction for FRETURN {
         String::from("freturn")
     }
 }
+
+pub fn freturn(value: Float, _: &ReturnTypes) -> InstructionResult {
+    InstructionResult::return_value(Types::Float(value))
+}
+
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DRETURN {}
@@ -136,7 +147,7 @@ impl Instruction for DRETURN {
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match execution_context.stack.pop() {
-            Types::Double(value) => InstructionResult::return_value(Types::Double(value)),
+            Types::Double(value) => dreturn(value, &execution_context.return_value),
             _ => panic!("Expected Double"),
         }
     }
@@ -149,6 +160,11 @@ impl Instruction for DRETURN {
         String::from("dreturn")
     }
 }
+
+pub fn dreturn(value: Double, _: &ReturnTypes) -> InstructionResult {
+    InstructionResult::return_value(Types::Double(value))
+}
+
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ARETURN {}
@@ -167,7 +183,7 @@ impl Instruction for ARETURN {
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match execution_context.stack.pop() {
             // FIXME: Check that the reference on the stack and the return type are assignment compatible
-            Types::Reference(value) => InstructionResult::return_value(Types::Reference(value)),
+            Types::Reference(value) => areturn(value, &execution_context.return_value),
             _ => panic!("Expected Reference"),
         }
     }
@@ -180,6 +196,11 @@ impl Instruction for ARETURN {
         String::from("areturn")
     }
 }
+
+pub fn areturn(value: Reference, _: &ReturnTypes) -> InstructionResult {
+    InstructionResult::return_value(Types::Reference(value))
+}
+
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct RETURN {}
