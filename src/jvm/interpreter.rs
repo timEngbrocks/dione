@@ -63,9 +63,8 @@ impl Interpreter {
 				continue;
 			}
 
-			let context = execution_context.clone();
-			let cursor = context.instruction_stream.cursor();
-			let len = context.instruction_stream.len();
+			let cursor = execution_context.instruction_stream.cursor().clone();
+			let len = execution_context.instruction_stream.len().clone();
 
 			let instruction = execution_context.instruction_stream.next();
 			
@@ -75,7 +74,7 @@ impl Interpreter {
 			global_exception = result.exception;
 
 			if let Some(new_execution_context) = result.call {
-				self.call_stack.push(self.current.clone().unwrap());
+				self.call_stack.push(self.current.take().unwrap());
 				self.current = Some(new_execution_context);
 				continue;
 			}

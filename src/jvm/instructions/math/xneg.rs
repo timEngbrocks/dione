@@ -10,7 +10,7 @@ impl Instruction for INEG {
 		INEG {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				execution_context.stack.push(Types::Int(Int::from_value(-value.get())));
@@ -38,7 +38,7 @@ impl Instruction for LNEG {
 		LNEG {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
 				execution_context.stack.push(Types::Long(Long::from_value(-value.get())));
@@ -66,7 +66,7 @@ impl Instruction for FNEG {
 		FNEG {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
 				execution_context.stack.push(Types::Float(Float::from_value(-value.get())));
@@ -94,7 +94,7 @@ impl Instruction for DNEG {
 		DNEG {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Double(Double::from_value(-value.get())));

@@ -10,7 +10,7 @@ impl Instruction for I2L {
 		I2L {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// Note: Rust's as cast uses sign extension
@@ -40,7 +40,7 @@ impl Instruction for I2F {
 		I2F {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
@@ -69,7 +69,7 @@ impl Instruction for I2D {
 		I2D {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				execution_context.stack.push(Types::Double(i2d(value)));
@@ -97,7 +97,7 @@ impl Instruction for L2I {
 		L2I {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
 				execution_context.stack.push(Types::Int(l2i(value)));
@@ -125,7 +125,7 @@ impl Instruction for L2F {
 		L2F {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
@@ -154,7 +154,7 @@ impl Instruction for L2D {
 		L2D {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
@@ -183,7 +183,7 @@ impl Instruction for F2I {
 		F2I {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
 				execution_context.stack.push(Types::Int(f2i(value)));
@@ -211,7 +211,7 @@ impl Instruction for F2L {
 		F2L {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
 				execution_context.stack.push(Types::Long(f2l(value)));
@@ -239,7 +239,7 @@ impl Instruction for F2D {
 		F2D {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
 				execution_context.stack.push(Types::Double(f2d(value)));
@@ -267,7 +267,7 @@ impl Instruction for D2I {
 		D2I {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Int(d2i(value)));
@@ -295,7 +295,7 @@ impl Instruction for D2L {
 		D2L {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Long(d2l(value)));
@@ -323,7 +323,7 @@ impl Instruction for D2F {
 		D2F {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
 				execution_context.stack.push(Types::Float(d2f(value)));
@@ -351,7 +351,7 @@ impl Instruction for I2B {
 		I2B {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				execution_context.stack.push(Types::Int(i2b(value).to_int()));
@@ -379,7 +379,7 @@ impl Instruction for I2C {
 		I2C {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses zero extension in this case.
@@ -408,7 +408,7 @@ impl Instruction for I2S {
 		I2S {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				// NOTE: Possible FIXME: as I am not sure that Rust's as uses zero extension in this case.

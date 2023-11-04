@@ -10,7 +10,7 @@ impl Instruction for DUP {
 		DUP {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value = execution_context.stack.pop();
 		match value {
 			Types::Double(_) | Types::Long(_) => panic!("Can not DUP a Double or Long"),
@@ -40,7 +40,7 @@ impl Instruction for DUP_X1 {
 		DUP_X1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -72,7 +72,7 @@ impl Instruction for DUP_X2 {
 		DUP_X2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -116,7 +116,7 @@ impl Instruction for DUP2 {
 		DUP2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		match value1 {
 			Types::Double(_) | Types::Long(_) => {
@@ -157,7 +157,7 @@ impl Instruction for DUP2_X1 {
 		DUP2_X1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {
@@ -211,7 +211,7 @@ impl Instruction for DUP2_X2 {
 		DUP2_X2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value1 = execution_context.stack.pop();
 		let value2 = execution_context.stack.pop();
 		match value1 {

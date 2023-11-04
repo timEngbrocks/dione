@@ -15,7 +15,7 @@ impl Instruction for ILOAD {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::Int(value) => {
@@ -49,7 +49,7 @@ impl Instruction for LLOAD {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() > self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::Long(value) => {
@@ -83,7 +83,7 @@ impl Instruction for FLOAD {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::Float(value) => {
@@ -117,7 +117,7 @@ impl Instruction for DLOAD {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() > self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::Double(value) => {
@@ -151,7 +151,7 @@ impl Instruction for ALOAD {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= self.index as u16);
 		match execution_context.local_variables.get(self.index as u16) {
 			Types::ReturnAddress(value) => {

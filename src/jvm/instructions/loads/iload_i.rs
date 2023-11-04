@@ -10,7 +10,7 @@ impl Instruction for ILOAD_0 {
 		ILOAD_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 1);
 		match execution_context.local_variables.get(0) {
 			Types::Int(value) => {
@@ -39,7 +39,7 @@ impl Instruction for ILOAD_1 {
 		ILOAD_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 2);
 		match execution_context.local_variables.get(1) {
 			Types::Int(value) => {
@@ -68,7 +68,7 @@ impl Instruction for ILOAD_2 {
 		ILOAD_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 3);
 		match execution_context.local_variables.get(2) {
 			Types::Int(value) => {
@@ -97,7 +97,7 @@ impl Instruction for ILOAD_3 {
 		ILOAD_3 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 4);
 		match execution_context.local_variables.get(3) {
 			Types::Int(value) => {

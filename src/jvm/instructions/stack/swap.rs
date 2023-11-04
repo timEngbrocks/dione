@@ -10,7 +10,7 @@ impl Instruction for SWAP {
 		SWAP {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			value1 if value1.get_computational_type_category() == ComputationalTypeCategory::Type1 => {
 				match execution_context.stack.pop() {

@@ -18,7 +18,7 @@ impl Instruction for IFEQ {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
@@ -58,7 +58,7 @@ impl Instruction for IFNE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
@@ -98,7 +98,7 @@ impl Instruction for IFLT {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
@@ -138,7 +138,7 @@ impl Instruction for IFGE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
@@ -178,7 +178,7 @@ impl Instruction for IFGT {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
@@ -218,7 +218,7 @@ impl Instruction for IFLE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value) => {

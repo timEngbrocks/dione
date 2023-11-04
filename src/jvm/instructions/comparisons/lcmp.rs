@@ -11,7 +11,7 @@ impl Instruction for LCMP {
 	}
 
 	#[allow(clippy::if_same_then_else)]
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value2) => {
 				match execution_context.stack.pop() {

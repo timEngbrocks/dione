@@ -25,7 +25,7 @@ impl Instruction for MULTIANEWARRAY {
 
 	// FIXME: If array class check that dimensionality is >= count
 	// FIXME: If count == 0 for any dimension => Deeper dimensions are not allocated
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(self.dimensions >= 1);
 		let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
 		let class_ref = match execution_context.runtime_constant_pool.get(index) {

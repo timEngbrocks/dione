@@ -18,7 +18,7 @@ impl Instruction for GOTO {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("GOTO::execute")
 	}
 

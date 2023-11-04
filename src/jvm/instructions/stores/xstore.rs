@@ -15,7 +15,7 @@ impl Instruction for ISTORE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!((self.index as u16) < execution_context.local_variables.len());
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
@@ -49,7 +49,7 @@ impl Instruction for LSTORE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!((self.index as u16) < execution_context.local_variables.len());
 		match execution_context.stack.pop() {
 			Types::Long(value) => {
@@ -83,7 +83,7 @@ impl Instruction for FSTORE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!((self.index as u16) < execution_context.local_variables.len());
 		match execution_context.stack.pop() {
 			Types::Float(value) => {
@@ -117,7 +117,7 @@ impl Instruction for DSTORE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!((self.index as u16) < execution_context.local_variables.len());
 		match execution_context.stack.pop() {
 			Types::Double(value) => {
@@ -151,7 +151,7 @@ impl Instruction for ASTORE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!((self.index as u16) < execution_context.local_variables.len());
 		match execution_context.stack.pop() {
 			Types::ReturnAddress(value) => {

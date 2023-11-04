@@ -10,7 +10,7 @@ impl Instruction for ALOAD_0 {
 		ALOAD_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 1);
 		match execution_context.local_variables.get(0) {
 			Types::ReturnAddress(value) => {
@@ -42,7 +42,7 @@ impl Instruction for ALOAD_1 {
 		ALOAD_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 2);
 		match execution_context.local_variables.get(1) {
 			Types::ReturnAddress(value) => {
@@ -74,7 +74,7 @@ impl Instruction for ALOAD_2 {
 		ALOAD_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 3);
 		match execution_context.local_variables.get(2) {
 			Types::ReturnAddress(value) => {
@@ -106,7 +106,7 @@ impl Instruction for ALOAD_3 {
 		ALOAD_3 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 4);
 		match execution_context.local_variables.get(3) {
 			Types::ReturnAddress(value) => {

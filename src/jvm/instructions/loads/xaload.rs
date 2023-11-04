@@ -10,7 +10,7 @@ impl Instruction for IALOAD {
 		IALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IALOAD")
 	}
 
@@ -32,7 +32,7 @@ impl Instruction for LALOAD {
 		LALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("LALOAD")
 	}
 
@@ -54,7 +54,7 @@ impl Instruction for FALOAD {
 		FALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("FALOAD")
 	}
 
@@ -76,7 +76,7 @@ impl Instruction for DALOAD {
 		DALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("DALOAD")
 	}
 
@@ -98,7 +98,7 @@ impl Instruction for AALOAD {
 		AALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("AALOAD")
 	}
 
@@ -120,7 +120,7 @@ impl Instruction for BALOAD {
 		BALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("BALOAD")
 	}
 
@@ -142,7 +142,7 @@ impl Instruction for CALOAD {
 		CALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("CALOAD")
 	}
 
@@ -164,7 +164,7 @@ impl Instruction for SALOAD {
 		SALOAD {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("SALOAD")
 	}
 

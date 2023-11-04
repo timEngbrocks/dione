@@ -10,7 +10,7 @@ impl Instruction for ISTORE_0 {
 		ISTORE_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 1);
 		let value = execution_context.stack.pop();
 		match value {
@@ -40,7 +40,7 @@ impl Instruction for ISTORE_1 {
 		ISTORE_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 2);
 		let value = execution_context.stack.pop();
 		match value {
@@ -70,7 +70,7 @@ impl Instruction for ISTORE_2 {
 		ISTORE_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 3);
 		let value = execution_context.stack.pop();
 		match value {
@@ -100,7 +100,7 @@ impl Instruction for ISTORE_3 {
 		ISTORE_3 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 4);
 		let value = execution_context.stack.pop();
 		match value {

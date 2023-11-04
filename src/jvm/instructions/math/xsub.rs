@@ -10,7 +10,7 @@ impl Instruction for ISUB {
 		ISUB {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
 				match execution_context.stack.pop() {
@@ -46,7 +46,7 @@ impl Instruction for LSUB {
 		LSUB {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value2) => {
 				match execution_context.stack.pop() {
@@ -82,7 +82,7 @@ impl Instruction for FSUB {
 		FSUB {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value2) => {
 				match execution_context.stack.pop() {
@@ -118,7 +118,7 @@ impl Instruction for DSUB {
 		DSUB {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value2) => {
 				match execution_context.stack.pop() {

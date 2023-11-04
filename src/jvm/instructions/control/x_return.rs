@@ -12,7 +12,7 @@ impl Instruction for IRETURN {
 
 	// TODO: Monitor update
 	// TODO: Exception handling
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value) => {
 				let return_value = match &execution_context.return_value {
@@ -52,7 +52,7 @@ impl Instruction for LRETURN {
 
 	// TODO: Monitor update
 	// TODO: Exception handling
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value) => InstructionResult::return_value(Types::Long(value)),
 			_ => panic!("Expected Long"),
@@ -79,7 +79,7 @@ impl Instruction for FRETURN {
 
 	// TODO: Monitor update
 	// TODO: Exception handling
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Float(value) => InstructionResult::return_value(Types::Float(value)),
 			_ => panic!("Expected Float"),
@@ -106,7 +106,7 @@ impl Instruction for DRETURN {
 
 	// TODO: Monitor update
 	// TODO: Exception handling
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Double(value) => InstructionResult::return_value(Types::Double(value)),
 			_ => panic!("Expected Double"),
@@ -133,7 +133,7 @@ impl Instruction for ARETURN {
 
 	// TODO: Monitor update
 	// TODO: Exception handling
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			// FIXME: Check that the reference on the stack and the return type are assignment compatible
 			Types::Reference(value) => InstructionResult::return_value(Types::Reference(value)),
@@ -161,7 +161,7 @@ impl Instruction for RETURN {
 
 	// TODO: Monitor update
 	// TODO: Exception handling
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		InstructionResult::return_void()
 	}
 

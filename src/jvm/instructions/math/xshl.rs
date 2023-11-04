@@ -10,7 +10,7 @@ impl Instruction for ISHL {
 		ISHL {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
 				match execution_context.stack.pop() {
@@ -44,7 +44,7 @@ impl Instruction for LSHL {
 		LSHL {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
 				match execution_context.stack.pop() {

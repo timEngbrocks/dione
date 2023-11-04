@@ -10,7 +10,7 @@ impl Instruction for IUSHR {
 		IUSHR {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
 				match execution_context.stack.pop() {
@@ -49,7 +49,7 @@ impl Instruction for LUSHR {
 		LUSHR {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
 				match execution_context.stack.pop() {

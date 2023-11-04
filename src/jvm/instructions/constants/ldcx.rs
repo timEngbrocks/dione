@@ -15,7 +15,7 @@ impl Instruction for LDC {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		ldc_impl(execution_context, self.index as u16);
 		InstructionResult::empty()
 	}
@@ -46,7 +46,7 @@ impl Instruction for LDC_W {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
 		ldc_impl(execution_context, index);
 		InstructionResult::empty()
@@ -79,7 +79,7 @@ impl Instruction for LDC2_W {
 	}
 
 	// TODO: https://docs.oracle.com/javase/specs/jvms/se19/html/jvms-6.html#jvms-6.5.ldc2_w
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
 		match execution_context.runtime_constant_pool.get(index) {
 			RuntimeConstants::NumericConstant(NumericConstant { value: NumericConstantKind::Long(value) }) => {

@@ -10,7 +10,7 @@ impl Instruction for FCONST_0 {
 		FCONST_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Float::from_value(0.0);
 		execution_context.stack.push(Types::Float(value));
 		InstructionResult::empty()
@@ -34,7 +34,7 @@ impl Instruction for FCONST_1 {
 		FCONST_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Float::from_value(1.0);
 		execution_context.stack.push(Types::Float(value));
 		InstructionResult::empty()
@@ -58,7 +58,7 @@ impl Instruction for FCONST_2 {
 		FCONST_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Float::from_value(2.0);
 		execution_context.stack.push(Types::Float(value));
 		InstructionResult::empty()

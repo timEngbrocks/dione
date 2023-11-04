@@ -18,7 +18,7 @@ impl Instruction for IF_ACMPEQ {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IF_ACMPEQ::execute")
 	}
 
@@ -48,7 +48,7 @@ impl Instruction for IF_ACMPNE {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IF_ACMPNE::execute")
 	}
 

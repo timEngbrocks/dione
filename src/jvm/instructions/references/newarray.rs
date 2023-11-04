@@ -15,7 +15,7 @@ impl Instruction for NEWARRAY {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let count = match execution_context.stack.pop() {
 			Types::Int(value) => value.get(),
 			_ => panic!("Expected Int"),

@@ -10,7 +10,7 @@ impl Instruction for IOR {
 		IOR {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
 				match execution_context.stack.pop() {
@@ -43,7 +43,7 @@ impl Instruction for LOR {
 		LOR {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop() {
 			Types::Long(value2) => {
 				match execution_context.stack.pop() {

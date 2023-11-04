@@ -12,7 +12,7 @@ impl Instruction for JSR {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -34,7 +34,7 @@ impl Instruction for RET {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -56,7 +56,7 @@ impl Instruction for WIDE {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -86,7 +86,7 @@ impl Instruction for IFNULL {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -116,7 +116,7 @@ impl Instruction for IFNONNULL {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -138,7 +138,7 @@ impl Instruction for GOTO_W {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -160,7 +160,7 @@ impl Instruction for JSR_W {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -182,7 +182,7 @@ impl Instruction for BREAKPOINT {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -204,7 +204,7 @@ impl Instruction for IMPDEP1 {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -226,7 +226,7 @@ impl Instruction for IMPDEP2 {
 		todo!("Implement");
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -256,7 +256,7 @@ impl Instruction for GETFIELD {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -286,7 +286,7 @@ impl Instruction for PUTFIELD {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -321,7 +321,7 @@ impl Instruction for INVOKEINTERFACE {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -355,7 +355,7 @@ impl Instruction for INVOKEDYNAMIC {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -377,7 +377,7 @@ impl Instruction for ARRAYLENGTH {
 		ARRAYLENGTH {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -407,7 +407,7 @@ impl Instruction for CHECKCAST {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -437,7 +437,7 @@ impl Instruction for INSTANCEOF {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -459,7 +459,7 @@ impl Instruction for MONITORENTER {
 		MONITORENTER {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 
@@ -481,7 +481,7 @@ impl Instruction for MONITOREXIT {
 		MONITOREXIT {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 

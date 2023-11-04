@@ -19,7 +19,7 @@ impl Instruction for PUTSTATIC {
 	}
 
 	// FIXME: final fields
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
 		let field_ref = match execution_context.runtime_constant_pool.get(index) {
 			RuntimeConstants::SymRefFieldOfClassOrInterface(value) => value,

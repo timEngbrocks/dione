@@ -10,7 +10,7 @@ impl Instruction for DLOAD_0 {
 		DLOAD_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 2);
 		match execution_context.local_variables.get(0) {
 			Types::Double(value) => {
@@ -39,7 +39,7 @@ impl Instruction for DLOAD_1 {
 		DLOAD_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 3);
 		match execution_context.local_variables.get(1) {
 			Types::Double(value) => {
@@ -68,7 +68,7 @@ impl Instruction for DLOAD_2 {
 		DLOAD_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 4);
 		match execution_context.local_variables.get(2) {
 			Types::Double(value) => {
@@ -97,7 +97,7 @@ impl Instruction for DLOAD_3 {
 		DLOAD_3 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 5);
 		match execution_context.local_variables.get(3) {
 			Types::Double(value) => {

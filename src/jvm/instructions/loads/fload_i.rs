@@ -10,7 +10,7 @@ impl Instruction for FLOAD_0 {
 		FLOAD_0 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 1);
 		match execution_context.local_variables.get(0) {
 			Types::Float(value) => {
@@ -39,7 +39,7 @@ impl Instruction for FLOAD_1 {
 		FLOAD_1 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 2);
 		match execution_context.local_variables.get(1) {
 			Types::Float(value) => {
@@ -68,7 +68,7 @@ impl Instruction for FLOAD_2 {
 		FLOAD_2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 3);
 		match execution_context.local_variables.get(2) {
 			Types::Float(value) => {
@@ -97,7 +97,7 @@ impl Instruction for FLOAD_3 {
 		FLOAD_3 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		assert!(execution_context.local_variables.len() >= 4);
 		match execution_context.local_variables.get(3) {
 			Types::Float(value) => {

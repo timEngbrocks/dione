@@ -10,7 +10,7 @@ impl Instruction for ACONST_NULL {
 		ACONST_NULL {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let value = Reference::new();
 		execution_context.stack.push(Types::Reference(value));
 		InstructionResult::empty()

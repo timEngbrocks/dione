@@ -18,7 +18,7 @@ impl Instruction for IF_ICMPEQ {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
@@ -65,7 +65,7 @@ impl Instruction for IF_ICMPNE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
@@ -112,7 +112,7 @@ impl Instruction for IF_ICMPLT {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
@@ -159,7 +159,7 @@ impl Instruction for IF_ICMPGE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
@@ -206,7 +206,7 @@ impl Instruction for IF_ICMPGT {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {
@@ -253,7 +253,7 @@ impl Instruction for IF_ICMPLE {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
 		match execution_context.stack.pop() {
 			Types::Int(value2) => {

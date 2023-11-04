@@ -10,7 +10,7 @@ impl Instruction for POP {
 		POP {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop().get_computational_type_category() {
 			ComputationalTypeCategory::Type1 => {
 				InstructionResult::empty()
@@ -37,7 +37,7 @@ impl Instruction for POP2 {
 		POP2 {}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		match execution_context.stack.pop().get_computational_type_category() {
 			ComputationalTypeCategory::Type1 => {
 				execution_context.stack.pop();

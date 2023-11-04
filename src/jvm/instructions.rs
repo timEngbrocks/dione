@@ -20,7 +20,7 @@ pub mod reserved;
 
 pub trait Instruction {
     fn new(parser: &mut Parser) -> Self where Self: Sized;
-    fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult;
+    fn execute(&self, execution_context: &mut Frame) -> InstructionResult;
     fn length(&self) -> U2;
     fn to_string(&self) -> String;
 }
@@ -137,11 +137,11 @@ impl InstructionStream {
         self.cursor < self.length
     }
 
-    pub fn next(&mut self) -> &mut Instructions {
+    pub fn next(&mut self) -> &Instructions {
         if !self.has_next() {
             panic!("Error handling!");
         }
-        let instruction = &mut self.instructions[self.cursor];
+        let instruction = &self.instructions[self.cursor];
         self.cursor += 1;
         instruction
     }
@@ -604,7 +604,7 @@ impl Instruction for Instructions {
         }
     }
 
-    fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+    fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match self {
             Instructions::NOP(instruction) => instruction.execute(execution_context),
             Instructions::ACONST_NULL(instruction) => instruction.execute(execution_context),

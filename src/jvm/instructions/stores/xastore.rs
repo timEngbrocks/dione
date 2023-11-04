@@ -10,7 +10,7 @@ impl Instruction for IASTORE {
 		IASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("IASTORE::execute()")
 	}
 
@@ -32,7 +32,7 @@ impl Instruction for LASTORE {
 		LASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("LASTORE::execute()")
 	}
 
@@ -54,7 +54,7 @@ impl Instruction for FASTORE {
 		FASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("FASTORE::execute()")
 	}
 
@@ -76,7 +76,7 @@ impl Instruction for DASTORE {
 		DASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("DASTORE::execute()")
 	}
 
@@ -98,7 +98,7 @@ impl Instruction for AASTORE {
 		AASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("AASTORE::execute()")
 	}
 
@@ -120,7 +120,7 @@ impl Instruction for BASTORE {
 		BASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("BASTORE::execute()")
 	}
 
@@ -142,7 +142,7 @@ impl Instruction for CASTORE {
 		CASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("CASTORE::execute()")
 	}
 
@@ -164,7 +164,7 @@ impl Instruction for SASTORE {
 		SASTORE {}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!("SASTORE::execute()")
 	}
 

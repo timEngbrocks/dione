@@ -49,7 +49,7 @@ impl Instruction for TABLESWITCH {
 		}
 	}
 
-	fn execute(&mut self, _: &mut Frame) -> InstructionResult {
+	fn execute(&self, _: &mut Frame) -> InstructionResult {
 		unimplemented!()
 	}
 

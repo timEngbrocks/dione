@@ -18,7 +18,7 @@ impl Instruction for INVOKEVIRTUAL {
 		}
 	}
 
-	fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+	fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
 		let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
 		let (object, method) = match execution_context.runtime_constant_pool.get(index) {
 			RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass { name, descriptor, class_ref }) => {
