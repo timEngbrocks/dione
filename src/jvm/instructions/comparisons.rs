@@ -1,8 +1,8 @@
-pub mod lcmp;
-pub mod fcmpl;
-pub mod fcmpg;
-pub mod dcmpl;
 pub mod dcmpg;
-pub mod ifop;
-pub mod if_icmpop;
+pub mod dcmpl;
+pub mod fcmpg;
+pub mod fcmpl;
 pub mod if_acmpop;
+pub mod if_icmpop;
+pub mod ifop;
+pub mod lcmp;

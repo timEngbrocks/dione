@@ -21,12 +21,7 @@ pub struct Field {
 }
 
 impl Field {
-    pub fn new(
-        name: String,
-        descriptor: String,
-        access_flags: u16,
-        value: Option<Types>,
-    ) -> Self {
+    pub fn new(name: String, descriptor: String, access_flags: u16, value: Option<Types>) -> Self {
         Field {
             name,
             descriptor,

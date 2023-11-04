@@ -1,8 +1,11 @@
-use std::{path::{PathBuf, Path}, fs::{metadata, self}};
+use std::{
+    fs::{self, metadata},
+    path::{Path, PathBuf},
+};
 
 pub fn list_files(path: &Path) -> Vec<PathBuf> {
     let mut vec = Vec::new();
-    _list_files(&mut vec,path);
+    _list_files(&mut vec, path);
     vec
 }
 

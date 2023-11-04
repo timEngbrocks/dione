@@ -1,36 +1,44 @@
-use std::{rc::Rc, cell::RefCell};
+use std::{cell::RefCell, rc::Rc};
 
-use crate::jvm::types::{Value, reference::Reference, object::Object, array::{PrimitiveArray, ReferenceArray}};
+use crate::jvm::types::{
+    array::{PrimitiveArray, ReferenceArray},
+    object::Object,
+    reference::Reference,
+    Value,
+};
 
 use super::allocator::JVMAllocator;
 
 pub enum ReferencePtr {
-	Null,
-	Class(ClassPtr),
-	Array(ArrayPtr),
-	Interface(InterfacePtr),
+    Null,
+    Class(ClassPtr),
+    Array(ArrayPtr),
+    Interface(InterfacePtr),
 }
 
 #[derive(Clone)]
 pub enum ArrayPtr {
-	Primitive(PrimitiveArrayPtr),
-	Reference(ReferenceArrayPtr),
+    Primitive(PrimitiveArrayPtr),
+    Reference(ReferenceArrayPtr),
 }
 
 impl Clone for ReferencePtr {
-	fn clone(&self) -> ReferencePtr {
-		match self {
-			ReferencePtr::Null => ReferencePtr::Null,
-			ReferencePtr::Class(value) => ReferencePtr::Class(Rc::clone(value)),
-			ReferencePtr::Array(value) => match value {
-				ArrayPtr::Primitive(value) => ReferencePtr::Array(ArrayPtr::Primitive(Rc::clone(value))),
-				ArrayPtr::Reference(value) => ReferencePtr::Array(ArrayPtr::Reference(Rc::clone(value))),
-			},
-			ReferencePtr::Interface(value) => ReferencePtr::Interface(Rc::clone(value)),
-		}
-	}
+    fn clone(&self) -> ReferencePtr {
+        match self {
+            ReferencePtr::Null => ReferencePtr::Null,
+            ReferencePtr::Class(value) => ReferencePtr::Class(Rc::clone(value)),
+            ReferencePtr::Array(value) => match value {
+                ArrayPtr::Primitive(value) => {
+                    ReferencePtr::Array(ArrayPtr::Primitive(Rc::clone(value)))
+                }
+                ArrayPtr::Reference(value) => {
+                    ReferencePtr::Array(ArrayPtr::Reference(Rc::clone(value)))
+                }
+            },
+            ReferencePtr::Interface(value) => ReferencePtr::Interface(Rc::clone(value)),
+        }
+    }
 }
-
 
 static CLASS_ALLOCATOR: JVMAllocator = JVMAllocator {};
 static PRIMITIVE_ARRAY_ALLOCATOR: JVMAllocator = JVMAllocator {};
@@ -47,58 +55,58 @@ static mut INSTANCE: Option<Heap> = None;
 pub struct Heap {}
 
 impl Heap {
-	pub fn initialize() {
-		Self::it();
-	}
+    pub fn initialize() {
+        Self::it();
+    }
 
-	fn new() -> Self {
-		Heap {}
-	}
+    fn new() -> Self {
+        Heap {}
+    }
 
-	fn it() -> &'static Self {
-		unsafe {
-			if INSTANCE.is_some() {
-				INSTANCE.as_ref().unwrap()
-			} else {
-				INSTANCE = Some(Heap::new());
-				INSTANCE.as_ref().unwrap()
-			}
-		}
-	}
+    fn it() -> &'static Self {
+        unsafe {
+            if INSTANCE.is_some() {
+                INSTANCE.as_ref().unwrap()
+            } else {
+                INSTANCE = Some(Heap::new());
+                INSTANCE.as_ref().unwrap()
+            }
+        }
+    }
 
-	pub fn allocate_class(object: Object) -> Reference {
-		Heap::it().allocate_class_impl(object)
-	}
+    pub fn allocate_class(object: Object) -> Reference {
+        Heap::it().allocate_class_impl(object)
+    }
 
-	fn allocate_class_impl(&self, object: Object) -> Reference {
-		let value = Rc::new_in(RefCell::new(object), &CLASS_ALLOCATOR);
-		Reference::from_value(ReferencePtr::Class(value))
-	}
+    fn allocate_class_impl(&self, object: Object) -> Reference {
+        let value = Rc::new_in(RefCell::new(object), &CLASS_ALLOCATOR);
+        Reference::from_value(ReferencePtr::Class(value))
+    }
 
-	pub fn allocate_primitive_array(array: PrimitiveArray) -> Reference {
-		Heap::it().allocate_primitive_array_impl(array)
-	}
+    pub fn allocate_primitive_array(array: PrimitiveArray) -> Reference {
+        Heap::it().allocate_primitive_array_impl(array)
+    }
 
-	fn allocate_primitive_array_impl(&self, array: PrimitiveArray) -> Reference {
-		let value = Rc::new_in(RefCell::new(array), &PRIMITIVE_ARRAY_ALLOCATOR);
-		Reference::from_value(ReferencePtr::Array(ArrayPtr::Primitive(value)))
-	}
+    fn allocate_primitive_array_impl(&self, array: PrimitiveArray) -> Reference {
+        let value = Rc::new_in(RefCell::new(array), &PRIMITIVE_ARRAY_ALLOCATOR);
+        Reference::from_value(ReferencePtr::Array(ArrayPtr::Primitive(value)))
+    }
 
-	pub fn allocate_reference_array(array: ReferenceArray) -> Reference {
-		Heap::it().allocate_reference_array_impl(array)
-	}
+    pub fn allocate_reference_array(array: ReferenceArray) -> Reference {
+        Heap::it().allocate_reference_array_impl(array)
+    }
 
-	fn allocate_reference_array_impl(&self, array: ReferenceArray) -> Reference {
-		let value = Rc::new_in(RefCell::new(array), &REFERENCE_ARRAY_ALLOCATOR);
-		Reference::from_value(ReferencePtr::Array(ArrayPtr::Reference(value)))
-	}
+    fn allocate_reference_array_impl(&self, array: ReferenceArray) -> Reference {
+        let value = Rc::new_in(RefCell::new(array), &REFERENCE_ARRAY_ALLOCATOR);
+        Reference::from_value(ReferencePtr::Array(ArrayPtr::Reference(value)))
+    }
 
-	pub fn allocate_interface(object: Object) -> Reference {
-		Heap::it().allocate_interface_impl(object)
-	}
+    pub fn allocate_interface(object: Object) -> Reference {
+        Heap::it().allocate_interface_impl(object)
+    }
 
-	fn allocate_interface_impl(&self, object: Object) -> Reference {
-		let value = Rc::new_in(RefCell::new(object), &INTERFACE_ALLOCATOR);
-		Reference::from_value(ReferencePtr::Interface(value))
-	}
+    fn allocate_interface_impl(&self, object: Object) -> Reference {
+        let value = Rc::new_in(RefCell::new(object), &INTERFACE_ALLOCATOR);
+        Reference::from_value(ReferencePtr::Interface(value))
+    }
 }

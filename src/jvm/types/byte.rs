@@ -1,9 +1,9 @@
 use crate::class_loader::parser::U2;
 
-use super::{Value, IntegralTypes, int::Int};
+use super::{int::Int, IntegralTypes, Value};
 
 pub struct Byte {
-	value: i8,
+    value: i8,
 }
 
 impl IntegralTypes for Byte {}
@@ -18,17 +18,13 @@ impl Value for Byte {
     type Type = i8;
 
     fn new() -> Self {
-        Self {
-            value: 0,
-        }
+        Self { value: 0 }
     }
 
     fn from_value(value: i8) -> Self {
-        Self {
-            value,
-        }
+        Self { value }
     }
-    
+
     fn set(&mut self, value: i8) {
         self.value = value;
     }
@@ -42,11 +38,8 @@ impl Value for Byte {
     }
 }
 
-
 impl Clone for Byte {
     fn clone(&self) -> Self {
-        Self {
-            value: self.value,
-        }
+        Self { value: self.value }
     }
 }

@@ -1,25 +1,118 @@
-use crate::class_loader::parser::{Parser, U4, U2};
+use crate::class_loader::parser::{Parser, U2, U4};
 
-use self::{constants::{nop::NOP, iconst_n::{ICONST_M1, ICONST_0, ICONST_1, ICONST_2, ICONST_3, ICONST_4, ICONST_5}, lconst_n::{LCONST_0, LCONST_1}, fconst_n::{FCONST_0, FCONST_1, FCONST_2}, dconst_n::{DCONST_0, DCONST_1}, xpush::{BIPUSH, SIPUSH}, ldcx::{LDC, LDC_W, LDC2_W}, aconst_null::ACONST_NULL}, unimplemented_instructions::MONITOREXIT, unimplemented_instructions::PUTFIELD, unimplemented_instructions::INVOKEDYNAMIC, unimplemented_instructions::INVOKEINTERFACE, unimplemented_instructions::MONITORENTER, unimplemented_instructions::INSTANCEOF, unimplemented_instructions::ARRAYLENGTH, unimplemented_instructions::CHECKCAST, unimplemented_instructions::JSR, unimplemented_instructions::RET, unimplemented_instructions::WIDE, unimplemented_instructions::GOTO_W, unimplemented_instructions::JSR_W, unimplemented_instructions::BREAKPOINT, unimplemented_instructions::IMPDEP1, unimplemented_instructions::IMPDEP2, control::{x_return::{IRETURN, LRETURN, FRETURN, DRETURN, ARETURN, RETURN}, goto::GOTO, tableswitch::TABLESWITCH, lookupswitch::LOOKUPSWITCH}, loads::{aload_i::{ALOAD_0, ALOAD_1, ALOAD_2, ALOAD_3}, xload::{ILOAD, LLOAD, FLOAD, DLOAD, ALOAD}, iload_i::{ILOAD_0, ILOAD_1, ILOAD_2, ILOAD_3}, lload_i::{LLOAD_0, LLOAD_1, LLOAD_2, LLOAD_3}, fload_i::{FLOAD_0, FLOAD_1, FLOAD_2, FLOAD_3}, dload_i::{DLOAD_0, DLOAD_1, DLOAD_2, DLOAD_3}, xaload::{IALOAD, LALOAD, FALOAD, DALOAD, AALOAD, BALOAD, CALOAD, SALOAD}}, comparisons::{if_acmpop::{IF_ACMPEQ, IF_ACMPNE}, ifop::{IFEQ, IFNE, IFLT, IFGE, IFGT, IFLE}, lcmp::LCMP, fcmpl::FCMPL, fcmpg::FCMPG, dcmpl::DCMPL, dcmpg::DCMPG, if_icmpop::{IF_ICMPEQ, IF_ICMPNE, IF_ICMPLT, IF_ICMPGE, IF_ICMPGT, IF_ICMPLE}}, references::{new::NEW, invokespecial::INVOKESPECIAL, invokevirtual::INVOKEVIRTUAL, invokestatic::INVOKESTATIC, athrow::ATHROW, getstatic::GETSTATIC, newarray::NEWARRAY, putstatic::PUTSTATIC, anewarray::ANEWARRAY, getfield::GETFIELD}, stack::{dup::{DUP, DUP_X1, DUP_X2, DUP2, DUP2_X1, DUP2_X2}, swap::SWAP, pop::{POP, POP2}}, stores::{lstore_i::{LSTORE_0, LSTORE_1, LSTORE_2, LSTORE_3}, dstore_i::{DSTORE_0, DSTORE_1, DSTORE_2, DSTORE_3}, fstore_i::{FSTORE_0, FSTORE_1, FSTORE_2, FSTORE_3}, istore_i::{ISTORE_0, ISTORE_1, ISTORE_2, ISTORE_3}, astore_i::{ASTORE_0, ASTORE_1, ASTORE_2, ASTORE_3}, xstore::{ISTORE, LSTORE, FSTORE, DSTORE, ASTORE}, xastore::{IASTORE, LASTORE, FASTORE, DASTORE, AASTORE, BASTORE, CASTORE, SASTORE}}, math::{xadd::{IADD, LADD, FADD, DADD}, xsub::{ISUB, LSUB, FSUB, DSUB}, xmul::{IMUL, LMUL, FMUL, DMUL}, xdiv::{IDIV, LDIV, FDIV, DDIV}, xrem::{IREM, LREM, FREM, DREM}, xneg::{INEG, LNEG, FNEG, DNEG}, xshl::{ISHL, LSHL}, xshr::{ISHR, LSHR}, xushr::{IUSHR, LUSHR}, xand::{IAND, LAND}, xor::{IOR, LOR}, xxor::{IXOR, LXOR}, iinc::IINC}, conversions::x2y::{I2L, I2F, I2D, L2I, L2F, L2D, F2I, F2L, F2D, D2I, D2L, D2F, I2B, I2C, I2S}, extended::{ifnull::IFNULL, ifnonnull::IFNONNULL, multianewarray::MULTIANEWARRAY}};
+use self::{
+    comparisons::{
+        dcmpg::DCMPG,
+        dcmpl::DCMPL,
+        fcmpg::FCMPG,
+        fcmpl::FCMPL,
+        if_acmpop::{IF_ACMPEQ, IF_ACMPNE},
+        if_icmpop::{IF_ICMPEQ, IF_ICMPGE, IF_ICMPGT, IF_ICMPLE, IF_ICMPLT, IF_ICMPNE},
+        ifop::{IFEQ, IFGE, IFGT, IFLE, IFLT, IFNE},
+        lcmp::LCMP,
+    },
+    constants::{
+        aconst_null::ACONST_NULL,
+        dconst_n::{DCONST_0, DCONST_1},
+        fconst_n::{FCONST_0, FCONST_1, FCONST_2},
+        iconst_n::{ICONST_0, ICONST_1, ICONST_2, ICONST_3, ICONST_4, ICONST_5, ICONST_M1},
+        lconst_n::{LCONST_0, LCONST_1},
+        ldcx::{LDC, LDC2_W, LDC_W},
+        nop::NOP,
+        xpush::{BIPUSH, SIPUSH},
+    },
+    control::{
+        goto::GOTO,
+        lookupswitch::LOOKUPSWITCH,
+        tableswitch::TABLESWITCH,
+        x_return::{ARETURN, DRETURN, FRETURN, IRETURN, LRETURN, RETURN},
+    },
+    conversions::x2y::{D2F, D2I, D2L, F2D, F2I, F2L, I2B, I2C, I2D, I2F, I2L, I2S, L2D, L2F, L2I},
+    extended::{ifnonnull::IFNONNULL, ifnull::IFNULL, multianewarray::MULTIANEWARRAY},
+    loads::{
+        aload_i::{ALOAD_0, ALOAD_1, ALOAD_2, ALOAD_3},
+        dload_i::{DLOAD_0, DLOAD_1, DLOAD_2, DLOAD_3},
+        fload_i::{FLOAD_0, FLOAD_1, FLOAD_2, FLOAD_3},
+        iload_i::{ILOAD_0, ILOAD_1, ILOAD_2, ILOAD_3},
+        lload_i::{LLOAD_0, LLOAD_1, LLOAD_2, LLOAD_3},
+        xaload::{AALOAD, BALOAD, CALOAD, DALOAD, FALOAD, IALOAD, LALOAD, SALOAD},
+        xload::{ALOAD, DLOAD, FLOAD, ILOAD, LLOAD},
+    },
+    math::{
+        iinc::IINC,
+        xadd::{DADD, FADD, IADD, LADD},
+        xand::{IAND, LAND},
+        xdiv::{DDIV, FDIV, IDIV, LDIV},
+        xmul::{DMUL, FMUL, IMUL, LMUL},
+        xneg::{DNEG, FNEG, INEG, LNEG},
+        xor::{IOR, LOR},
+        xrem::{DREM, FREM, IREM, LREM},
+        xshl::{ISHL, LSHL},
+        xshr::{ISHR, LSHR},
+        xsub::{DSUB, FSUB, ISUB, LSUB},
+        xushr::{IUSHR, LUSHR},
+        xxor::{IXOR, LXOR},
+    },
+    references::{
+        anewarray::ANEWARRAY, athrow::ATHROW, getfield::GETFIELD, getstatic::GETSTATIC,
+        invokespecial::INVOKESPECIAL, invokestatic::INVOKESTATIC, invokevirtual::INVOKEVIRTUAL,
+        new::NEW, newarray::NEWARRAY, putstatic::PUTSTATIC,
+    },
+    stack::{
+        dup::{DUP, DUP2, DUP2_X1, DUP2_X2, DUP_X1, DUP_X2},
+        pop::{POP, POP2},
+        swap::SWAP,
+    },
+    stores::{
+        astore_i::{ASTORE_0, ASTORE_1, ASTORE_2, ASTORE_3},
+        dstore_i::{DSTORE_0, DSTORE_1, DSTORE_2, DSTORE_3},
+        fstore_i::{FSTORE_0, FSTORE_1, FSTORE_2, FSTORE_3},
+        istore_i::{ISTORE_0, ISTORE_1, ISTORE_2, ISTORE_3},
+        lstore_i::{LSTORE_0, LSTORE_1, LSTORE_2, LSTORE_3},
+        xastore::{AASTORE, BASTORE, CASTORE, DASTORE, FASTORE, IASTORE, LASTORE, SASTORE},
+        xstore::{ASTORE, DSTORE, FSTORE, ISTORE, LSTORE},
+    },
+    unimplemented_instructions::ARRAYLENGTH,
+    unimplemented_instructions::BREAKPOINT,
+    unimplemented_instructions::CHECKCAST,
+    unimplemented_instructions::GOTO_W,
+    unimplemented_instructions::IMPDEP1,
+    unimplemented_instructions::IMPDEP2,
+    unimplemented_instructions::INSTANCEOF,
+    unimplemented_instructions::INVOKEDYNAMIC,
+    unimplemented_instructions::INVOKEINTERFACE,
+    unimplemented_instructions::JSR,
+    unimplemented_instructions::JSR_W,
+    unimplemented_instructions::MONITORENTER,
+    unimplemented_instructions::MONITOREXIT,
+    unimplemented_instructions::PUTFIELD,
+    unimplemented_instructions::RET,
+    unimplemented_instructions::WIDE,
+};
 
-use super::{frame::Frame, execution_context::ExecutionContext, exception_handler::ExceptionHandlerTable, types::Types};
+use super::{
+    exception_handler::ExceptionHandlerTable, execution_context::ExecutionContext, frame::Frame,
+    types::Types,
+};
 
 pub mod unimplemented_instructions;
 
-pub mod constants;
-pub mod loads;
-pub mod stores;
-pub mod stack;
-pub mod math;
-pub mod conversions;
 pub mod comparisons;
-pub mod references;
+pub mod constants;
 pub mod control;
+pub mod conversions;
 pub mod extended;
+pub mod loads;
+pub mod math;
+pub mod references;
 pub mod reserved;
+pub mod stack;
+pub mod stores;
 
 pub trait Instruction {
-    fn new(parser: &mut Parser) -> Self where Self: Sized;
+    fn new(parser: &mut Parser) -> Self
+    where
+        Self: Sized;
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult;
     fn length(&self) -> U2;
     fn to_string(&self) -> String;
@@ -117,7 +210,11 @@ impl InstructionStream {
         }
     }
 
-    pub fn new(parser: &mut Parser, length: U4, exception_handler_table: ExceptionHandlerTable) -> InstructionStream {
+    pub fn new(
+        parser: &mut Parser,
+        length: U4,
+        exception_handler_table: ExceptionHandlerTable,
+    ) -> InstructionStream {
         let mut instructions = Vec::with_capacity(length as usize);
         while parser.remaining() > 0 {
             let instruction = Instructions::new(parser);
@@ -392,7 +489,10 @@ impl std::fmt::Debug for Instructions {
 }
 
 impl Instruction for Instructions {
-    fn new(parser: &mut Parser) -> Self where Self: Sized {
+    fn new(parser: &mut Parser) -> Self
+    where
+        Self: Sized,
+    {
         let opcode = parser.peek_u1();
         match opcode {
             0x00 => Instructions::NOP(NOP::new(parser)),
@@ -600,7 +700,7 @@ impl Instruction for Instructions {
             0xca => Instructions::BREAKPOINT(BREAKPOINT::new(parser)),
             0xfe => Instructions::IMPDEP1(IMPDEP1::new(parser)),
             0xff => Instructions::IMPDEP2(IMPDEP2::new(parser)),
-            v => panic!("Unknown opcode: {v}")
+            v => panic!("Unknown opcode: {v}"),
         }
     }
 
@@ -811,7 +911,7 @@ impl Instruction for Instructions {
             Instructions::BREAKPOINT(instruction) => instruction.execute(execution_context),
             Instructions::IMPDEP1(instruction) => instruction.execute(execution_context),
             Instructions::IMPDEP2(instruction) => instruction.execute(execution_context),
-                    }
+        }
     }
 
     fn length(&self) -> U2 {

@@ -1,9 +1,9 @@
 use crate::class_loader::parser::U2;
 
-use super::{Value, PrimitiveTypes};
+use super::{PrimitiveTypes, Value};
 
 pub struct ReturnAddress {
-	value: usize,
+    value: usize,
 }
 
 impl PrimitiveTypes for ReturnAddress {}
@@ -16,9 +16,7 @@ impl Value for ReturnAddress {
     }
 
     fn from_value(value: usize) -> Self {
-        Self {
-            value,
-        }
+        Self { value }
     }
 
     fn set(&mut self, value: usize) {
@@ -36,8 +34,6 @@ impl Value for ReturnAddress {
 
 impl Clone for ReturnAddress {
     fn clone(&self) -> Self {
-        Self {
-            value: self.value,
-        }
+        Self { value: self.value }
     }
 }

@@ -1,6 +1,12 @@
 use std::cmp::Ordering;
 
-use super::{constant_pool_info::{ConstantPool, ConstantPoolInfo, ConstantPoolInfoType}, field_info::FieldInfo, method_info::MethodInfo, attribute_info::AttributeInfo, parser::{Parser, U2, U4}};
+use super::{
+    attribute_info::AttributeInfo,
+    constant_pool_info::{ConstantPool, ConstantPoolInfo, ConstantPoolInfoType},
+    field_info::FieldInfo,
+    method_info::MethodInfo,
+    parser::{Parser, U2, U4},
+};
 use crate::class_loader::{attribute_info::Attribute, constant_pool_info::ConstantEmptyItem};
 
 pub enum ClassFileAccessFlags {
@@ -36,7 +42,7 @@ pub fn compare_class_file_version_to_global(major_version: u16, minor_version: u
 
 #[derive(Debug, Clone)]
 pub struct ClassFile {
-	pub magic: U4,
+    pub magic: U4,
     pub minor_version: U2,
     pub major_version: U2,
     pub constant_pool_count: U2,
@@ -71,11 +77,14 @@ impl ClassFile {
         }
 
         let constant_pool_count = parser.consume_u2();
-        let mut constants: Vec<ConstantPoolInfoType> = Vec::with_capacity((constant_pool_count - 1) as usize);
+        let mut constants: Vec<ConstantPoolInfoType> =
+            Vec::with_capacity((constant_pool_count - 1) as usize);
         for _ in 0..(constant_pool_count - 1) {
             if let Some(c) = constants.last() {
                 if c.get_tag() == &5 || c.get_tag() == &6 {
-                    constants.push(ConstantPoolInfoType::EmptyItem(ConstantEmptyItem::new(&mut parser)));
+                    constants.push(ConstantPoolInfoType::EmptyItem(ConstantEmptyItem::new(
+                        &mut parser,
+                    )));
                     continue;
                 }
             }
@@ -122,7 +131,7 @@ impl ClassFile {
             methods_count,
             methods,
             attributes_count,
-            attributes
+            attributes,
         }
     }
 

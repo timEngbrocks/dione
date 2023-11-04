@@ -1,4 +1,8 @@
-use super::{attribute_info::{AttributeInfo, Attribute}, parser::Parser, constant_pool_info::ConstantPool};
+use super::{
+    attribute_info::{Attribute, AttributeInfo},
+    constant_pool_info::ConstantPool,
+    parser::Parser,
+};
 
 #[derive(Debug)]
 pub enum FieldAccessFlags {
@@ -25,22 +29,22 @@ pub struct FieldInfo {
 }
 
 impl FieldInfo {
-	pub fn new(parser: &mut Parser, constant_pool: &ConstantPool) -> FieldInfo {
-		let access_flags = parser.consume_u2();
-		let name_index = parser.consume_u2();
-		let descriptor_index = parser.consume_u2();
-		let attributes_count = parser.consume_u2();
-		let mut attributes = Vec::with_capacity(attributes_count as usize);
-		for _ in 0..attributes_count {
-			attributes.push(AttributeInfo::new(parser, constant_pool));
-		}
+    pub fn new(parser: &mut Parser, constant_pool: &ConstantPool) -> FieldInfo {
+        let access_flags = parser.consume_u2();
+        let name_index = parser.consume_u2();
+        let descriptor_index = parser.consume_u2();
+        let attributes_count = parser.consume_u2();
+        let mut attributes = Vec::with_capacity(attributes_count as usize);
+        for _ in 0..attributes_count {
+            attributes.push(AttributeInfo::new(parser, constant_pool));
+        }
 
-		FieldInfo {
-			access_flags,
-			name_index,
-			descriptor_index,
-			attributes_count,
-			attributes
-		}
-	}
+        FieldInfo {
+            access_flags,
+            name_index,
+            descriptor_index,
+            attributes_count,
+            attributes,
+        }
+    }
 }

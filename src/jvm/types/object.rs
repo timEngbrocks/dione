@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::{jvm::object_manager::ObjectManager, class_loader::class_file::ClassFile};
+use crate::{class_loader::class_file::ClassFile, jvm::object_manager::ObjectManager};
 
 use super::{field::Field, method::Method};
 
