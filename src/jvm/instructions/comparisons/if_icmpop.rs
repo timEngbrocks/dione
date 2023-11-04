@@ -37,7 +37,7 @@ impl Instruction for IF_ICMPEQ {
                     let value2 = value2.get();
                     let value1 = value1.get();
                     if value1 == value2 {
-                        InstructionResult::branch(BranchKind::Relative(offset))
+                        InstructionResult::branch(BranchKind::Relative(offset as i32))
                     } else {
                         InstructionResult::empty()
                     }
@@ -85,7 +85,7 @@ impl Instruction for IF_ICMPNE {
                     let value2 = value2.get();
                     let value1 = value1.get();
                     if value1 != value2 {
-                        InstructionResult::branch(BranchKind::Relative(offset))
+                        InstructionResult::branch(BranchKind::Relative(offset as i32))
                     } else {
                         InstructionResult::empty()
                     }
@@ -133,7 +133,7 @@ impl Instruction for IF_ICMPLT {
                     let value2 = value2.get();
                     let value1 = value1.get();
                     if value1 < value2 {
-                        InstructionResult::branch(BranchKind::Relative(offset))
+                        InstructionResult::branch(BranchKind::Relative(offset as i32))
                     } else {
                         InstructionResult::empty()
                     }
@@ -181,7 +181,7 @@ impl Instruction for IF_ICMPGE {
                     let value2 = value2.get();
                     let value1 = value1.get();
                     if value1 >= value2 {
-                        InstructionResult::branch(BranchKind::Relative(offset))
+                        InstructionResult::branch(BranchKind::Relative(offset as i32))
                     } else {
                         InstructionResult::empty()
                     }
@@ -229,7 +229,7 @@ impl Instruction for IF_ICMPGT {
                     let value2 = value2.get();
                     let value1 = value1.get();
                     if value1 > value2 {
-                        InstructionResult::branch(BranchKind::Relative(offset))
+                        InstructionResult::branch(BranchKind::Relative(offset as i32))
                     } else {
                         InstructionResult::empty()
                     }
@@ -277,7 +277,7 @@ impl Instruction for IF_ICMPLE {
                     let value2 = value2.get();
                     let value1 = value1.get();
                     if value1 <= value2 {
-                        InstructionResult::branch(BranchKind::Relative(offset))
+                        InstructionResult::branch(BranchKind::Relative(offset as i32))
                     } else {
                         InstructionResult::empty()
                     }

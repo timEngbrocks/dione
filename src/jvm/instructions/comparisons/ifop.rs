@@ -34,7 +34,7 @@ impl Instruction for IFEQ {
         match execution_context.stack.pop() {
             Types::Int(value) => {
                 if value.get() == 0 {
-                    InstructionResult::branch(BranchKind::Relative(offset))
+                    InstructionResult::branch(BranchKind::Relative(offset as i32))
                 } else {
                     InstructionResult::empty()
                 }
@@ -77,7 +77,7 @@ impl Instruction for IFNE {
         match execution_context.stack.pop() {
             Types::Int(value) => {
                 if value.get() != 0 {
-                    InstructionResult::branch(BranchKind::Relative(offset))
+                    InstructionResult::branch(BranchKind::Relative(offset as i32))
                 } else {
                     InstructionResult::empty()
                 }
@@ -120,7 +120,7 @@ impl Instruction for IFLT {
         match execution_context.stack.pop() {
             Types::Int(value) => {
                 if value.get() < 0 {
-                    InstructionResult::branch(BranchKind::Relative(offset))
+                    InstructionResult::branch(BranchKind::Relative(offset as i32))
                 } else {
                     InstructionResult::empty()
                 }
@@ -163,7 +163,7 @@ impl Instruction for IFGE {
         match execution_context.stack.pop() {
             Types::Int(value) => {
                 if value.get() >= 0 {
-                    InstructionResult::branch(BranchKind::Relative(offset))
+                    InstructionResult::branch(BranchKind::Relative(offset as i32))
                 } else {
                     InstructionResult::empty()
                 }
@@ -206,7 +206,7 @@ impl Instruction for IFGT {
         match execution_context.stack.pop() {
             Types::Int(value) => {
                 if value.get() > 0 {
-                    InstructionResult::branch(BranchKind::Relative(offset))
+                    InstructionResult::branch(BranchKind::Relative(offset as i32))
                 } else {
                     InstructionResult::empty()
                 }
@@ -249,7 +249,7 @@ impl Instruction for IFLE {
         match execution_context.stack.pop() {
             Types::Int(value) => {
                 if value.get() <= 0 {
-                    InstructionResult::branch(BranchKind::Relative(offset))
+                    InstructionResult::branch(BranchKind::Relative(offset as i32))
                 } else {
                     InstructionResult::empty()
                 }

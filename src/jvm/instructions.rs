@@ -28,7 +28,9 @@ use self::{
         x_return::{ARETURN, DRETURN, FRETURN, IRETURN, LRETURN, RETURN},
     },
     conversions::x2y::{D2F, D2I, D2L, F2D, F2I, F2L, I2B, I2C, I2D, I2F, I2L, I2S, L2D, L2F, L2I},
-    extended::{ifnonnull::IFNONNULL, ifnull::IFNULL, multianewarray::MULTIANEWARRAY},
+    extended::{
+        goto_w::GOTO_W, ifnonnull::IFNONNULL, ifnull::IFNULL, multianewarray::MULTIANEWARRAY,
+    },
     loads::{
         aload_i::{ALOAD_0, ALOAD_1, ALOAD_2, ALOAD_3},
         dload_i::{DLOAD_0, DLOAD_1, DLOAD_2, DLOAD_3},
@@ -75,7 +77,6 @@ use self::{
     unimplemented_instructions::ARRAYLENGTH,
     unimplemented_instructions::BREAKPOINT,
     unimplemented_instructions::CHECKCAST,
-    unimplemented_instructions::GOTO_W,
     unimplemented_instructions::IMPDEP1,
     unimplemented_instructions::IMPDEP2,
     unimplemented_instructions::INSTANCEOF,
@@ -119,8 +120,8 @@ pub trait Instruction {
 }
 
 pub enum BranchKind {
-    Absolute(u16),
-    Relative(i16),
+    Absolute(usize),
+    Relative(i32),
 }
 
 pub enum ReturnKind {
@@ -196,6 +197,7 @@ pub struct InstructionStream {
     instructions: Vec<Instructions>,
     length: usize,
     cursor: usize,
+    pre_cursor: usize,
     exception_handler_table: ExceptionHandlerTable,
 }
 
@@ -206,6 +208,7 @@ impl InstructionStream {
             instructions: Vec::new(),
             length: 0,
             cursor: 0,
+            pre_cursor: 0,
             exception_handler_table: ExceptionHandlerTable::new(),
         }
     }
@@ -226,6 +229,7 @@ impl InstructionStream {
             instructions,
             length,
             cursor: 0,
+            pre_cursor: 0,
             exception_handler_table,
         }
     }
@@ -238,8 +242,9 @@ impl InstructionStream {
         if !self.has_next() {
             panic!("Error handling!");
         }
-        let instruction = &self.instructions[self.cursor];
-        self.cursor += 1;
+        self.pre_cursor = self.cursor;
+        let instruction = &self.instructions[self.cursor_to_index(self.cursor)];
+        self.cursor += instruction.length() as usize;
         instruction
     }
 
@@ -250,8 +255,13 @@ impl InstructionStream {
         self.cursor = index;
     }
 
-    pub fn relative_jump(&mut self, offset: usize) {
-        self.absolute_jump(self.cursor + offset);
+    // FIXME: usize can not simply be casted to i32
+    pub fn relative_jump(&mut self, offset: i32) {
+        let new_cursor = (self.pre_cursor as i32) + offset;
+        if new_cursor >= self.length as i32 || new_cursor < 0 {
+            panic!("Error handling!");
+        }
+        self.cursor = new_cursor as usize;
     }
 
     pub fn try_handle(&mut self, exception: &()) -> bool {
@@ -268,6 +278,18 @@ impl InstructionStream {
 
     pub fn cursor(&self) -> &usize {
         &self.cursor
+    }
+
+    // FIXME: Find a better way to do this
+    fn cursor_to_index(&self, cursor: usize) -> usize {
+        let mut i = 0;
+        for (index, instruction) in self.instructions.iter().enumerate() {
+            if i == cursor {
+                return index;
+            }
+            i += instruction.length() as usize;
+        }
+        panic!("Error handling!");
     }
 }
 

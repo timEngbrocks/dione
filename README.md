@@ -44,8 +44,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 136/205 Instructions</label>
-<progress id="status" value="136" max="205"></progress>
+<label for="status">Status: Finished 138/205 Instructions</label>
+<progress id="status" value="138" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -216,7 +216,7 @@ latest GNU nightly toolchain from Rust.
 | <span style="color:green">IF_ICMPLE</span> | implemented |
 | IF_ACMPEQ | not implemented |
 | IF_ACMPNE | not implemented |
-| GOTO | not implemented |
+| <span style="color:green">GOTO</span> | implemented |
 | JSR | not implemented |
 | RET | not implemented |
 | TABLESWITCH | not implemented |
@@ -249,7 +249,7 @@ latest GNU nightly toolchain from Rust.
 | <span style="color:green">MULTIANEWARRAY</span> | implemented |
 | <span style="color:green">IFNULL</span> | implemented |
 | <span style="color:green">IFNONNULL</span> | implemented |
-| GOTO_W | not implemented |
+| <span style="color:green">GOTO_W</span> | implemented |
 | JSR_W | not implemented |
 | BREAKPOINT | not implemented |
 | IMPDEP1 | not implemented |

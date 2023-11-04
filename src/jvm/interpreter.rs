@@ -96,14 +96,10 @@ impl Interpreter {
             if let Some(branch) = result.branch {
                 match branch {
                     BranchKind::Absolute(value) => {
-                        execution_context
-                            .instruction_stream
-                            .absolute_jump(value as usize);
+                        execution_context.instruction_stream.absolute_jump(value);
                     }
                     BranchKind::Relative(value) => {
-                        execution_context
-                            .instruction_stream
-                            .relative_jump(value as usize);
+                        execution_context.instruction_stream.relative_jump(value);
                     }
                 }
                 continue;

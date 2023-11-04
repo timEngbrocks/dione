@@ -83,31 +83,6 @@ impl Instruction for WIDE {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct GOTO_W {}
-impl Instruction for GOTO_W {
-    fn new(parser: &mut Parser) -> Self
-    where
-        Self: Sized,
-    {
-        let opcode = parser.consume_u1();
-        assert_eq!(opcode, opcodes!(Instructions::GOTO_W));
-        todo!("Implement");
-    }
-
-    fn execute(&self, _: &mut Frame) -> InstructionResult {
-        unimplemented!()
-    }
-
-    fn length(&self) -> U2 {
-        1
-    }
-
-    fn to_string(&self) -> String {
-        unimplemented!("GOTO_W")
-    }
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct JSR_W {}
 impl Instruction for JSR_W {
     fn new(parser: &mut Parser) -> Self

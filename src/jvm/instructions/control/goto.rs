@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U1, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
+        instructions::{BranchKind, Instruction, InstructionResult},
     },
     opcodes,
 };
@@ -29,7 +29,8 @@ impl Instruction for GOTO {
     }
 
     fn execute(&self, _: &mut Frame) -> InstructionResult {
-        unimplemented!("GOTO::execute")
+        let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
+        InstructionResult::branch(BranchKind::Relative(offset as i32))
     }
 
     fn length(&self) -> U2 {
