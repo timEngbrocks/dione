@@ -36,12 +36,13 @@ impl Instruction for GETFIELD {
 		let object = object_ref.borrow_mut();
 		// FIXME: Check if field_ref.class_ref is a superclass of object
 		// assert_eq!(object.name, field_ref.class_ref.name);
-		println!("Getting field `{}.{} - {}` from object `{}`", &field_ref.class_ref.name, &field_ref.name, &field_ref.descriptor, &object.name);
 		let value = match object.get_field(&field_ref.name, &field_ref.descriptor) {
-			Some(field) => match field.get_value() {
-				Some(value) => value,
-				None => panic!("Expected value"),
-			},
+			Some(field) => {
+				match field.get_value() {
+					Some(value) => value,
+					None => panic!("Expected value"),
+				}
+			}
 			None => panic!("Expected field"),
 		};
 		execution_context.stack.push(value.clone());

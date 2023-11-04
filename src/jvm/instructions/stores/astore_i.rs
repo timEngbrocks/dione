@@ -53,7 +53,7 @@ impl Instruction for ASTORE_1 {
 				InstructionResult::empty()
 			},
 			Types::Reference(value) => {
-				execution_context.local_variables.set(0, Types::Reference(value));
+				execution_context.local_variables.set(1, Types::Reference(value));
 				InstructionResult::empty()
 			},
 			_ => panic!("ASTORE_1: Expected ReturnAddress/Reference"),
@@ -87,7 +87,7 @@ impl Instruction for ASTORE_2 {
 				InstructionResult::empty()
 			},
 			Types::Reference(value) => {
-				execution_context.local_variables.set(0, Types::Reference(value));
+				execution_context.local_variables.set(2, Types::Reference(value));
 				InstructionResult::empty()
 			},
 			_ => panic!("ASTORE_2: Expected ReturnAddress/Reference"),
@@ -121,7 +121,7 @@ impl Instruction for ASTORE_3 {
 				InstructionResult::empty()
 			},
 			Types::Reference(value) => {
-				execution_context.local_variables.set(0, Types::Reference(value));
+				execution_context.local_variables.set(3, Types::Reference(value));
 				InstructionResult::empty()
 			},
 			_ => panic!("ASTORE_3: Expected ReturnAddress/Reference"),

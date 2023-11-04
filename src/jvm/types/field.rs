@@ -14,10 +14,10 @@ pub enum FieldAccessFlags {
 
 #[derive(Clone)]
 pub struct Field {
-    name: String,
-    descriptor: String,
-    access_flags: u16,
-    value: Option<Types>,
+    pub name: String,
+    pub descriptor: String,
+    pub access_flags: u16,
+    pub value: Option<Types>,
 }
 
 impl Field {

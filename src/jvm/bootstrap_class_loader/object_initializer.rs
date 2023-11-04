@@ -106,10 +106,9 @@ fn get_fields(class_file: &ClassFile) -> (HashMap<String, Field>, HashMap<String
 
 fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
 	let mut methods = HashMap::new();
-	// println!("Parsing {} methods", class_file.methods.len());
+	
 	for (_, method) in class_file.methods.iter().enumerate() {
 		let name = resolve_constant!(ConstantPoolInfoType::Utf8, method.name_index, &class_file.constant_pool).to_string();
-		// println!("Method `{}` ({}/{})", name, index + 1, class_file.methods.len());
 
 		let descriptor = resolve_constant!(ConstantPoolInfoType::Utf8, method.descriptor_index, &class_file.constant_pool).to_string();
 		let access_flags = method.access_flags;

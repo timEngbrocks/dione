@@ -70,66 +70,6 @@ impl Instruction for WIDE {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct IFNULL {
-	branchbyte1: U1,
-	branchbyte2: U1,
-}
-impl Instruction for IFNULL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IFNULL));
-		let branchbyte1 = parser.consume_u1();
-		let branchbyte2 = parser.consume_u1();
-		IFNULL {
-			branchbyte1,
-			branchbyte2,
-		}
-	}
-
-	fn execute(&self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		3
-	}
-
-	fn to_string(&self) -> String {
-		unimplemented!("IFNULL")
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IFNONNULL {
-	branchbyte1: U1,
-	branchbyte2: U1,
-}
-impl Instruction for IFNONNULL {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::IFNONNULL));
-		let branchbyte1 = parser.consume_u1();
-		let branchbyte2 = parser.consume_u1();
-		IFNONNULL {
-			branchbyte1,
-			branchbyte2,
-		}
-	}
-
-	fn execute(&self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		3
-	}
-
-	fn to_string(&self) -> String {
-		unimplemented!("IFNONNULL")
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct GOTO_W {}
 impl Instruction for GOTO_W {
 	fn new(parser: &mut Parser) -> Self where Self: Sized {

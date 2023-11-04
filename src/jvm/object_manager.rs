@@ -2,13 +2,14 @@ use std::collections::HashMap;
 
 use crate::util::heap::Heap;
 
-use super::{types::{object::Object, reference::Reference}, bootstrap_class_loader::BootstrapClassLoader, interpreter::Interpreter};
+use super::{types::{object::Object, reference::Reference, Value, field::Field, Types}, bootstrap_class_loader::BootstrapClassLoader, interpreter::Interpreter};
 
 static mut INSTANCE: Option<ObjectManager> = None;
 
 pub struct ObjectManager {
 	bootstrap_class_loader: BootstrapClassLoader,
 	objects: HashMap<String, Object>,
+	associated_class_objects: HashMap<String, Reference>,
 	initialized: HashMap<String, bool>,
 	being_initialized: HashMap<String, bool>,
 	jdk_base_path: String,
@@ -39,6 +40,13 @@ impl ObjectManager {
 	pub fn instantiate(name: &str) -> Reference {
 		let instance = ObjectManager::it();
 		instance.instantiate_impl(name)
+	}
+
+	pub fn get_associated_class_object(name: &str) -> Reference {
+		match ObjectManager::it().associated_class_objects.get(name) {
+			Some(reference) => reference.clone(),
+			None => panic!("Associated class object not found: {}", name),
+		}
 	}
 
 	pub fn is_class(name: &str) -> bool {
@@ -76,12 +84,14 @@ impl ObjectManager {
 		let mut bootstrap_class_loader = BootstrapClassLoader::new();
 		bootstrap_class_loader.initialize(jdk_base_path.clone());
 		let objects: HashMap<String, Object> = HashMap::new();
+		let associated_class_objects: HashMap<String, Reference> = HashMap::new();
 		let initialized: HashMap<String, bool> = HashMap::new();
 		let being_initialized: HashMap<String, bool> = HashMap::new();
 
 		ObjectManager {
 			bootstrap_class_loader,
 			objects,
+			associated_class_objects,
 			initialized,
 			being_initialized,
 			jdk_base_path,
@@ -116,7 +126,9 @@ impl ObjectManager {
 		let mut objects = self.bootstrap_class_loader.load_object(name);
 		for object in objects.drain(..) {
 			self.initialized.insert(object.name.clone(), false);
+			let name = object.name.clone();
 			self.objects.insert(object.name.clone(), object);
+			self.construct_associated_class_object(&name);
 		}
 	}
 
@@ -155,5 +167,25 @@ impl ObjectManager {
 				Heap::allocate_class(object)
 			},
 		}
+	}
+
+	fn construct_associated_class_object(&mut self, name: &str) {
+		let base = self.get_impl(name).clone();
+		let mut object = self.get_impl("java/lang/Class").clone();
+		// FIXME: Set module
+		object.put_field(Field::new("module".to_string(), "Ljava/lang/Module;".to_string(), 0x0002 | 0x0080, Some(Types::Reference(Reference::new()))));
+		// FIXME: Set classLoader
+		object.put_field(Field::new("classLoader".to_string(), "Ljava/lang/ClassLoader;".to_string(), 0x0002 | 0x0010, Some(Types::Reference(Reference::new()))));
+		if object.is_class() {
+			let reference = Heap::allocate_class(base);
+			object.put_field(Field::new("classData".to_string(), "Ljava/lang/Object;".to_string(), 0x0002 | 0x0080, Some(Types::Reference(reference))));
+		} else if object.is_interface() {
+			let reference = Heap::allocate_interface(base);
+			object.put_field(Field::new("classData".to_string(), "Ljava/lang/Object;".to_string(), 0x0002 | 0x0080, Some(Types::Reference(reference))));
+		} else {
+			panic!("Could not construct associated class object for {} because it is neither a class nor an interface", name);
+		}
+		let reference = Heap::allocate_class(object);
+		self.associated_class_objects.insert(name.to_string(), reference);
 	}
 }

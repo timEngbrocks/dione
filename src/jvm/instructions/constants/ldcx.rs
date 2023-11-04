@@ -120,7 +120,7 @@ fn ldc_impl(execution_context: &mut Frame, index: u16) {
 			unimplemented!("LDC::execute: String");
 		},
 		RuntimeConstants::SymRefClassOrInterface(class_ref) => {
-			let reference = ObjectManager::instantiate(&class_ref.name);
+			let reference = ObjectManager::get_associated_class_object(&class_ref.name);
 			execution_context.stack.push(Types::Reference(reference));
 		},
 		// TODO: method type, method handle, dynamically computed constant
