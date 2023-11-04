@@ -1,4 +1,4 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::HashMap;
 
 use crate::{jvm::object_manager::ObjectManager, class_loader::class_file::ClassFile};
 
@@ -21,8 +21,8 @@ pub enum ObjectAccessFlags {
 pub struct Object {
     pub name: String,
     pub access_flags: u16,
-    pub super_class: Option<String>,
-    pub interfaces: HashSet<String>,
+    pub super_class: Option<Box<Object>>,
+    pub interfaces: HashMap<String, Object>,
     pub fields: HashMap<String, Field>,
     pub static_fields: HashMap<String, Field>,
     pub methods: HashMap<String, Method>,
@@ -33,8 +33,8 @@ impl Object {
     pub fn new_class(
         name: String,
         access_flags: u16,
-        super_class: Option<String>,
-        interfaces: HashSet<String>,
+        super_class: Option<Box<Object>>,
+        interfaces: HashMap<String, Object>,
         fields: HashMap<String, Field>,
         static_fields: HashMap<String, Field>,
         methods: HashMap<String, Method>,
@@ -55,8 +55,8 @@ impl Object {
     pub fn new_interface(
         name: String,
         access_flags: u16,
-        super_class: Option<String>,
-        interfaces: HashSet<String>,
+        super_class: Option<Box<Object>>,
+        interfaces: HashMap<String, Object>,
         static_fields: HashMap<String, Field>,
         methods: HashMap<String, Method>,
         class_file: ClassFile,
@@ -78,7 +78,6 @@ impl Object {
         if self.methods.contains_key(key.as_str()) {
             Some((self, self.methods.get(key.as_str()).unwrap()))
         } else if let Some(super_class) = &self.super_class {
-            let super_class = ObjectManager::get(super_class);
             super_class.get_method(method_name, descriptor)
         } else {
             None
@@ -90,7 +89,7 @@ impl Object {
         if self.static_fields.contains_key(key.as_str()) {
             self.static_fields.get_mut(key.as_str())
         } else if let Some(super_class) = &self.super_class {
-            let super_class = ObjectManager::get(super_class);
+            let super_class = ObjectManager::get(&super_class.name);
             super_class.get_static_field(field_name, descriptor)
         } else {
             None
@@ -99,10 +98,10 @@ impl Object {
 
     pub fn get_field(&self, field_name: &str, descriptor: &str) -> Option<&Field> {
         let key: String = format!("{}{}", field_name, descriptor);
+        println!("key: {}, contains: {}, super_class: {}", key, self.fields.contains_key(key.as_str()), self.super_class.as_ref().unwrap().name);
         if self.fields.contains_key(key.as_str()) {
             self.fields.get(key.as_str())
         } else if let Some(super_class) = &self.super_class {
-            let super_class = ObjectManager::get(super_class);
             super_class.get_field(field_name, descriptor)
         } else {
             None

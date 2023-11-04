@@ -240,36 +240,6 @@ impl Instruction for IMPDEP2 {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct GETFIELD {
-	indexbyte1: U1,
-	indexbyte2: U1,
-}
-impl Instruction for GETFIELD {
-	fn new(parser: &mut Parser) -> Self where Self: Sized {
-		let opcode = parser.consume_u1();
-		assert_eq!(opcode, opcodes!(Instructions::GETFIELD));
-		let indexbyte1 = parser.consume_u1();
-		let indexbyte2 = parser.consume_u1();
-		GETFIELD {
-			indexbyte1,
-			indexbyte2,
-		}
-	}
-
-	fn execute(&self, _: &mut Frame) -> InstructionResult {
-		unimplemented!()
-	}
-
-	fn length(&self) -> U2 {
-		3
-	}
-
-	fn to_string(&self) -> String {
-		unimplemented!("GETFIELD")
-	}
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct PUTFIELD {
 	indexbyte1: U1,
 	indexbyte2: U1,

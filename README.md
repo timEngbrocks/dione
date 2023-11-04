@@ -44,8 +44,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 133/205 Instructions</label>
-<progress id="status" value="133" max="205"></progress>
+<label for="status">Status: Finished 134/205 Instructions</label>
+<progress id="status" value="134" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -229,7 +229,7 @@ latest GNU nightly toolchain from Rust.
 | <span style="color:green">RETURN</span> | implemented |
 | GETSTATIC | not implemented |
 | <span style="color:green">PUTSTATIC</span> | implemented |
-| GETFIELD | not implemented |
+| <span style="color:green">GETFIELD</span> | implemented |
 | PUTFIELD | not implemented |
 | <span style="color:yellow">INVOKEVIRTUAL</span> | partially implemented |
 | <span style="color:yellow">INVOKESPECIAL</span> | partially implemented |

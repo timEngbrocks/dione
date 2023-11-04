@@ -8,3 +8,4 @@ pub mod athrow;
 pub mod newarray;
 pub mod anewarray;
 pub mod multianewarray;
+pub mod getfield;

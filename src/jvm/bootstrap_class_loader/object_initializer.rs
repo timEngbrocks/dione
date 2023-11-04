@@ -1,6 +1,6 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::HashMap;
 
-use crate::{class_loader::{class_file::ClassFile, constant_pool_info::ConstantPoolInfoType, attribute_info::AttributeInfo, parser::Parser}, jvm::{types::{object::Object, field::{Field, FieldAccessFlags}, method::{Method, MethodAccesFlags}}, instructions::InstructionStream}, resolve_constant};
+use crate::{class_loader::{class_file::ClassFile, constant_pool_info::ConstantPoolInfoType, attribute_info::AttributeInfo, parser::Parser}, jvm::{types::{object::Object, field::{Field, FieldAccessFlags}, method::{Method, MethodAccesFlags}}, instructions::InstructionStream, object_manager::ObjectManager}, resolve_constant};
 
 pub fn initialize_class(mut class_file: ClassFile) -> Object {
 	let name = get_name(&class_file);
@@ -52,20 +52,24 @@ fn get_access_flags(class_file: &ClassFile) -> u16 {
 	class_file.access_flags
 }
 
-fn get_super_class(class_file: &ClassFile) -> Option<String> {
+fn get_super_class(class_file: &ClassFile) -> Option<Box<Object>> {
 	if class_file.super_class == 0 {
 		None
 	} else {
 		let super_class = resolve_constant!(ConstantPoolInfoType::Class, class_file.super_class, &class_file.constant_pool);
-		Some(resolve_constant!(ConstantPoolInfoType::Utf8, super_class.name_index, &class_file.constant_pool).to_string())
+		let name = resolve_constant!(ConstantPoolInfoType::Utf8, super_class.name_index, &class_file.constant_pool).to_string();
+		let object = ObjectManager::get(name.as_str());
+		Some(Box::new(object.clone()))
 	}
 }
 
-fn get_interfaces(class_file: &mut ClassFile) -> HashSet<String> {
-	let mut interfaces = HashSet::new();
+fn get_interfaces(class_file: &mut ClassFile) -> HashMap<String, Object> {
+	let mut interfaces: HashMap<String, Object> = HashMap::new();
 	for interface in class_file.interfaces.drain(..) {
 		let interface = resolve_constant!(ConstantPoolInfoType::Class, interface, &class_file.constant_pool);
-		interfaces.insert(resolve_constant!(ConstantPoolInfoType::Utf8, interface.name_index, &class_file.constant_pool).to_string());
+		let name = resolve_constant!(ConstantPoolInfoType::Utf8, interface.name_index, &class_file.constant_pool).to_string();
+		let object = ObjectManager::get(name.as_str());
+		interfaces.insert(name.clone(), object.clone());
 	}
 	interfaces
 }
