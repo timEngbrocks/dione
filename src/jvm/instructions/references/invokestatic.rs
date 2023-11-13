@@ -84,7 +84,7 @@ impl Instruction for INVOKESTATIC {
             panic!("Expected static method")
         }
 
-        // FIXME: Initialize class if not already initialized
+        ObjectManager::initialize_object(&object.name);
 
         let (max_locals, max_stack) = if method.is_native() {
             (None, None)
