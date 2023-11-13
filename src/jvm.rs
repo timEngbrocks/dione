@@ -167,7 +167,7 @@ impl JVM {
                     Box::new(
                         RollingFileAppender::builder()
                             .encoder(Box::new(PatternEncoder::new(
-                                "[{d(%H:%M:%S)} - {h({l})} - {T} (({i})) - {L}@{M}]: {m}{n}",
+                                "[{d(%H:%M:%S)}]: {m}{n}",
                             )))
                             .build(".log/instructions.log", Box::new(compound_policy))
                             .unwrap(),

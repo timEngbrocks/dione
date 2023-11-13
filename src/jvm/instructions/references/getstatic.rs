@@ -59,7 +59,15 @@ impl Instruction for GETSTATIC {
         3
     }
 
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        format!("getstatic: {}, {}", self.indexbyte1, self.indexbyte2)
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
+        let field = match runtime_constant_pool.get(index) {
+            RuntimeConstants::SymRefFieldOfClassOrInterface(field) => field,
+            _ => panic!("Expected SymRefFieldOfClassOrInterface"),
+        };
+        format!(
+            "getstatic {}.{}:{}",
+            field.class_ref.name, field.name, field.descriptor
+        )
     }
 }

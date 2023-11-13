@@ -504,12 +504,6 @@ pub enum Instructions {
     IMPDEP2(IMPDEP2),
 }
 
-// impl std::fmt::Debug for Instructions {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-//         write!(f, "{}", self.to_string())
-//     }
-// }
-
 impl Instruction for Instructions {
     fn new(parser: &mut Parser) -> Self
     where

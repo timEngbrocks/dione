@@ -69,16 +69,10 @@ impl Interpreter {
                 continue;
             }
 
-            let cursor = *execution_context.instruction_stream.cursor();
-            let len = *execution_context.instruction_stream.len();
-
             let instruction = execution_context.instruction_stream.next();
 
             trace!(
-                "({} - {}/{}) {}.{} -> {:?}",
-                self.identifier,
-                cursor,
-                len,
+                "{}.{} -> {:?}",
                 execution_context.frame.object_name,
                 execution_context.frame.method_name,
                 instruction.to_string(&execution_context.frame.runtime_constant_pool)

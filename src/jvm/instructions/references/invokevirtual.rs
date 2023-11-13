@@ -132,7 +132,34 @@ impl Instruction for INVOKEVIRTUAL {
         3
     }
 
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        format!("invokevirtual: {}, {}", self.indexbyte1, self.indexbyte2)
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
+        let (object, method) = match runtime_constant_pool.get(index) {
+            RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass {
+                name,
+                descriptor,
+                class_ref,
+            }) => {
+                let object = ObjectManager::get(class_ref.name.as_str());
+                object
+                    .get_method(name.as_str(), descriptor.as_str())
+                    .unwrap()
+            }
+            RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface {
+                name,
+                descriptor,
+                class_ref,
+            }) => {
+                let object = ObjectManager::get(class_ref.name.as_str());
+                object
+                    .get_method(name.as_str(), descriptor.as_str())
+                    .unwrap()
+            }
+            _ => panic!("Expected SymRefMethodOfClass or SymRefMethodOfInterface"),
+        };
+        format!(
+            "invokevirtual {}.{}:{}",
+            object.name, method.name, method.descriptor
+        )
     }
 }

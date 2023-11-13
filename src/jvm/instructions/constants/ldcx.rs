@@ -8,7 +8,7 @@ use crate::{
             numeric_constant::{NumericConstant, NumericConstantKind},
             RuntimeConstants, RuntimeConstantPool,
         },
-        types::Types,
+        types::{Types, Value},
     },
     opcodes,
 };
@@ -38,8 +38,8 @@ impl Instruction for LDC {
         2
     }
 
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        format!("ldc: {}", self.index)
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        ldc_to_string_impl(runtime_constant_pool, self.index as u16, "ldc".to_string())
     }
 }
 #[derive(Clone)]
@@ -73,8 +73,9 @@ impl Instruction for LDC_W {
         3
     }
 
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        format!("ldc_w: {}, {}", self.indexbyte1, self.indexbyte2)
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
+        ldc_to_string_impl(runtime_constant_pool, index, "ldc_w".to_string())
     }
 }
 #[derive(Clone)]
@@ -124,8 +125,51 @@ impl Instruction for LDC2_W {
         3
     }
 
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        format!("ldc2_w: {}, {}", self.indexbyte1, self.indexbyte2)
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
+        match runtime_constant_pool.get(index) {
+            RuntimeConstants::NumericConstant(NumericConstant {
+                value: NumericConstantKind::Long(value),
+            }) => {
+                format!("ldc2_w: Long({})", value.get())
+            }
+            RuntimeConstants::NumericConstant(NumericConstant {
+                value: NumericConstantKind::Double(value),
+            }) => {
+                format!("ldc2_w: Double({})", value.get())
+            }
+            // TODO: Dynamically computed long/double constant
+            _ => {
+                panic!("LDC2_W::to_string: Unknown constant at index {}", index);
+            }
+        }
+    }
+}
+
+fn ldc_to_string_impl(runtime_constant_pool: &RuntimeConstantPool, index: u16, kind: String) -> String {
+    match runtime_constant_pool.get(index) {
+        RuntimeConstants::NumericConstant(NumericConstant {
+            value: NumericConstantKind::Integer(value),
+        }) => {
+            format!("{}: Int({})", kind, value.get())
+        }
+        RuntimeConstants::NumericConstant(NumericConstant {
+            value: NumericConstantKind::Float(value),
+        }) => {
+            format!("{}: Float({})", kind, value.get())
+        }
+        RuntimeConstants::StringConstant(_) => {
+            // TODO: Push reference to an instance of class String that contains value
+            // TODO: Push reference to the above instance
+            unimplemented!("LDC::to_string: String");
+        }
+        RuntimeConstants::SymRefClassOrInterface(class_ref) => {
+            format!("{}: Object({})", kind, class_ref.name)
+        }
+        // TODO: method type, method handle, dynamically computed constant
+        _ => {
+            panic!("LDC::to_string: Unknown constant at index {}", index);
+        }
     }
 }
 

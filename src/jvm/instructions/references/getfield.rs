@@ -62,7 +62,16 @@ impl Instruction for GETFIELD {
         3
     }
 
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        format!("getfield {} {}", self.indexbyte1, self.indexbyte2)
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let index = (self.indexbyte1 as U2) << 8 | self.indexbyte2 as U2;
+        let field_ref = match runtime_constant_pool.get(index) {
+            RuntimeConstants::SymRefFieldOfClassOrInterface(field_ref) => field_ref,
+            _ => panic!("Expected SymRefFieldOfClassOrInterface"),
+        };
+        format!(
+            "getfield {} {}",
+            field_ref.name,
+            field_ref.descriptor,
+        )
     }
 }
