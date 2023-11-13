@@ -9,7 +9,7 @@ use crate::{
         types::{
             double::Double, float::Float, int::Int, long::Long, reference::Reference, ReturnTypes,
             Types, Value,
-        },
+        }, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -40,7 +40,7 @@ impl Instruction for IRETURN {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("ireturn")
     }
 }
@@ -86,7 +86,7 @@ impl Instruction for LRETURN {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("lreturn")
     }
 }
@@ -121,7 +121,7 @@ impl Instruction for FRETURN {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("freturn")
     }
 }
@@ -156,7 +156,7 @@ impl Instruction for DRETURN {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dreturn")
     }
 }
@@ -192,7 +192,7 @@ impl Instruction for ARETURN {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("areturn")
     }
 }
@@ -224,7 +224,7 @@ impl Instruction for RETURN {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("return")
     }
 }

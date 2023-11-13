@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
+        instructions::{Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -79,7 +79,7 @@ impl Instruction for TABLESWITCH {
         (1 + self.padding as u32 + 12 + 4 * (self.high - self.low + 1) as u32) as u16
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!(
             "tableswitch {}, {}, {}, {}, {:?}",
             self.padding, self.default, self.high, self.low, self.jump_offsets

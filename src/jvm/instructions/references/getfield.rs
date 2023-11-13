@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        runtime_constant_pool::RuntimeConstants,
+        runtime_constant_pool::{RuntimeConstants, RuntimeConstantPool},
         types::{Types, Value},
     },
     opcodes,
@@ -62,7 +62,7 @@ impl Instruction for GETFIELD {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("getfield {} {}", self.indexbyte1, self.indexbyte2)
     }
 }

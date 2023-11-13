@@ -4,7 +4,7 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         object_manager::ObjectManager,
-        runtime_constant_pool::RuntimeConstants,
+        runtime_constant_pool::{RuntimeConstants, RuntimeConstantPool},
         types::{
             array::{ReferenceArray, ReferenceArrayKind},
             reference::Reference,
@@ -89,7 +89,7 @@ impl Instruction for MULTIANEWARRAY {
         4
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!(
             "multianewarray: {}, {}, {}",
             self.indexbyte1, self.indexbyte2, self.dimensions

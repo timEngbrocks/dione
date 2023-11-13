@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{reference::Reference, Types, Value},
+        types::{reference::Reference, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -31,7 +31,7 @@ impl Instruction for ACONST_NULL {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("aconst_null")
     }
 }

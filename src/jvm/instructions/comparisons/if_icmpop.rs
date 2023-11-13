@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{BranchKind, Instruction, InstructionResult},
-        types::{Types, Value},
+        types::{Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -52,7 +52,7 @@ impl Instruction for IF_ICMPEQ {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_icmpeq: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -100,7 +100,7 @@ impl Instruction for IF_ICMPNE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_icmpne: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -148,7 +148,7 @@ impl Instruction for IF_ICMPLT {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_icmplt: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -196,7 +196,7 @@ impl Instruction for IF_ICMPGE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_icmpge: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -244,7 +244,7 @@ impl Instruction for IF_ICMPGT {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_icmpgt: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -292,7 +292,7 @@ impl Instruction for IF_ICMPLE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_icmple: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }

@@ -6,7 +6,7 @@ use crate::{
         object_manager::ObjectManager,
         runtime_constant_pool::{
             numeric_constant::{NumericConstant, NumericConstantKind},
-            RuntimeConstants,
+            RuntimeConstants, RuntimeConstantPool,
         },
         types::Types,
     },
@@ -38,7 +38,7 @@ impl Instruction for LDC {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ldc: {}", self.index)
     }
 }
@@ -73,7 +73,7 @@ impl Instruction for LDC_W {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ldc_w: {}, {}", self.indexbyte1, self.indexbyte2)
     }
 }
@@ -124,7 +124,7 @@ impl Instruction for LDC2_W {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ldc2_w: {}, {}", self.indexbyte1, self.indexbyte2)
     }
 }

@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U1, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
+        instructions::{Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -36,7 +36,7 @@ impl Instruction for IF_ACMPEQ {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_acmpeq: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -69,7 +69,7 @@ impl Instruction for IF_ACMPNE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("if_acmpne: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }

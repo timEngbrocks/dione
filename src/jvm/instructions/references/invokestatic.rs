@@ -11,7 +11,7 @@ use crate::{
         object_manager::ObjectManager,
         runtime_constant_pool::{
             sym_ref_method_of_class::SymRefMethodOfClass,
-            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants,
+            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants, RuntimeConstantPool,
         },
         types::Types,
     },
@@ -129,7 +129,7 @@ impl Instruction for INVOKESTATIC {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("invokestatic: {}, {}", self.indexbyte1, self.indexbyte2)
     }
 }

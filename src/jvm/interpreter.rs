@@ -81,7 +81,7 @@ impl Interpreter {
                 len,
                 execution_context.frame.object_name,
                 execution_context.frame.method_name,
-                instruction
+                instruction.to_string(&execution_context.frame.runtime_constant_pool)
             );
 
             let result = instruction.execute(&mut execution_context.frame);

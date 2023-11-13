@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::Types,
+        types::Types, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -35,7 +35,7 @@ impl Instruction for FLOAD_0 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fload_0")
     }
 }
@@ -66,7 +66,7 @@ impl Instruction for FLOAD_1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fload_1")
     }
 }
@@ -97,7 +97,7 @@ impl Instruction for FLOAD_2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fload_2")
     }
 }
@@ -128,7 +128,7 @@ impl Instruction for FLOAD_3 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fload_3")
     }
 }

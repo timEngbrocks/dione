@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{long::Long, Types, Value},
+        types::{long::Long, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -31,7 +31,7 @@ impl Instruction for LCONST_0 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("lconst_0")
     }
 }
@@ -58,7 +58,7 @@ impl Instruction for LCONST_1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("lconst_1")
     }
 }

@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::Types,
+        types::Types, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -37,7 +37,7 @@ impl Instruction for DUP {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dup")
     }
 }
@@ -72,7 +72,7 @@ impl Instruction for DUP_X1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dup_x1")
     }
 }
@@ -121,7 +121,7 @@ impl Instruction for DUP_X2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dup_x2")
     }
 }
@@ -165,7 +165,7 @@ impl Instruction for DUP2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dup2")
     }
 }
@@ -222,7 +222,7 @@ impl Instruction for DUP2_X1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dup2_x1")
     }
 }
@@ -303,7 +303,7 @@ impl Instruction for DUP2_X2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dup2_x2")
     }
 }

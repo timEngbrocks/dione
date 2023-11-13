@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
+        instructions::{Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -28,7 +28,7 @@ impl Instruction for IASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iastore")
     }
 }
@@ -53,7 +53,7 @@ impl Instruction for LASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("lastore")
     }
 }
@@ -78,7 +78,7 @@ impl Instruction for FASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fastore")
     }
 }
@@ -103,7 +103,7 @@ impl Instruction for DASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dastore")
     }
 }
@@ -128,7 +128,7 @@ impl Instruction for AASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("aastore")
     }
 }
@@ -153,7 +153,7 @@ impl Instruction for BASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("bastore")
     }
 }
@@ -178,7 +178,7 @@ impl Instruction for CASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("castore")
     }
 }
@@ -203,7 +203,7 @@ impl Instruction for SASTORE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("sastore")
     }
 }

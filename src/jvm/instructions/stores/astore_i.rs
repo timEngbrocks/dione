@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::Types,
+        types::Types, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -44,7 +44,7 @@ impl Instruction for ASTORE_0 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("astore_0")
     }
 }
@@ -84,7 +84,7 @@ impl Instruction for ASTORE_1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("astore_1")
     }
 }
@@ -124,7 +124,7 @@ impl Instruction for ASTORE_2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("astore_2")
     }
 }
@@ -164,7 +164,7 @@ impl Instruction for ASTORE_3 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("astore_3")
     }
 }

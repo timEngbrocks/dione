@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{BranchKind, Instruction, InstructionResult},
-        types::{Types, Value},
+        types::{Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -47,7 +47,7 @@ impl Instruction for IFEQ {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ifeq: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -90,7 +90,7 @@ impl Instruction for IFNE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ifne: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -133,7 +133,7 @@ impl Instruction for IFLT {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("iflt: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -176,7 +176,7 @@ impl Instruction for IFGE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ifge: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -219,7 +219,7 @@ impl Instruction for IFGT {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ifgt: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }
@@ -262,7 +262,7 @@ impl Instruction for IFLE {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("ifle: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }

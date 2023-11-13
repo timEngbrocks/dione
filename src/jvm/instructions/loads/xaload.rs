@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
+        instructions::{Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -28,7 +28,7 @@ impl Instruction for IALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iaload")
     }
 }
@@ -53,7 +53,7 @@ impl Instruction for LALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("laload")
     }
 }
@@ -78,7 +78,7 @@ impl Instruction for FALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("faload")
     }
 }
@@ -103,7 +103,7 @@ impl Instruction for DALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("daload")
     }
 }
@@ -128,7 +128,7 @@ impl Instruction for AALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("aaload")
     }
 }
@@ -153,7 +153,7 @@ impl Instruction for BALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("baload")
     }
 }
@@ -178,7 +178,7 @@ impl Instruction for CALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("caload")
     }
 }
@@ -203,7 +203,7 @@ impl Instruction for SALOAD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("saload")
     }
 }

@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{BranchKind, Instruction, InstructionResult},
-        types::Types,
+        types::Types, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -46,7 +46,7 @@ impl Instruction for IFNONNULL {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!(
             "ifnonnull {}",
             (self.branchbyte1 as i16) << 8 | self.branchbyte2 as i16

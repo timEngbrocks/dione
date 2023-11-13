@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{float::Float, Types, Value},
+        types::{float::Float, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -31,7 +31,7 @@ impl Instruction for FCONST_0 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fconst_0")
     }
 }
@@ -58,7 +58,7 @@ impl Instruction for FCONST_1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fconst_1")
     }
 }
@@ -85,7 +85,7 @@ impl Instruction for FCONST_2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fconst_2")
     }
 }

@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{int::Int, Value},
+        types::{int::Int, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -77,7 +77,7 @@ impl Instruction for LOOKUPSWITCH {
         (1 + self.padding as u32 + 8 + 8 * std::cmp::max(self.npairs, 0) as u32) as u16
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!(
             "lookupswitch {}, {}, {}, {:?}",
             self.padding, self.default, self.npairs, self.match_offset_pairs

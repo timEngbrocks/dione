@@ -1,6 +1,6 @@
 use crate::{
     class_loader::parser::{Parser, U1, U2},
-    jvm::frame::Frame,
+    jvm::{frame::Frame, runtime_constant_pool::RuntimeConstantPool},
     opcodes,
 };
 
@@ -27,7 +27,7 @@ impl Instruction for JSR {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("JSR")
     }
 }
@@ -52,7 +52,7 @@ impl Instruction for RET {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("RET")
     }
 }
@@ -77,7 +77,7 @@ impl Instruction for WIDE {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("WIDE")
     }
 }
@@ -102,7 +102,7 @@ impl Instruction for JSR_W {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("JSR_W")
     }
 }
@@ -127,7 +127,7 @@ impl Instruction for BREAKPOINT {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("BREAKPOINT")
     }
 }
@@ -152,7 +152,7 @@ impl Instruction for IMPDEP1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("IMPDEP1")
     }
 }
@@ -177,7 +177,7 @@ impl Instruction for IMPDEP2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("IMPDEP2")
     }
 }
@@ -210,7 +210,7 @@ impl Instruction for PUTFIELD {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("PUTFIELD")
     }
 }
@@ -248,7 +248,7 @@ impl Instruction for INVOKEINTERFACE {
         5
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("INVOKEINTERFACE")
     }
 }
@@ -285,7 +285,7 @@ impl Instruction for INVOKEDYNAMIC {
         5
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("INVOKEDYNAMIC")
     }
 }
@@ -310,7 +310,7 @@ impl Instruction for ARRAYLENGTH {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("ARRAYLENGTH")
     }
 }
@@ -343,7 +343,7 @@ impl Instruction for CHECKCAST {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("CHECKCAST")
     }
 }
@@ -376,7 +376,7 @@ impl Instruction for INSTANCEOF {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("INSTANCEOF")
     }
 }
@@ -401,7 +401,7 @@ impl Instruction for MONITORENTER {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("MONITORENTER")
     }
 }
@@ -426,7 +426,7 @@ impl Instruction for MONITOREXIT {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         unimplemented!("MONITOREXIT")
     }
 }

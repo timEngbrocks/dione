@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::Types,
+        types::Types, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -38,7 +38,7 @@ impl Instruction for ILOAD {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("iload {}", self.index)
     }
 }
@@ -72,7 +72,7 @@ impl Instruction for LLOAD {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("lload {}", self.index)
     }
 }
@@ -106,7 +106,7 @@ impl Instruction for FLOAD {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("fload {}", self.index)
     }
 }
@@ -140,7 +140,7 @@ impl Instruction for DLOAD {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("dload {}", self.index)
     }
 }
@@ -181,7 +181,7 @@ impl Instruction for ALOAD {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("aload {}", self.index)
     }
 }

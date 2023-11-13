@@ -6,7 +6,7 @@ use crate::{
         types::{
             byte::Byte, char::Char, double::Double, float::Float, int::Int, short::Short, Value,
         },
-        types::{long::Long, Types},
+        types::{long::Long, Types}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -39,7 +39,7 @@ impl Instruction for I2L {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("i2l")
     }
 }
@@ -72,7 +72,7 @@ impl Instruction for I2F {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("i2f")
     }
 }
@@ -103,7 +103,7 @@ impl Instruction for I2D {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("i2d")
     }
 }
@@ -134,7 +134,7 @@ impl Instruction for L2I {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("l2i")
     }
 }
@@ -166,7 +166,7 @@ impl Instruction for L2F {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("l2f")
     }
 }
@@ -198,7 +198,7 @@ impl Instruction for L2D {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("l2d")
     }
 }
@@ -229,7 +229,7 @@ impl Instruction for F2I {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("f2i")
     }
 }
@@ -260,7 +260,7 @@ impl Instruction for F2L {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("f2l")
     }
 }
@@ -291,7 +291,7 @@ impl Instruction for F2D {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("f2d")
     }
 }
@@ -322,7 +322,7 @@ impl Instruction for D2I {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("d2i")
     }
 }
@@ -353,7 +353,7 @@ impl Instruction for D2L {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("d2l")
     }
 }
@@ -384,7 +384,7 @@ impl Instruction for D2F {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("d2f")
     }
 }
@@ -417,7 +417,7 @@ impl Instruction for I2B {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("i2b")
     }
 }
@@ -451,7 +451,7 @@ impl Instruction for I2C {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("i2c")
     }
 }
@@ -485,7 +485,7 @@ impl Instruction for I2S {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("i2s")
     }
 }

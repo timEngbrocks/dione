@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{double::Double, float::Float, int::Int, long::Long, Types, Value},
+        types::{double::Double, float::Float, int::Int, long::Long, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -37,7 +37,7 @@ impl Instruction for INEG {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("ineg")
     }
 }
@@ -70,7 +70,7 @@ impl Instruction for LNEG {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("lneg")
     }
 }
@@ -103,7 +103,7 @@ impl Instruction for FNEG {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fneg")
     }
 }
@@ -136,7 +136,7 @@ impl Instruction for DNEG {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dneg")
     }
 }

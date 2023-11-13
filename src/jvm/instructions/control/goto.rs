@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U1, U2},
     jvm::{
         frame::Frame,
-        instructions::{BranchKind, Instruction, InstructionResult},
+        instructions::{BranchKind, Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -37,7 +37,7 @@ impl Instruction for GOTO {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("goto: {}, {}", self.branchbyte1, self.branchbyte2)
     }
 }

@@ -7,7 +7,7 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         object_manager::ObjectManager,
-        runtime_constant_pool::RuntimeConstants,
+        runtime_constant_pool::{RuntimeConstants, RuntimeConstantPool},
         types::{
             boolean::{Boolean, BooleanValue},
             int::Int,
@@ -107,7 +107,7 @@ impl Instruction for PUTSTATIC {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("putstatic {} {}", self.indexbyte1, self.indexbyte2)
     }
 }

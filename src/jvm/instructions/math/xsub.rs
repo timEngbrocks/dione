@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{double::Double, float::Float, int::Int, long::Long, Types, Value},
+        types::{double::Double, float::Float, int::Int, long::Long, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -43,7 +43,7 @@ impl Instruction for ISUB {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("isub")
     }
 }
@@ -82,7 +82,7 @@ impl Instruction for LSUB {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("lsub")
     }
 }
@@ -121,7 +121,7 @@ impl Instruction for FSUB {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fsub")
     }
 }
@@ -160,7 +160,7 @@ impl Instruction for DSUB {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dsub")
     }
 }

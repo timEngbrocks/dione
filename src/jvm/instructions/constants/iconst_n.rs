@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{int::Int, Types, Value},
+        types::{int::Int, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -31,7 +31,7 @@ impl Instruction for ICONST_M1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_m1")
     }
 }
@@ -58,7 +58,7 @@ impl Instruction for ICONST_0 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_0")
     }
 }
@@ -85,7 +85,7 @@ impl Instruction for ICONST_1 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_1")
     }
 }
@@ -112,7 +112,7 @@ impl Instruction for ICONST_2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_2")
     }
 }
@@ -139,7 +139,7 @@ impl Instruction for ICONST_3 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_3")
     }
 }
@@ -166,7 +166,7 @@ impl Instruction for ICONST_4 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_4")
     }
 }
@@ -193,7 +193,7 @@ impl Instruction for ICONST_5 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iconst_5")
     }
 }

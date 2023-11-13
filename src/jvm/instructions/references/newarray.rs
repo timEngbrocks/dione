@@ -14,7 +14,7 @@ use crate::{
             long::Long,
             short::Short,
             Types, Value,
-        },
+        }, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
     util::heap::Heap,
@@ -61,7 +61,7 @@ impl Instruction for NEWARRAY {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("newarray {}", self.atype)
     }
 }

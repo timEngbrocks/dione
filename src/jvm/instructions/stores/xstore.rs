@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::Types,
+        types::Types, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -40,7 +40,7 @@ impl Instruction for ISTORE {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("istore {}", self.index)
     }
 }
@@ -76,7 +76,7 @@ impl Instruction for LSTORE {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("lstore {}", self.index)
     }
 }
@@ -112,7 +112,7 @@ impl Instruction for FSTORE {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("fstore {}", self.index)
     }
 }
@@ -148,7 +148,7 @@ impl Instruction for DSTORE {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("dstore {}", self.index)
     }
 }
@@ -190,7 +190,7 @@ impl Instruction for ASTORE {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("astore {}", self.index)
     }
 }

@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{double::Double, float::Float, int::Int, long::Long, Types, Value},
+        types::{double::Double, float::Float, int::Int, long::Long, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -43,7 +43,7 @@ impl Instruction for IADD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("iadd")
     }
 }
@@ -82,7 +82,7 @@ impl Instruction for LADD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("ladd")
     }
 }
@@ -121,7 +121,7 @@ impl Instruction for FADD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("fadd")
     }
 }
@@ -160,7 +160,7 @@ impl Instruction for DADD {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("dadd")
     }
 }

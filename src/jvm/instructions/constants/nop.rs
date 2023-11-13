@@ -2,7 +2,7 @@ use crate::{
     class_loader::parser::{Parser, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult, Instructions},
+        instructions::{Instruction, InstructionResult, Instructions}, runtime_constant_pool::RuntimeConstantPool,
     },
 };
 
@@ -28,7 +28,7 @@ impl Instruction for NOP {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("nop")
     }
 }

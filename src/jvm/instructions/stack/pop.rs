@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::ComputationalTypeCategory,
+        types::ComputationalTypeCategory, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -36,7 +36,7 @@ impl Instruction for POP {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("pop")
     }
 }
@@ -71,7 +71,7 @@ impl Instruction for POP2 {
         1
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         String::from("pop2")
     }
 }

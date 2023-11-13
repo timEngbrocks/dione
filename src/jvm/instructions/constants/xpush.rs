@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{int::Int, Types, Value},
+        types::{int::Int, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };
@@ -34,7 +34,7 @@ impl Instruction for BIPUSH {
         2
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("bipush {}", self.byte)
     }
 }
@@ -67,7 +67,7 @@ impl Instruction for SIPUSH {
         3
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
         format!("sipush {}, {}", self.byte1, self.byte2)
     }
 }
