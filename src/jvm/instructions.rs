@@ -77,8 +77,6 @@ use self::{
     unimplemented_instructions::ARRAYLENGTH,
     unimplemented_instructions::BREAKPOINT,
     unimplemented_instructions::CHECKCAST,
-    unimplemented_instructions::IMPDEP1,
-    unimplemented_instructions::IMPDEP2,
     unimplemented_instructions::INSTANCEOF,
     unimplemented_instructions::INVOKEDYNAMIC,
     unimplemented_instructions::INVOKEINTERFACE,
@@ -88,7 +86,7 @@ use self::{
     unimplemented_instructions::MONITOREXIT,
     unimplemented_instructions::PUTFIELD,
     unimplemented_instructions::RET,
-    unimplemented_instructions::WIDE,
+    unimplemented_instructions::WIDE, reserved::impdep::{IMPDEP1, IMPDEP2},
 };
 
 use super::{
@@ -205,8 +203,8 @@ pub struct InstructionStream {
 impl InstructionStream {
     pub fn new_native() -> InstructionStream {
         InstructionStream {
-            instructions: Vec::new(),
-            length: 0,
+            instructions: vec![Instructions::IMPDEP1(IMPDEP1::new_native_call())],
+            length: 1,
             cursor: 0,
             pre_cursor: 0,
             exception_handler_table: ExceptionHandlerTable::new(),

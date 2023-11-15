@@ -4,28 +4,28 @@ use super::{
         control::x_return::{areturn, dreturn, freturn, ireturn, lreturn},
         InstructionResult, ReturnKind,
     },
-    types::{object::Object, Types},
+    types::{object::Object, Types}, interpreter::Interpreter,
 };
 
 pub mod java;
+pub mod jdk;
 
 pub fn native_call(
-    class_name: &str,
-    method_name: &str,
-    descriptor: &str,
-    execution_context: &mut Frame,
-    object: &Object,
+    execution_context: &mut Frame
 ) -> InstructionResult {
+    // FIXME: Do this without cloning.
+    let object = Interpreter::get_current_object(execution_context).clone();
     // NOTE: Native calls return without invoking any return instruction so we need to manually call them.
-    let result = match class_name {
-        _ if class_name.starts_with("java/") => java::native_call_java(
-            class_name,
-            method_name,
-            descriptor,
+    let result = match () {
+        _ if execution_context.object_name.starts_with("java/") => java::native_call_java(
             execution_context,
-            object,
+            &object,
         ),
-        _ => panic!("Unknown native class: {}", class_name),
+        _ if execution_context.object_name.starts_with("jdk/") => jdk::native_call_jdk(
+            execution_context,
+            &object,
+        ),
+        _ => panic!("Unknown native class: {}", execution_context.object_name),
     };
     if let Some(kind) = &result.ret {
         match kind {

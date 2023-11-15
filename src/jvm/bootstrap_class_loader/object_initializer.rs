@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use log::trace;
+
 use crate::{
     class_loader::{
         attribute_info::AttributeInfo, class_file::ClassFile,
@@ -19,7 +21,7 @@ use crate::{
 
 pub fn initialize_class(mut class_file: ClassFile) -> Object {
     let name = get_name(&class_file);
-    println!("Initializing class `{}`", name);
+    trace!("Initializing class `{}`", name);
     let access_flags = get_access_flags(&class_file);
     let super_class = get_super_class(&class_file);
     let interfaces = get_interfaces(&mut class_file);

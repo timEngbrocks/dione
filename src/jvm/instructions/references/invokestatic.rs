@@ -6,14 +6,13 @@ use crate::{
         descriptor::parse_method_descriptor,
         execution_context::ExecutionContext,
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
-        native::native_call,
+        instructions::{Instruction, InstructionResult, InstructionStream},
         object_manager::ObjectManager,
         runtime_constant_pool::{
             sym_ref_method_of_class::SymRefMethodOfClass,
             sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants, RuntimeConstantPool,
         },
-        types::Types,
+        types::Types, interpreter::Interpreter,
     },
     opcodes,
     util::{sized_array::SizedArray, stack::Stack},
@@ -86,6 +85,18 @@ impl Instruction for INVOKESTATIC {
 
         ObjectManager::initialize_object(&object.name);
 
+        if method.is_synchronized() {
+            unimplemented!("INVOKESTATIC: synchronized")
+        }
+
+        if method.is_native() {
+            Interpreter::set_current_object_index(index);
+            return InstructionResult::call(ExecutionContext::new(
+                Frame::new_native(&object.class_file, object.name.clone(), method.name.clone(), method.descriptor.clone(), return_type),
+                InstructionStream::new_native(),
+            ));
+        }
+
         let (max_locals, max_stack) = if method.is_native() {
             (None, None)
         } else {
@@ -96,28 +107,15 @@ impl Instruction for INVOKESTATIC {
             local_variables.set(index as u16, arg.clone());
         }
         let stack = Stack::<Types>::new(max_stack);
-        let mut frame = Frame::new(
+        let frame = Frame::new(
             local_variables,
             stack,
             &object.class_file,
             object.name.clone(),
             method.name.clone(),
+            method.descriptor.clone(),
             return_type,
         );
-
-        if method.is_synchronized() {
-            unimplemented!("INVOKESTATIC: synchronized")
-        }
-
-        if method.is_native() {
-            return native_call(
-                &object.name,
-                &method.name,
-                &method.descriptor,
-                &mut frame,
-                object,
-            );
-        }
 
         InstructionResult::call(ExecutionContext::new(
             frame,

@@ -4,14 +4,13 @@ use crate::{
         descriptor::parse_method_descriptor,
         execution_context::ExecutionContext,
         frame::Frame,
-        instructions::{Instruction, InstructionResult},
-        native::native_call,
+        instructions::{Instruction, InstructionResult, InstructionStream},
         object_manager::ObjectManager,
         runtime_constant_pool::{
             sym_ref_method_of_class::SymRefMethodOfClass,
             sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants, RuntimeConstantPool,
         },
-        types::Types,
+        types::Types, interpreter::Interpreter,
     },
     opcodes,
     util::{sized_array::SizedArray, stack::Stack},
@@ -82,26 +81,6 @@ impl Instruction for INVOKEVIRTUAL {
             _ => panic!("INVOKEVIRTUAL: Expected Reference for object_ref"),
         };
 
-        let (max_locals, max_stack) = if method.is_native() {
-            (None, None)
-        } else {
-            (Some(method.max_locals), Some(method.max_stack))
-        };
-        let mut local_variables = SizedArray::<Types>::new(max_locals);
-        local_variables.set(0, Types::Reference(object_ref.clone()));
-        for (index, arg) in arg_types.iter().enumerate() {
-            local_variables.set((index + 1) as u16, arg.clone());
-        }
-        let stack = Stack::<Types>::new(max_stack);
-        let mut frame = Frame::new(
-            local_variables,
-            stack,
-            &object.class_file,
-            object.name.clone(),
-            method.name.clone(),
-            return_type,
-        );
-
         if method.is_synchronized() {
             unimplemented!("INVOKEVIRTUAL: synchronized")
         }
@@ -113,14 +92,33 @@ impl Instruction for INVOKEVIRTUAL {
         }
 
         if method.is_native() {
-            return native_call(
-                &object.name,
-                &method.name,
-                &method.descriptor,
-                &mut frame,
-                object,
-            );
+            Interpreter::set_current_object_index(index);
+            return InstructionResult::call(ExecutionContext::new(
+                Frame::new_native(&object.class_file, object.name.clone(), method.name.clone(), method.descriptor.clone(), return_type),
+                InstructionStream::new_native(),
+            ));
         }
+
+        let (max_locals, max_stack) = if method.is_native() {
+            (None, None)
+        } else {
+            (Some(method.max_locals), Some(method.max_stack))
+        };
+        let mut local_variables = SizedArray::<Types>::new(max_locals);
+        local_variables.set(0, Types::Reference(object_ref.clone()));
+        for (index, arg) in arg_types.iter().enumerate() {
+            local_variables.set((index + 1) as u16, arg.clone());
+        }
+        let stack = Stack::<Types>::new(max_stack);
+        let frame = Frame::new(
+            local_variables,
+            stack,
+            &object.class_file,
+            object.name.clone(),
+            method.name.clone(),
+            method.descriptor.clone(),
+            return_type,
+        );
 
         InstructionResult::call(ExecutionContext::new(
             frame,

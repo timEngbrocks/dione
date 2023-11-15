@@ -133,56 +133,6 @@ impl Instruction for BREAKPOINT {
 }
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct IMPDEP1 {}
-impl Instruction for IMPDEP1 {
-    fn new(parser: &mut Parser) -> Self
-    where
-        Self: Sized,
-    {
-        let opcode = parser.consume_u1();
-        assert_eq!(opcode, opcodes!(Instructions::IMPDEP1));
-        todo!("Implement");
-    }
-
-    fn execute(&self, _: &mut Frame) -> InstructionResult {
-        unimplemented!()
-    }
-
-    fn length(&self) -> U2 {
-        1
-    }
-
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("IMPDEP1")
-    }
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct IMPDEP2 {}
-impl Instruction for IMPDEP2 {
-    fn new(parser: &mut Parser) -> Self
-    where
-        Self: Sized,
-    {
-        let opcode = parser.consume_u1();
-        assert_eq!(opcode, opcodes!(Instructions::IMPDEP2));
-        todo!("Implement");
-    }
-
-    fn execute(&self, _: &mut Frame) -> InstructionResult {
-        unimplemented!()
-    }
-
-    fn length(&self) -> U2 {
-        1
-    }
-
-    fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("IMPDEP2")
-    }
-}
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
 pub struct PUTFIELD {
     indexbyte1: U1,
     indexbyte2: U1,

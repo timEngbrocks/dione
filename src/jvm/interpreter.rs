@@ -5,7 +5,7 @@ use crate::{
 
 use super::{
     descriptor::parse_method_descriptor, execution_context::ExecutionContext, frame::Frame,
-    instructions::Instruction, object_manager::ObjectManager, types::Types,
+    instructions::Instruction, object_manager::ObjectManager, types::{Types, object::Object}, runtime_constant_pool::{RuntimeConstants, sym_ref_method_of_interface::SymRefMethodOfInterface, sym_ref_method_of_class::SymRefMethodOfClass},
 };
 
 use log::trace;
@@ -55,6 +55,9 @@ impl Interpreter {
                         break;
                     }
                     self.current = self.call_stack.pop();
+                    if self.current.is_none() {
+                        break;
+                    }
                     continue;
                 }
                 global_exception = None;
@@ -66,15 +69,20 @@ impl Interpreter {
                     break;
                 }
                 self.current = self.call_stack.pop();
+                if self.current.is_none() {
+                    break;
+                }
                 continue;
             }
 
+            let instruction_index = *execution_context.instruction_stream.cursor();
             let instruction = execution_context.instruction_stream.next();
 
             trace!(
-                "{}.{} -> {:?}",
+                "{}.{} @ {} -> {:?}",
                 execution_context.frame.object_name,
                 execution_context.frame.method_name,
+                instruction_index + instruction.length() as usize,
                 instruction.to_string(&execution_context.frame.runtime_constant_pool)
             );
 
@@ -108,10 +116,16 @@ impl Interpreter {
                             .frame
                             .assert_matches_return_type(&value);
                         self.current = self.call_stack.pop();
+                        if self.current.is_none() {
+                            break;
+                        }
                         self.current.as_mut().unwrap().frame.stack.push(value);
                     }
                     ReturnKind::Void => {
                         self.current = self.call_stack.pop();
+                        if self.current.is_none() {
+                            break;
+                        }
                     }
                 }
                 continue;
@@ -144,6 +158,7 @@ impl Interpreter {
                 &object.class_file,
                 object.name.clone(),
                 method.name.clone(),
+                method.descriptor.clone(),
                 return_type,
             );
 
@@ -158,6 +173,40 @@ impl Interpreter {
                 "Method not found: {}{} on {}",
                 method_name, descriptor, class_name
             );
+        }
+    }
+}
+
+static mut CURRENT_OBJECT_INDEX: Option<u16> = None;
+impl Interpreter {
+    pub fn set_current_object_index(index: u16) {
+        unsafe {
+            CURRENT_OBJECT_INDEX = Some(index);
+        }
+    }
+    
+    pub fn get_current_object(execution_context: &Frame) -> &Object {
+        unsafe {
+            if CURRENT_OBJECT_INDEX.is_none() {
+                panic!("No current object index set");
+            }
+            match execution_context.runtime_constant_pool.get(CURRENT_OBJECT_INDEX.take().unwrap()) {
+                RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass {
+                    name: _,
+                    descriptor: _,
+                    class_ref,
+                }) => {
+                    ObjectManager::get(class_ref.name.as_str())
+                }
+                RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface {
+                    name: _,
+                    descriptor: _,
+                    class_ref,
+                }) => {
+                    ObjectManager::get(class_ref.name.as_str())
+                }
+                _ => panic!("Expected SymRefMethodOfClass or SymRefMethodOfInterface"),
+            }
         }
     }
 }
