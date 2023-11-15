@@ -10,7 +10,7 @@ use crate::{
             sym_ref_method_of_class::SymRefMethodOfClass,
             sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants, RuntimeConstantPool,
         },
-        types::Types, interpreter::Interpreter,
+        types::Types,
     },
     opcodes,
     util::{sized_array::SizedArray, stack::Stack},
@@ -86,9 +86,8 @@ impl Instruction for INVOKESPECIAL {
         }
 
         if method.is_native() {
-            Interpreter::set_current_object_index(index);
             return InstructionResult::call(ExecutionContext::new(
-                Frame::new_native(&object.class_file, object.name.clone(), method.name.clone(), method.descriptor.clone(), return_type),
+                Frame::new_native(&object.class_file, index.clone(), object.name.clone(), method.name.clone(), method.descriptor.clone(), return_type),
                 InstructionStream::new_native(),
             ));
         }
@@ -108,6 +107,7 @@ impl Instruction for INVOKESPECIAL {
             local_variables,
             stack,
             &object.class_file,
+            index.clone(),
             object.name.clone(),
             method.name.clone(),
             method.descriptor.clone(),

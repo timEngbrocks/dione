@@ -5,7 +5,7 @@ use crate::{
 
 use super::{
     descriptor::parse_method_descriptor, execution_context::ExecutionContext, frame::Frame,
-    instructions::Instruction, object_manager::ObjectManager, types::{Types, object::Object}, runtime_constant_pool::{RuntimeConstants, sym_ref_method_of_interface::SymRefMethodOfInterface, sym_ref_method_of_class::SymRefMethodOfClass},
+    instructions::Instruction, object_manager::ObjectManager, types::Types,
 };
 
 use log::trace;
@@ -64,7 +64,9 @@ impl Interpreter {
                 continue;
             }
 
+            let instruction_index = *execution_context.instruction_stream.cursor();
             if !execution_context.instruction_stream.has_next() {
+                println!("Interpreter {} finished at {}", self.identifier, instruction_index);
                 if self.call_stack.is_empty() {
                     break;
                 }
@@ -75,7 +77,6 @@ impl Interpreter {
                 continue;
             }
 
-            let instruction_index = *execution_context.instruction_stream.cursor();
             let instruction = execution_context.instruction_stream.next();
 
             trace!(
@@ -160,6 +161,7 @@ impl Interpreter {
                 method.name.clone(),
                 method.descriptor.clone(),
                 return_type,
+                None
             );
 
             let instruction_stream = method.instruction_stream.clone();
@@ -173,40 +175,6 @@ impl Interpreter {
                 "Method not found: {}{} on {}",
                 method_name, descriptor, class_name
             );
-        }
-    }
-}
-
-static mut CURRENT_OBJECT_INDEX: Option<u16> = None;
-impl Interpreter {
-    pub fn set_current_object_index(index: u16) {
-        unsafe {
-            CURRENT_OBJECT_INDEX = Some(index);
-        }
-    }
-    
-    pub fn get_current_object(execution_context: &Frame) -> &Object {
-        unsafe {
-            if CURRENT_OBJECT_INDEX.is_none() {
-                panic!("No current object index set");
-            }
-            match execution_context.runtime_constant_pool.get(CURRENT_OBJECT_INDEX.take().unwrap()) {
-                RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass {
-                    name: _,
-                    descriptor: _,
-                    class_ref,
-                }) => {
-                    ObjectManager::get(class_ref.name.as_str())
-                }
-                RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface {
-                    name: _,
-                    descriptor: _,
-                    class_ref,
-                }) => {
-                    ObjectManager::get(class_ref.name.as_str())
-                }
-                _ => panic!("Expected SymRefMethodOfClass or SymRefMethodOfInterface"),
-            }
         }
     }
 }

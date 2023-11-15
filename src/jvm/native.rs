@@ -13,8 +13,7 @@ pub mod jdk;
 pub fn native_call(
     execution_context: &mut Frame
 ) -> InstructionResult {
-    // FIXME: Do this without cloning.
-    let object = Interpreter::get_current_object(execution_context).clone();
+    let object = 
     // NOTE: Native calls return without invoking any return instruction so we need to manually call them.
     let result = match () {
         _ if execution_context.object_name.starts_with("java/") => java::native_call_java(
