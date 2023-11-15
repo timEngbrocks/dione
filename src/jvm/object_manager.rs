@@ -1,11 +1,11 @@
 use std::collections::HashMap;
 
-use crate::util::heap::Heap;
+use crate::util::heap::{Heap, ReferencePtr};
 
 use super::{
     bootstrap_class_loader::BootstrapClassLoader,
     interpreter::Interpreter,
-    types::{field::Field, object::Object, reference::Reference, Types, Value},
+    types::{field::Field, object::Object, reference::Reference, Types, Value, array::{PrimitiveArray, Array}, byte::Byte},
 };
 
 static mut INSTANCE: Option<ObjectManager> = None;
@@ -72,6 +72,27 @@ impl ObjectManager {
             return false;
         }
         matches!(ObjectManager::get(name).fields.capacity(), 0)
+    }
+
+    pub fn get_string_instance(text: String) -> Reference {
+        let object_ref = ObjectManager::instantiate("java/lang/String");
+        let mut byte_array = PrimitiveArray::new(Types::Byte(Byte::new()), text.len());
+        for (index, byte) in text.bytes().enumerate() {
+            byte_array.set(index, Types::Byte(Byte::from_value(byte as i8)));
+        }
+        let arry_ref = Heap::allocate_primitive_array(byte_array);
+        let reference = object_ref.get();
+        let mut object = match reference {
+            ReferencePtr::Class(ref object) => object.borrow_mut(),
+            _ => panic!("Expected class reference"),
+        };
+        object.put_field(Field::new(
+            "value".to_string(),
+            "[B".to_string(),
+            0x0002 | 0x0010,
+            Some(Types::Reference(arry_ref)),
+        ));
+        object_ref
     }
 
     fn it() -> &'static mut ObjectManager {

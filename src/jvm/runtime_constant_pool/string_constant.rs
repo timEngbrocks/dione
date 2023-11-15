@@ -1,6 +1,6 @@
 use crate::{
     class_loader::{class_file::ClassFile, constant_pool_info::ConstantPoolInfoType},
-    jvm::types::reference::Reference,
+    jvm::{types::reference::Reference, object_manager::ObjectManager},
     resolve_constant,
 };
 
@@ -13,7 +13,11 @@ pub struct StringConstant {
 
 impl StringConstant {
     pub fn get(&self) -> Reference {
-        unimplemented!("StringConstant::get")
+        ObjectManager::get_string_instance(self.text.clone())
+    }
+
+    pub fn text(&self) -> &String {
+        &self.text
     }
 }
 

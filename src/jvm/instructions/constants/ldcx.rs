@@ -158,10 +158,8 @@ fn ldc_to_string_impl(runtime_constant_pool: &RuntimeConstantPool, index: u16, k
         }) => {
             format!("{}: Float({})", kind, value.get())
         }
-        RuntimeConstants::StringConstant(_) => {
-            // TODO: Push reference to an instance of class String that contains value
-            // TODO: Push reference to the above instance
-            unimplemented!("LDC::to_string: String");
+        RuntimeConstants::StringConstant(constant) => {
+            format!("{}: String({})", kind, constant.text())
         }
         RuntimeConstants::SymRefClassOrInterface(class_ref) => {
             format!("{}: Object({})", kind, class_ref.name)
@@ -186,10 +184,8 @@ fn ldc_impl(execution_context: &mut Frame, index: u16) {
         }) => {
             execution_context.stack.push(Types::Float(value.clone()));
         }
-        RuntimeConstants::StringConstant(_) => {
-            // TODO: Push reference to an instance of class String that contains value
-            // TODO: Push reference to the above instance
-            unimplemented!("LDC::execute: String");
+        RuntimeConstants::StringConstant(constant) => {
+            execution_context.stack.push(Types::Reference(constant.get()))
         }
         RuntimeConstants::SymRefClassOrInterface(class_ref) => {
             let reference = ObjectManager::get_associated_class_object(&class_ref.name);

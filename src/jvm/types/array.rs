@@ -15,16 +15,20 @@ pub enum ReferenceArrayKind {
 }
 
 impl ReferenceArrayKind {
-    pub fn new(&self) -> Self {
+    pub fn new(&self, reference: Option<Reference>) -> Self {
+        let reference = match reference {
+            Some(reference) => reference,
+            None => Reference::new(),
+        };
         match self {
             ReferenceArrayKind::Class(class_ref, _) => {
-                ReferenceArrayKind::Class(class_ref.clone(), Reference::new())
+                ReferenceArrayKind::Class(class_ref.clone(), reference)
             }
             ReferenceArrayKind::Array(class_ref, _) => {
-                ReferenceArrayKind::Array(class_ref.clone(), Reference::new())
+                ReferenceArrayKind::Array(class_ref.clone(), reference)
             }
             ReferenceArrayKind::Interface(class_ref, _) => {
-                ReferenceArrayKind::Interface(class_ref.clone(), Reference::new())
+                ReferenceArrayKind::Interface(class_ref.clone(), reference)
             }
         }
     }
@@ -106,6 +110,13 @@ impl Array for PrimitiveArray {
 
     fn kind(&self) -> &Self::Type {
         &self.kind
+    }
+}
+
+impl ReferenceArray {
+    pub fn set_helper(&mut self, index: usize, value: Reference) {
+        let value = self.kind().new(Some(value));
+        self.set(index, value);
     }
 }
 
