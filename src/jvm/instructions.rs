@@ -60,6 +60,7 @@ use self::{
         invokespecial::INVOKESPECIAL, invokestatic::INVOKESTATIC, invokevirtual::INVOKEVIRTUAL,
         new::NEW, newarray::NEWARRAY, putstatic::PUTSTATIC,
     },
+    reserved::impdep::{IMPDEP1, IMPDEP2},
     stack::{
         dup::{DUP, DUP2, DUP2_X1, DUP2_X2, DUP_X1, DUP_X2},
         pop::{POP, POP2},
@@ -86,7 +87,7 @@ use self::{
     unimplemented_instructions::MONITOREXIT,
     unimplemented_instructions::PUTFIELD,
     unimplemented_instructions::RET,
-    unimplemented_instructions::WIDE, reserved::impdep::{IMPDEP1, IMPDEP2},
+    unimplemented_instructions::WIDE,
 };
 
 use super::{

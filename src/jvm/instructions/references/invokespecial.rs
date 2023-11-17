@@ -8,7 +8,8 @@ use crate::{
         object_manager::ObjectManager,
         runtime_constant_pool::{
             sym_ref_method_of_class::SymRefMethodOfClass,
-            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants, RuntimeConstantPool,
+            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstantPool,
+            RuntimeConstants,
         },
         types::Types,
     },
@@ -81,17 +82,6 @@ impl Instruction for INVOKESPECIAL {
             _ => panic!("INVOKESPECIAL: Expected Reference for object_ref"),
         };
 
-        if method.is_synchronized() {
-            unimplemented!("INVOKESPECIAL: synchronized")
-        }
-
-        if method.is_native() {
-            return InstructionResult::call(ExecutionContext::new(
-                Frame::new_native(&object.class_file, index.clone(), object.name.clone(), method.name.clone(), method.descriptor.clone(), return_type),
-                InstructionStream::new_native(),
-            ));
-        }
-
         let (max_locals, max_stack) = if method.is_native() {
             (None, None)
         } else {
@@ -107,12 +97,22 @@ impl Instruction for INVOKESPECIAL {
             local_variables,
             stack,
             &object.class_file,
-            index.clone(),
             object.name.clone(),
             method.name.clone(),
             method.descriptor.clone(),
             return_type,
         );
+
+        if method.is_synchronized() {
+            unimplemented!("INVOKESPECIAL: synchronized")
+        }
+
+        if method.is_native() {
+            return InstructionResult::call(ExecutionContext::new(
+                frame,
+                InstructionStream::new_native(),
+            ));
+        }
 
         InstructionResult::call(ExecutionContext::new(
             frame,

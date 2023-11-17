@@ -10,12 +10,13 @@ use crate::{
         object_manager::ObjectManager,
         runtime_constant_pool::{
             sym_ref_method_of_class::SymRefMethodOfClass,
-            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstants, RuntimeConstantPool,
+            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstantPool,
+            RuntimeConstants,
         },
         types::Types,
     },
     opcodes,
-    util::{sized_array::SizedArray, stack::Stack, heap::Heap},
+    util::{sized_array::SizedArray, stack::Stack},
 };
 
 #[derive(Clone)]
@@ -85,32 +86,6 @@ impl Instruction for INVOKESTATIC {
 
         ObjectManager::initialize_object(&object.name);
 
-        if method.is_synchronized() {
-            unimplemented!("INVOKESTATIC: synchronized")
-        }
-
-        if method.is_native() {
-            /*
-            NOTE: native_call needs access to &Object on which the native method is being called.
-            There are different scenarios for &Object's origin depending on the invocation method:
-            INVOKESTATIC: &Object needs to come directly from ObjectManager
-            INVOKEVIRTUAL: &Object needs to come from the stack
-            INVOKEINTERFACE: &Object needs to come from the stack
-            INVOKESPECIAL: &Object needs to come from the stack
-
-            FIXME: Find a way to do this
-
-            I really like the idea of using impdep1 as a trap door for native calls.
-            Maybe we can just put all of the information on the stack and make native variants of the different invocation methods.
-            For this we would need a global getter for getting a native method implementation that returns a functor which can
-            be called by the invocation method's native implementation.
-            */
-            return InstructionResult::call(ExecutionContext::new(
-                Frame::new_native(&object.class_file, index.clone(), object.name.clone(), method.name.clone(), method.descriptor.clone(), return_type),
-                InstructionStream::new_native(),
-            ));
-        }
-
         let (max_locals, max_stack) = if method.is_native() {
             (None, None)
         } else {
@@ -125,12 +100,22 @@ impl Instruction for INVOKESTATIC {
             local_variables,
             stack,
             &object.class_file,
-            index.clone(),
             object.name.clone(),
             method.name.clone(),
             method.descriptor.clone(),
             return_type,
         );
+
+        if method.is_synchronized() {
+            unimplemented!("INVOKESTATIC: synchronized")
+        }
+
+        if method.is_native() {
+            return InstructionResult::call(ExecutionContext::new(
+                frame,
+                InstructionStream::new_native(),
+            ));
+        }
 
         InstructionResult::call(ExecutionContext::new(
             frame,

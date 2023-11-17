@@ -1,6 +1,4 @@
-use crate::jvm::{
-    frame::Frame, instructions::InstructionResult, native::NativeClass, types::object::Object,
-};
+use crate::jvm::{frame::Frame, instructions::InstructionResult, native::NativeClass};
 
 pub struct Thread {}
 
@@ -9,10 +7,9 @@ impl NativeClass for Thread {
         method_name: &str,
         _descriptor: &str,
         execution_context: &mut Frame,
-        object: &Object,
     ) -> InstructionResult {
         match method_name {
-            "registerNatives" => Thread::register_natives(execution_context, object),
+            "registerNatives" => Thread::register_natives(execution_context),
             _ => panic!(
                 "Unknown native method: {}.{}",
                 "java/lang/Thread", method_name
@@ -22,7 +19,7 @@ impl NativeClass for Thread {
 }
 
 impl Thread {
-    pub fn register_natives(_execution_context: &mut Frame, _object: &Object) -> InstructionResult {
+    pub fn register_natives(_execution_context: &mut Frame) -> InstructionResult {
         InstructionResult::empty()
     }
 }

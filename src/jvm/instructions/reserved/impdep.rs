@@ -1,6 +1,11 @@
 use crate::{
     class_loader::parser::{Parser, U2},
-    jvm::{frame::Frame, runtime_constant_pool::RuntimeConstantPool, instructions::{Instruction, InstructionResult}, native::native_call},
+    jvm::{
+        frame::Frame,
+        instructions::{Instruction, InstructionResult},
+        native::native_call,
+        runtime_constant_pool::RuntimeConstantPool,
+    },
     opcodes,
 };
 
@@ -8,9 +13,9 @@ use crate::{
 #[allow(non_camel_case_types)]
 pub struct IMPDEP1 {}
 impl IMPDEP1 {
-	pub fn new_native_call() -> IMPDEP1 {
-		IMPDEP1 {}
-	}
+    pub fn new_native_call() -> IMPDEP1 {
+        IMPDEP1 {}
+    }
 }
 impl Instruction for IMPDEP1 {
     fn new(_: &mut Parser) -> Self

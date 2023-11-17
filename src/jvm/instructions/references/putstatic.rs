@@ -7,7 +7,7 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         object_manager::ObjectManager,
-        runtime_constant_pool::{RuntimeConstants, RuntimeConstantPool},
+        runtime_constant_pool::{RuntimeConstantPool, RuntimeConstants},
         types::{
             boolean::{Boolean, BooleanValue},
             int::Int,
@@ -113,6 +113,9 @@ impl Instruction for PUTSTATIC {
             RuntimeConstants::SymRefFieldOfClassOrInterface(value) => value,
             _ => panic!("Expected SymRefFieldOfClassOrInterface"),
         };
-        format!("putstatic {} {} {}", field_ref.class_ref.name, field_ref.name, field_ref.descriptor)
+        format!(
+            "putstatic {} {} {}",
+            field_ref.class_ref.name, field_ref.name, field_ref.descriptor
+        )
     }
 }

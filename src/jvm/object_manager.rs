@@ -5,7 +5,14 @@ use crate::util::heap::{Heap, ReferencePtr};
 use super::{
     bootstrap_class_loader::BootstrapClassLoader,
     interpreter::Interpreter,
-    types::{field::Field, object::Object, reference::Reference, Types, Value, array::{PrimitiveArray, Array}, byte::Byte},
+    types::{
+        array::{Array, PrimitiveArray},
+        byte::Byte,
+        field::Field,
+        object::Object,
+        reference::Reference,
+        Types, Value,
+    },
 };
 
 static mut INSTANCE: Option<ObjectManager> = None;

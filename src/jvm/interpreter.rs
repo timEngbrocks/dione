@@ -66,7 +66,10 @@ impl Interpreter {
 
             let instruction_index = *execution_context.instruction_stream.cursor();
             if !execution_context.instruction_stream.has_next() {
-                println!("Interpreter {} finished at {}", self.identifier, instruction_index);
+                println!(
+                    "Interpreter {} finished at {}",
+                    self.identifier, instruction_index
+                );
                 if self.call_stack.is_empty() {
                     break;
                 }
@@ -161,7 +164,6 @@ impl Interpreter {
                 method.name.clone(),
                 method.descriptor.clone(),
                 return_type,
-                None
             );
 
             let instruction_stream = method.instruction_stream.clone();

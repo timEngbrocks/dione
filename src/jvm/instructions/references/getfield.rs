@@ -3,7 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        runtime_constant_pool::{RuntimeConstants, RuntimeConstantPool},
+        runtime_constant_pool::{RuntimeConstantPool, RuntimeConstants},
         types::{Types, Value},
     },
     opcodes,
@@ -68,10 +68,6 @@ impl Instruction for GETFIELD {
             RuntimeConstants::SymRefFieldOfClassOrInterface(field_ref) => field_ref,
             _ => panic!("Expected SymRefFieldOfClassOrInterface"),
         };
-        format!(
-            "getfield {} {}",
-            field_ref.name,
-            field_ref.descriptor,
-        )
+        format!("getfield {} {}", field_ref.name, field_ref.descriptor,)
     }
 }

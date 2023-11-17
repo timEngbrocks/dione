@@ -4,7 +4,7 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         object_manager::ObjectManager,
-        runtime_constant_pool::{RuntimeConstants, RuntimeConstantPool},
+        runtime_constant_pool::{RuntimeConstantPool, RuntimeConstants},
         types::Types,
     },
     opcodes,

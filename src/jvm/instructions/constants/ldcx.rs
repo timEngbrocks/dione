@@ -6,7 +6,7 @@ use crate::{
         object_manager::ObjectManager,
         runtime_constant_pool::{
             numeric_constant::{NumericConstant, NumericConstantKind},
-            RuntimeConstants, RuntimeConstantPool,
+            RuntimeConstantPool, RuntimeConstants,
         },
         types::{Types, Value},
     },
@@ -146,7 +146,11 @@ impl Instruction for LDC2_W {
     }
 }
 
-fn ldc_to_string_impl(runtime_constant_pool: &RuntimeConstantPool, index: u16, kind: String) -> String {
+fn ldc_to_string_impl(
+    runtime_constant_pool: &RuntimeConstantPool,
+    index: u16,
+    kind: String,
+) -> String {
     match runtime_constant_pool.get(index) {
         RuntimeConstants::NumericConstant(NumericConstant {
             value: NumericConstantKind::Integer(value),
@@ -184,9 +188,9 @@ fn ldc_impl(execution_context: &mut Frame, index: u16) {
         }) => {
             execution_context.stack.push(Types::Float(value.clone()));
         }
-        RuntimeConstants::StringConstant(constant) => {
-            execution_context.stack.push(Types::Reference(constant.get()))
-        }
+        RuntimeConstants::StringConstant(constant) => execution_context
+            .stack
+            .push(Types::Reference(constant.get())),
         RuntimeConstants::SymRefClassOrInterface(class_ref) => {
             let reference = ObjectManager::get_associated_class_object(&class_ref.name);
             execution_context.stack.push(Types::Reference(reference));

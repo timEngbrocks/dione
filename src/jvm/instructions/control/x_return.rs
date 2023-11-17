@@ -6,10 +6,11 @@ use crate::{
             conversions::x2y::{i2b, i2c, i2s},
             Instruction, InstructionResult,
         },
+        runtime_constant_pool::RuntimeConstantPool,
         types::{
             double::Double, float::Float, int::Int, long::Long, reference::Reference, ReturnTypes,
             Types, Value,
-        }, runtime_constant_pool::RuntimeConstantPool,
+        },
     },
     opcodes,
 };

@@ -4,26 +4,21 @@ use super::{
         control::x_return::{areturn, dreturn, freturn, ireturn, lreturn},
         InstructionResult, ReturnKind,
     },
-    types::{object::Object, Types}, interpreter::Interpreter,
+    types::Types,
 };
 
 pub mod java;
 pub mod jdk;
 
-pub fn native_call(
-    execution_context: &mut Frame
-) -> InstructionResult {
-    let object = 
+pub fn native_call(execution_context: &mut Frame) -> InstructionResult {
     // NOTE: Native calls return without invoking any return instruction so we need to manually call them.
     let result = match () {
-        _ if execution_context.object_name.starts_with("java/") => java::native_call_java(
-            execution_context,
-            &object,
-        ),
-        _ if execution_context.object_name.starts_with("jdk/") => jdk::native_call_jdk(
-            execution_context,
-            &object,
-        ),
+        _ if execution_context.object_name.starts_with("java/") => {
+            java::native_call_java(execution_context)
+        }
+        _ if execution_context.object_name.starts_with("jdk/") => {
+            jdk::native_call_jdk(execution_context)
+        }
         _ => panic!("Unknown native class: {}", execution_context.object_name),
     };
     if let Some(kind) = &result.ret {
@@ -48,6 +43,5 @@ pub trait NativeClass {
         method_name: &str,
         descriptor: &str,
         execution_context: &mut Frame,
-        object: &Object,
     ) -> InstructionResult;
 }

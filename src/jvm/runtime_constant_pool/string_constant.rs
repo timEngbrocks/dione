@@ -1,6 +1,6 @@
 use crate::{
     class_loader::{class_file::ClassFile, constant_pool_info::ConstantPoolInfoType},
-    jvm::{types::reference::Reference, object_manager::ObjectManager},
+    jvm::{object_manager::ObjectManager, types::reference::Reference},
     resolve_constant,
 };
 

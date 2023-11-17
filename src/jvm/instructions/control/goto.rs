@@ -2,7 +2,8 @@ use crate::{
     class_loader::parser::{Parser, U1, U2},
     jvm::{
         frame::Frame,
-        instructions::{BranchKind, Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool,
+        instructions::{BranchKind, Instruction, InstructionResult},
+        runtime_constant_pool::RuntimeConstantPool,
     },
     opcodes,
 };

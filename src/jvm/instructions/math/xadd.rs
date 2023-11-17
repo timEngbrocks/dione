@@ -3,7 +3,8 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
-        types::{double::Double, float::Float, int::Int, long::Long, Types, Value}, runtime_constant_pool::RuntimeConstantPool,
+        runtime_constant_pool::RuntimeConstantPool,
+        types::{double::Double, float::Float, int::Int, long::Long, Types, Value},
     },
     opcodes,
 };

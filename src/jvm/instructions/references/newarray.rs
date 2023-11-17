@@ -3,6 +3,7 @@ use crate::{
     jvm::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
+        runtime_constant_pool::RuntimeConstantPool,
         types::{
             array::{Array, PrimitiveArray},
             boolean::Boolean,
@@ -14,7 +15,7 @@ use crate::{
             long::Long,
             short::Short,
             Types, Value,
-        }, runtime_constant_pool::RuntimeConstantPool,
+        },
     },
     opcodes,
     util::heap::Heap,

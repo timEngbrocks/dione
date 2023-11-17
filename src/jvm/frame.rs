@@ -4,7 +4,7 @@ use crate::{
     util::{sized_array::SizedArray, stack::Stack},
 };
 
-use super::{runtime_constant_pool::RuntimeConstantPool, types::{ReturnTypes, reference::Reference}};
+use super::{runtime_constant_pool::RuntimeConstantPool, types::ReturnTypes};
 
 pub struct Frame {
     pub local_variables: SizedArray<Types>,
@@ -14,7 +14,6 @@ pub struct Frame {
     pub method_name: String,
     pub descriptor: String,
     pub return_value: ReturnTypes,
-    pub object_ref: Option<Reference>,
 }
 
 impl Frame {
@@ -26,7 +25,6 @@ impl Frame {
         method_name: String,
         descriptor: String,
         return_value: ReturnTypes,
-        object_ref: Option<Reference>,
     ) -> Frame {
         Frame {
             local_variables,
@@ -36,20 +34,6 @@ impl Frame {
             method_name,
             descriptor,
             return_value,
-            object_ref,
-        }
-    }
-
-    pub fn new_native(class_file: &ClassFile, object_name: String, method_name: String, descriptor: String, return_value: ReturnTypes, object_ref: Option<Reference>) -> Frame {
-        Frame {
-            local_variables: SizedArray::<Types>::new(None),
-            stack: Stack::<Types>::new(None),
-            runtime_constant_pool: RuntimeConstantPool::new(class_file),
-            object_name,
-            method_name,
-            descriptor,
-            return_value,
-            object_ref,
         }
     }
 
@@ -71,7 +55,6 @@ impl Clone for Frame {
             method_name: self.method_name.clone(),
             descriptor: self.descriptor.clone(),
             return_value: self.return_value.clone(),
-            object_ref: self.object_ref.clone(),
         }
     }
 }

@@ -2,9 +2,12 @@ use crate::{
     class_loader::parser::{Parser, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult}, runtime_constant_pool::RuntimeConstantPool, types::{Types, Value, array::Array},
+        instructions::{Instruction, InstructionResult},
+        runtime_constant_pool::RuntimeConstantPool,
+        types::{array::Array, Types, Value},
     },
-    opcodes, util::heap::{ReferencePtr, ArrayPtr},
+    opcodes,
+    util::heap::{ArrayPtr, ReferencePtr},
 };
 
 #[derive(Clone)]
@@ -38,7 +41,7 @@ impl Instruction for IASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("IASTORE: array must be an array of ints"),
-            }
+            },
             _ => panic!("IASTORE: array must be an array"),
         };
         array.set(index, Types::Int(value));
@@ -84,7 +87,7 @@ impl Instruction for LASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("LASTORE: array must be an array of longs"),
-            }
+            },
             _ => panic!("LASTORE: array must be an array"),
         };
         array.set(index, Types::Long(value));
@@ -130,7 +133,7 @@ impl Instruction for FASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("FASTORE: array must be an array of floats"),
-            }
+            },
             _ => panic!("FASTORE: array must be an array"),
         };
         array.set(index, Types::Float(value));
@@ -176,7 +179,7 @@ impl Instruction for DASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("DASTORE: array must be an array of doubles"),
-            }
+            },
             _ => panic!("DASTORE: array must be an array"),
         };
         array.set(index, Types::Double(value));
@@ -222,7 +225,7 @@ impl Instruction for AASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Reference(array) => array.borrow_mut(),
                 _ => panic!("AASTORE: array must be an array of references"),
-            }
+            },
             _ => panic!("AASTORE: array must be an array"),
         };
         array.set_helper(index, value);
@@ -268,7 +271,7 @@ impl Instruction for BASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("BASTORE: array must be an array of bytes"),
-            }
+            },
             _ => panic!("BASTORE: array must be an array"),
         };
         array.set(index, Types::Byte(value));
@@ -314,7 +317,7 @@ impl Instruction for CASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("CASTORE: array must be an array of chars"),
-            }
+            },
             _ => panic!("CASTORE: array must be an array"),
         };
         array.set(index, Types::Char(value));
@@ -360,7 +363,7 @@ impl Instruction for SASTORE {
             ReferencePtr::Array(ref mut array) => match array {
                 ArrayPtr::Primitive(array) => array.borrow_mut(),
                 _ => panic!("SASTORE: array must be an array of shorts"),
-            }
+            },
             _ => panic!("SASTORE: array must be an array"),
         };
         array.set(index, Types::Short(value));

@@ -2,7 +2,8 @@ use crate::{
     class_loader::parser::{Parser, U2},
     jvm::{
         frame::Frame,
-        instructions::{Instruction, InstructionResult, Instructions}, runtime_constant_pool::RuntimeConstantPool,
+        instructions::{Instruction, InstructionResult, Instructions},
+        runtime_constant_pool::RuntimeConstantPool,
     },
 };
 
