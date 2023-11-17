@@ -47,6 +47,8 @@ impl Interpreter {
 
         while self.current.is_some() {
             let execution_context = self.current.as_mut().unwrap();
+            trace!(target: "parsed_methods", "Object: {} Method: {} - {}", execution_context.frame.object_name, execution_context.frame.method_name, execution_context.instruction_stream.len());
+            trace!(target: "parsed_methods", "{}", execution_context.instruction_stream.to_string(&execution_context.frame.runtime_constant_pool));
 
             if let Some(exception) = global_exception {
                 if !execution_context.instruction_stream.try_handle(&exception) {
@@ -66,10 +68,6 @@ impl Interpreter {
 
             let instruction_index = *execution_context.instruction_stream.cursor();
             if !execution_context.instruction_stream.has_next() {
-                println!(
-                    "Interpreter {} finished at {}",
-                    self.identifier, instruction_index
-                );
                 if self.call_stack.is_empty() {
                     break;
                 }
@@ -83,7 +81,9 @@ impl Interpreter {
             let instruction = execution_context.instruction_stream.next();
 
             trace!(
-                "{}.{} @ {} -> {:?}",
+                target: "instructions",
+                "({}) {}.{} @ {} -> {:?}",
+                self.identifier,
                 execution_context.frame.object_name,
                 execution_context.frame.method_name,
                 instruction_index + instruction.length() as usize,

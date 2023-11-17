@@ -279,6 +279,18 @@ impl InstructionStream {
         &self.cursor
     }
 
+    pub fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let mut string = String::new();
+        for (index, instruction) in self.instructions.iter().enumerate() {
+            string.push_str(&format!(
+                "{:04} {}\n",
+                index,
+                instruction.to_string(runtime_constant_pool)
+            ));
+        }
+        string
+    }
+
     // FIXME: Find a better way to do this
     fn cursor_to_index(&self, cursor: usize) -> usize {
         let mut i = 0;

@@ -28,7 +28,7 @@ impl Instruction for JSR {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("JSR")
+        String::from("jsr")
     }
 }
 #[derive(Clone)]
@@ -53,7 +53,7 @@ impl Instruction for RET {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("RET")
+        String::from("ret")
     }
 }
 #[derive(Clone)]
@@ -78,7 +78,7 @@ impl Instruction for WIDE {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("WIDE")
+        String::from("wide")
     }
 }
 #[derive(Clone)]
@@ -103,7 +103,7 @@ impl Instruction for JSR_W {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("JSR_W")
+        String::from("jsr_w")
     }
 }
 #[derive(Clone)]
@@ -128,7 +128,7 @@ impl Instruction for BREAKPOINT {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("BREAKPOINT")
+        String::from("breakpoint")
     }
 }
 #[derive(Clone)]
@@ -161,7 +161,7 @@ impl Instruction for PUTFIELD {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("PUTFIELD")
+        String::from("putfield")
     }
 }
 #[derive(Clone)]
@@ -199,7 +199,7 @@ impl Instruction for INVOKEINTERFACE {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("INVOKEINTERFACE")
+        String::from("invokeinterface")
     }
 }
 #[derive(Clone)]
@@ -236,7 +236,7 @@ impl Instruction for INVOKEDYNAMIC {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("INVOKEDYNAMIC")
+        String::from("invokedynamic")
     }
 }
 #[derive(Clone)]
@@ -261,7 +261,7 @@ impl Instruction for ARRAYLENGTH {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("ARRAYLENGTH")
+        String::from("arraylength")
     }
 }
 #[derive(Clone)]
@@ -294,7 +294,7 @@ impl Instruction for CHECKCAST {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("CHECKCAST")
+        String::from("checkcast")
     }
 }
 #[derive(Clone)]
@@ -327,7 +327,7 @@ impl Instruction for INSTANCEOF {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("INSTANCEOF")
+        String::from("instanceof")
     }
 }
 #[derive(Clone)]
@@ -352,7 +352,7 @@ impl Instruction for MONITORENTER {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("MONITORENTER")
+        String::from("monitorenter")
     }
 }
 #[derive(Clone)]
@@ -377,6 +377,6 @@ impl Instruction for MONITOREXIT {
     }
 
     fn to_string(&self, _runtime_constant_pool: &RuntimeConstantPool) -> String {
-        unimplemented!("MONITOREXIT")
+        String::from("monitorexit")
     }
 }

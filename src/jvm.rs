@@ -9,6 +9,7 @@ pub mod execution_context;
 pub mod frame;
 pub mod instructions;
 pub mod interpreter;
+pub mod logging;
 pub mod native;
 pub mod object_manager;
 pub mod runtime_constant_pool;
@@ -22,7 +23,7 @@ pub struct JVM {
 
 impl JVM {
     pub fn start(jdk_base_path: String) {
-        JVM::setup_logging();
+        logging::setup_logging();
 
         unsafe {
             INSTANCE = Some(JVM {
@@ -153,61 +154,4 @@ impl JVM {
         let mut temporary_interpreter = Interpreter::new();
         temporary_interpreter.run("java/lang/System", "initPhase3", "()V");
     }
-
-    fn setup_logging() {
-        let fixed_window_roller = FixedWindowRoller::builder()
-            .build(".log/instructions.{}.log", 0)
-            .unwrap();
-        let trigger = RolloverOnStartTrigger {};
-        let compound_policy = CompoundPolicy::new(Box::new(trigger), Box::new(fixed_window_roller));
-        let config = Config::builder()
-            .appender(
-                Appender::builder().build(
-                    "instructions",
-                    Box::new(
-                        RollingFileAppender::builder()
-                            .encoder(Box::new(PatternEncoder::new("[{d(%H:%M:%S)}]: {m}{n}")))
-                            .build(".log/instructions.log", Box::new(compound_policy))
-                            .unwrap(),
-                    ),
-                ),
-            )
-            .build(
-                Root::builder()
-                    .appender("instructions")
-                    .build(LevelFilter::Trace),
-            )
-            .unwrap();
-        log4rs::init_config(config).unwrap();
-    }
 }
-
-#[derive(Debug)]
-struct RolloverOnStartTrigger {}
-
-static mut FIRST_CALL: bool = true;
-
-impl Trigger for RolloverOnStartTrigger {
-    fn trigger(&self, _: &LogFile<'_>) -> Result<bool> {
-        unsafe {
-            if FIRST_CALL {
-                FIRST_CALL = false;
-                Ok(true)
-            } else {
-                Ok(false)
-            }
-        }
-    }
-}
-
-use anyhow::Result;
-use log::LevelFilter;
-use log4rs::append::rolling_file::policy::compound::roll::fixed_window::FixedWindowRoller;
-use log4rs::append::rolling_file::policy::compound::trigger::Trigger;
-use log4rs::append::rolling_file::policy::compound::CompoundPolicy;
-use log4rs::append::rolling_file::LogFile;
-use log4rs::append::rolling_file::RollingFileAppender;
-use log4rs::config::Appender;
-use log4rs::config::Root;
-use log4rs::encode::pattern::PatternEncoder;
-use log4rs::Config;
