@@ -7,9 +7,9 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeSignature {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub signature_index: U2,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    signature_index: U2,
 }
 
 impl Attribute for AttributeSignature {

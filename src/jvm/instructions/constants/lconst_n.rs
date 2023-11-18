@@ -24,7 +24,7 @@ impl Instruction for LCONST_0 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Long::from_value(0);
-        execution_context.stack.push(Types::Long(value));
+        execution_context.stack().push(Types::Long(value));
         InstructionResult::empty()
     }
 
@@ -51,7 +51,7 @@ impl Instruction for LCONST_1 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Long::from_value(1);
-        execution_context.stack.push(Types::Long(value));
+        execution_context.stack().push(Types::Long(value));
         InstructionResult::empty()
     }
 

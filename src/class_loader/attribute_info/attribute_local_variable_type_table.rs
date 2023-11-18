@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeLocalVariableTypeTable {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub local_variable_type_table_length: U2,
-    pub local_variable_type_table: Vec<LocalVariableTypeTableEntry>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    local_variable_type_table_length: U2,
+    local_variable_type_table: Vec<LocalVariableTypeTableEntry>,
 }
 
 impl Attribute for AttributeLocalVariableTypeTable {
@@ -35,11 +35,11 @@ impl Attribute for AttributeLocalVariableTypeTable {
 
 #[derive(Debug, Clone)]
 pub struct LocalVariableTypeTableEntry {
-    pub start_pc: U2,
-    pub length: U2,
-    pub name_index: U2,
-    pub signature_index: U2,
-    pub index: U2,
+    start_pc: U2,
+    length: U2,
+    name_index: U2,
+    signature_index: U2,
+    index: U2,
 }
 
 impl LocalVariableTypeTableEntry {

@@ -5,8 +5,7 @@ use crate::{
         instructions::{Instruction, InstructionResult},
         object_manager::ObjectManager,
         runtime_constant_pool::{
-            numeric_constant::{NumericConstant, NumericConstantKind},
-            RuntimeConstantPool, RuntimeConstants,
+            numeric_constant::NumericConstantKind, RuntimeConstantPool, RuntimeConstants,
         },
         types::{Types, Value},
     },
@@ -102,22 +101,24 @@ impl Instruction for LDC2_W {
     // TODO: https://docs.oracle.com/javase/specs/jvms/se19/html/jvms-6.html#jvms-6.5.ldc2_w
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
-        match execution_context.runtime_constant_pool.get(index) {
-            RuntimeConstants::NumericConstant(NumericConstant {
-                value: NumericConstantKind::Long(value),
-            }) => {
-                execution_context.stack.push(Types::Long(value.clone()));
-            }
-            RuntimeConstants::NumericConstant(NumericConstant {
-                value: NumericConstantKind::Double(value),
-            }) => {
-                execution_context.stack.push(Types::Double(value.clone()));
-            }
-            // TODO: Dynamically computed long/double constant
-            _ => {
-                panic!("LDC2_W::execute: Unknown constant at index {}", index);
-            }
-        }
+        let value = execution_context
+            .runtime_constant_pool()
+            .map(index, |constant| -> Types {
+                match constant {
+                    RuntimeConstants::NumericConstant(constant) => match constant.value() {
+                        NumericConstantKind::Long(value) => Types::Long(value.clone()),
+                        NumericConstantKind::Double(value) => Types::Double(value.clone()),
+                        _ => {
+                            panic!("LDC2_W::execute: Unknown constant at index {}", index);
+                        }
+                    },
+                    // TODO: Dynamically computed long/double constant
+                    _ => {
+                        panic!("LDC2_W::execute: Unknown constant at index {}", index);
+                    }
+                }
+            });
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -128,16 +129,17 @@ impl Instruction for LDC2_W {
     fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
         let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
         match runtime_constant_pool.get(index) {
-            RuntimeConstants::NumericConstant(NumericConstant {
-                value: NumericConstantKind::Long(value),
-            }) => {
-                format!("ldc2_w: Long({})", value.get())
-            }
-            RuntimeConstants::NumericConstant(NumericConstant {
-                value: NumericConstantKind::Double(value),
-            }) => {
-                format!("ldc2_w: Double({})", value.get())
-            }
+            RuntimeConstants::NumericConstant(constant) => match constant.value() {
+                NumericConstantKind::Long(value) => {
+                    format!("ldc2_w: Long({})", value.get())
+                }
+                NumericConstantKind::Double(value) => {
+                    format!("ldc2_w: Double({})", value.get())
+                }
+                _ => {
+                    panic!("LDC2_W::to_string: Unknown constant at index {}", index);
+                }
+            },
             // TODO: Dynamically computed long/double constant
             _ => {
                 panic!("LDC2_W::to_string: Unknown constant at index {}", index);
@@ -152,21 +154,22 @@ fn ldc_to_string_impl(
     kind: String,
 ) -> String {
     match runtime_constant_pool.get(index) {
-        RuntimeConstants::NumericConstant(NumericConstant {
-            value: NumericConstantKind::Integer(value),
-        }) => {
-            format!("{}: Int({})", kind, value.get())
-        }
-        RuntimeConstants::NumericConstant(NumericConstant {
-            value: NumericConstantKind::Float(value),
-        }) => {
-            format!("{}: Float({})", kind, value.get())
-        }
+        RuntimeConstants::NumericConstant(constant) => match constant.value() {
+            NumericConstantKind::Integer(value) => {
+                format!("{}: Int({})", kind, value.get())
+            }
+            NumericConstantKind::Float(value) => {
+                format!("{}: Float({})", kind, value.get())
+            }
+            _ => {
+                panic!("LDC::to_string: Unknown constant at index {}", index);
+            }
+        },
         RuntimeConstants::StringConstant(constant) => {
             format!("{}: String({})", kind, constant.text())
         }
         RuntimeConstants::SymRefClassOrInterface(class_ref) => {
-            format!("{}: Object({})", kind, class_ref.name)
+            format!("{}: Object({})", kind, class_ref.name())
         }
         // TODO: method type, method handle, dynamically computed constant
         _ => {
@@ -177,27 +180,26 @@ fn ldc_to_string_impl(
 
 // TODO: https://docs.oracle.com/javase/specs/jvms/se19/html/jvms-6.html#jvms-6.5.ldc
 fn ldc_impl(execution_context: &mut Frame, index: u16) {
-    match execution_context.runtime_constant_pool.get(index) {
-        RuntimeConstants::NumericConstant(NumericConstant {
-            value: NumericConstantKind::Integer(value),
-        }) => {
-            execution_context.stack.push(Types::Int(value.clone()));
-        }
-        RuntimeConstants::NumericConstant(NumericConstant {
-            value: NumericConstantKind::Float(value),
-        }) => {
-            execution_context.stack.push(Types::Float(value.clone()));
-        }
-        RuntimeConstants::StringConstant(constant) => execution_context
-            .stack
-            .push(Types::Reference(constant.get())),
-        RuntimeConstants::SymRefClassOrInterface(class_ref) => {
-            let reference = ObjectManager::get_associated_class_object(&class_ref.name);
-            execution_context.stack.push(Types::Reference(reference));
-        }
-        // TODO: method type, method handle, dynamically computed constant
-        _ => {
-            panic!("LDC::execute: Unknown constant at index {}", index);
-        }
-    }
+    let value = execution_context
+        .runtime_constant_pool()
+        .map(index, |constant| -> Types {
+            match constant {
+                RuntimeConstants::NumericConstant(constant) => match constant.value() {
+                    NumericConstantKind::Integer(value) => Types::Int(value.clone()),
+                    NumericConstantKind::Float(value) => Types::Float(value.clone()),
+                    _ => {
+                        panic!("LDC::execute: Unknown constant at index {}", index);
+                    }
+                },
+                RuntimeConstants::StringConstant(constant) => Types::Reference(constant.get()),
+                RuntimeConstants::SymRefClassOrInterface(class_ref) => {
+                    Types::Reference(ObjectManager::get_associated_class_object(class_ref.name()))
+                }
+                // TODO: method type, method handle, dynamically computed constant
+                _ => {
+                    panic!("LDC::execute: Unknown constant at index {}", index);
+                }
+            }
+        });
+    execution_context.stack().push(value);
 }

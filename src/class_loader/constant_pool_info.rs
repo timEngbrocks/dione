@@ -164,7 +164,7 @@ impl ConstantPool {
         ConstantPool { constants }
     }
 
-    pub fn get(&self, index: U2) -> &ConstantPoolInfoType {
+    pub fn get(&self, index: &U2) -> &ConstantPoolInfoType {
         match self.constants.get((index - 1) as usize) {
             Some(constant) => constant,
             None => panic!("{index}"),
@@ -178,7 +178,7 @@ impl ConstantPool {
 
 #[derive(Clone)]
 pub struct ConstantEmptyItem {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl ConstantPoolInfo for ConstantEmptyItem {

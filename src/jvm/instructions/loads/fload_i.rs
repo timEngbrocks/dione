@@ -4,7 +4,6 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         runtime_constant_pool::RuntimeConstantPool,
-        types::Types,
     },
     opcodes,
 };
@@ -23,12 +22,9 @@ impl Instruction for FLOAD_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(0) {
-            Types::Float(value) => {
-                execution_context.stack.push(Types::Float(value.clone()));
-            }
-            _ => panic!("FLOAD_0: Expected a Float"),
-        }
+        let value = execution_context.local_variables().get(0).clone();
+        assert!(value.is_float());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -54,12 +50,9 @@ impl Instruction for FLOAD_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(1) {
-            Types::Float(value) => {
-                execution_context.stack.push(Types::Float(value.clone()));
-            }
-            _ => panic!("FLOAD_1: Expected a Float"),
-        }
+        let value = execution_context.local_variables().get(1).clone();
+        assert!(value.is_float());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -85,12 +78,9 @@ impl Instruction for FLOAD_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(2) {
-            Types::Float(value) => {
-                execution_context.stack.push(Types::Float(value.clone()));
-            }
-            _ => panic!("FLOAD_2: Expected a Float"),
-        }
+        let value = execution_context.local_variables().get(2).clone();
+        assert!(value.is_float());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -116,12 +106,9 @@ impl Instruction for FLOAD_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(3) {
-            Types::Float(value) => {
-                execution_context.stack.push(Types::Float(value.clone()));
-            }
-            _ => panic!("FLOAD_3: Expected a Float"),
-        }
+        let value = execution_context.local_variables().get(3).clone();
+        assert!(value.is_float());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 

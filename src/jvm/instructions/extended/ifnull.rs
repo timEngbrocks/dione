@@ -31,7 +31,7 @@ impl Instruction for IFNULL {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        if let Types::Reference(reference) = execution_context.stack.pop() {
+        if let Types::Reference(reference) = execution_context.stack().pop() {
             if reference.is_null() {
                 let offset = (self.branchbyte1 as i16) << 8 | self.branchbyte2 as i16;
                 InstructionResult::branch(BranchKind::Relative(offset as i32))

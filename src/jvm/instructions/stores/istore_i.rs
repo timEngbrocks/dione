@@ -23,10 +23,12 @@ impl Instruction for ISTORE_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Int(value) => {
-                execution_context.local_variables.set(0, Types::Int(value));
+                execution_context
+                    .local_variables()
+                    .set(0, Types::Int(value));
                 InstructionResult::empty()
             }
             _ => panic!("ISTORE_0: Expected Int"),
@@ -55,10 +57,12 @@ impl Instruction for ISTORE_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Int(value) => {
-                execution_context.local_variables.set(1, Types::Int(value));
+                execution_context
+                    .local_variables()
+                    .set(1, Types::Int(value));
                 InstructionResult::empty()
             }
             _ => panic!("ISTORE_1: Expected Int"),
@@ -87,10 +91,12 @@ impl Instruction for ISTORE_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Int(value) => {
-                execution_context.local_variables.set(2, Types::Int(value));
+                execution_context
+                    .local_variables()
+                    .set(2, Types::Int(value));
                 InstructionResult::empty()
             }
             _ => panic!("ISTORE_2: Expected Int"),
@@ -119,10 +125,12 @@ impl Instruction for ISTORE_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Int(value) => {
-                execution_context.local_variables.set(3, Types::Int(value));
+                execution_context
+                    .local_variables()
+                    .set(3, Types::Int(value));
                 InstructionResult::empty()
             }
             _ => panic!("ISTORE_3: Expected Int"),

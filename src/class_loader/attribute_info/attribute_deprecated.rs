@@ -7,8 +7,8 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeDeprecated {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
+    attribute_name_index: U2,
+    attribute_length: U4,
 }
 
 impl Attribute for AttributeDeprecated {

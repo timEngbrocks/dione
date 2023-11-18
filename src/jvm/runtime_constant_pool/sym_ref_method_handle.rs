@@ -25,17 +25,17 @@ pub enum MethodHandleKind {
 
 #[derive(Clone)]
 pub struct SymRefMethodHandle {
-    pub kind: MethodHandleKind,
+    kind: MethodHandleKind,
 }
 
 impl RuntimeConstant for SymRefMethodHandle {
     fn resolve(index: u16, class_file: &ClassFile) -> Self {
         let method_handle = resolve_constant!(
             ConstantPoolInfoType::MethodHandle,
-            index,
-            class_file.constant_pool
+            &index,
+            class_file.constant_pool()
         );
-        let kind = ConstantMethodHandleKind::from_kind(method_handle.reference_kind);
+        let kind = ConstantMethodHandleKind::from_kind(*method_handle.reference_kind());
 
         match kind {
             ConstantMethodHandleKind::GetField
@@ -44,7 +44,7 @@ impl RuntimeConstant for SymRefMethodHandle {
             | ConstantMethodHandleKind::PutStatic => {
                 // CONSTANT_Fieldref_info
                 let field_ref = SymRefFieldOfClassOrInterface::resolve(
-                    method_handle.reference_index,
+                    *method_handle.reference_index(),
                     class_file,
                 );
                 SymRefMethodHandle {
@@ -55,7 +55,7 @@ impl RuntimeConstant for SymRefMethodHandle {
             | ConstantMethodHandleKind::NewInvokeSpecial => {
                 // CONSTANT_Methodref_info
                 let method_ref =
-                    SymRefMethodOfClass::resolve(method_handle.reference_index, class_file);
+                    SymRefMethodOfClass::resolve(*method_handle.reference_index(), class_file);
                 SymRefMethodHandle {
                     kind: MethodHandleKind::ClassMethod(method_ref),
                 }
@@ -65,20 +65,20 @@ impl RuntimeConstant for SymRefMethodHandle {
                 // Else: CONSTANT_Methodref_info or CONSTANT_InterfaceMethodref_info
                 if compare_class_file_version_to_global(52, 0) == Ordering::Less {
                     let method_ref =
-                        SymRefMethodOfClass::resolve(method_handle.reference_index, class_file);
+                        SymRefMethodOfClass::resolve(*method_handle.reference_index(), class_file);
                     SymRefMethodHandle {
                         kind: MethodHandleKind::ClassMethod(method_ref),
                     }
                 } else {
-                    match class_file.constant_pool.get(index) {
+                    match class_file.constant_pool().get(&index) {
 						ConstantPoolInfoType::Methodref(_) => {
-							let method_ref = SymRefMethodOfClass::resolve(method_handle.reference_index, class_file);
+							let method_ref = SymRefMethodOfClass::resolve(*method_handle.reference_index(), class_file);
 							SymRefMethodHandle {
 								kind: MethodHandleKind::ClassMethod(method_ref),
 							}
 						},
 						ConstantPoolInfoType::InterfaceMethodref(_) => {
-							let method_ref = SymRefMethodOfInterface::resolve(method_handle.reference_index, class_file);
+							let method_ref = SymRefMethodOfInterface::resolve(*method_handle.reference_index(), class_file);
 							SymRefMethodHandle {
 								kind: MethodHandleKind::InterfaceMethod(method_ref),
 							}
@@ -90,7 +90,7 @@ impl RuntimeConstant for SymRefMethodHandle {
             ConstantMethodHandleKind::InvokeInterface => {
                 // CONSTANT_InterfaceMethodref_info
                 let method_ref =
-                    SymRefMethodOfInterface::resolve(method_handle.reference_index, class_file);
+                    SymRefMethodOfInterface::resolve(*method_handle.reference_index(), class_file);
                 SymRefMethodHandle {
                     kind: MethodHandleKind::InterfaceMethod(method_ref),
                 }

@@ -25,10 +25,10 @@ pub fn initialize_class(mut class_file: ClassFile) -> Object {
     let access_flags = get_access_flags(&class_file);
     let super_class = get_super_class(&class_file);
     let interfaces = get_interfaces(&mut class_file);
-    let (fields, static_fields) = get_fields(&class_file);
+    let (fields, static_fields) = get_fields(&mut class_file);
     let methods = get_methods(&mut class_file);
 
-    Object {
+    Object::new_class(
         name,
         access_flags,
         super_class,
@@ -37,7 +37,7 @@ pub fn initialize_class(mut class_file: ClassFile) -> Object {
         static_fields,
         methods,
         class_file,
-    }
+    )
 }
 
 pub fn initialize_interface(mut class_file: ClassFile) -> Object {
@@ -45,52 +45,51 @@ pub fn initialize_interface(mut class_file: ClassFile) -> Object {
     let access_flags = get_access_flags(&class_file);
     let super_class = get_super_class(&class_file);
     let interfaces = get_interfaces(&mut class_file);
-    let (fields, static_fields) = get_fields(&class_file);
+    let (_, static_fields) = get_fields(&mut class_file);
     let methods = get_methods(&mut class_file);
 
-    Object {
+    Object::new_interface(
         name,
         access_flags,
         super_class,
         interfaces,
-        fields,
         static_fields,
         methods,
         class_file,
-    }
+    )
 }
 
 fn get_name(class_file: &ClassFile) -> String {
     let class = resolve_constant!(
         ConstantPoolInfoType::Class,
-        class_file.this_class,
-        &class_file.constant_pool
+        class_file.this_class(),
+        class_file.constant_pool()
     );
     resolve_constant!(
         ConstantPoolInfoType::Utf8,
-        class.name_index,
-        &class_file.constant_pool
+        class.name_index(),
+        class_file.constant_pool()
     )
     .to_string()
 }
 
 fn get_access_flags(class_file: &ClassFile) -> u16 {
-    class_file.access_flags
+    *class_file.access_flags()
 }
 
 fn get_super_class(class_file: &ClassFile) -> Option<Box<Object>> {
-    if class_file.super_class == 0 {
+    if *class_file.super_class() == 0 {
         None
     } else {
         let super_class = resolve_constant!(
             ConstantPoolInfoType::Class,
-            class_file.super_class,
-            &class_file.constant_pool
+            class_file.super_class(),
+            class_file.constant_pool()
         );
         let name = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            super_class.name_index,
-            &class_file.constant_pool
+            super_class.name_index(),
+            class_file.constant_pool()
         )
         .to_string();
         let object = ObjectManager::get(name.as_str());
@@ -100,42 +99,42 @@ fn get_super_class(class_file: &ClassFile) -> Option<Box<Object>> {
 
 fn get_interfaces(class_file: &mut ClassFile) -> HashMap<String, Object> {
     let mut interfaces: HashMap<String, Object> = HashMap::new();
-    for interface in class_file.interfaces.drain(..) {
+    class_file.interfaces().iter().for_each(|interface| {
         let interface = resolve_constant!(
             ConstantPoolInfoType::Class,
             interface,
-            &class_file.constant_pool
+            class_file.constant_pool()
         );
         let name = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            interface.name_index,
-            &class_file.constant_pool
+            interface.name_index(),
+            class_file.constant_pool()
         )
         .to_string();
         let object = ObjectManager::get(name.as_str());
         interfaces.insert(name.clone(), object.clone());
-    }
+    });
     interfaces
 }
 
-fn get_fields(class_file: &ClassFile) -> (HashMap<String, Field>, HashMap<String, Field>) {
+fn get_fields(class_file: &mut ClassFile) -> (HashMap<String, Field>, HashMap<String, Field>) {
     let mut fields = HashMap::new();
     let mut static_fields = HashMap::new();
 
-    for field in class_file.fields.iter() {
+    for field in class_file.fields().iter() {
         let name = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            field.name_index,
-            &class_file.constant_pool
+            field.name_index(),
+            class_file.constant_pool()
         )
         .to_string();
         let descriptor = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            field.descriptor_index,
-            &class_file.constant_pool
+            field.descriptor_index(),
+            class_file.constant_pool()
         )
         .to_string();
-        let access_flags = field.access_flags;
+        let access_flags = *field.access_flags();
 
         let value = None;
 
@@ -157,21 +156,21 @@ fn get_fields(class_file: &ClassFile) -> (HashMap<String, Field>, HashMap<String
 fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
     let mut methods = HashMap::new();
 
-    for (_, method) in class_file.methods.iter().enumerate() {
+    for (_, method) in class_file.methods().iter().enumerate() {
         let name = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            method.name_index,
-            &class_file.constant_pool
+            method.name_index(),
+            class_file.constant_pool()
         )
         .to_string();
 
         let descriptor = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            method.descriptor_index,
-            &class_file.constant_pool
+            method.descriptor_index(),
+            class_file.constant_pool()
         )
         .to_string();
-        let access_flags = method.access_flags;
+        let access_flags = *method.access_flags();
 
         if access_flags & MethodAccesFlags::Native as u16 != 0
             || access_flags & MethodAccesFlags::Abstract as u16 != 0
@@ -190,7 +189,7 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
             );
         } else {
             let attr_code = match method
-                .attributes
+                .attributes()
                 .iter()
                 .find(|attribute| matches!(attribute, AttributeInfo::Code(_)))
             {
@@ -198,10 +197,10 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
                 _ => panic!("Method `{}` does not have a Code attribute!", name),
             };
             let exception_handler_table = attr_code.get_exception_handler_table();
-            let mut code_parser = Parser::new(attr_code.code.clone());
+            let mut code_parser = Parser::new(attr_code.code().clone());
             let instruction_stream = InstructionStream::new(
                 &mut code_parser,
-                attr_code.code_length,
+                *attr_code.code_length(),
                 exception_handler_table,
             );
 
@@ -211,8 +210,8 @@ fn get_methods(class_file: &mut ClassFile) -> HashMap<String, Method> {
                     name,
                     descriptor,
                     access_flags,
-                    attr_code.max_locals,
-                    attr_code.max_stack,
+                    *attr_code.max_locals(),
+                    *attr_code.max_stack(),
                     instruction_stream,
                     false,
                 ),

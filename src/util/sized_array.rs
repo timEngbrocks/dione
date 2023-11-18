@@ -63,6 +63,14 @@ where
         }
     }
 
+    pub fn map<F, R>(&self, index: u16, mapper: F) -> R
+    where
+        F: Fn(&T) -> R,
+    {
+        let element = self.get(index);
+        mapper(element)
+    }
+
     fn set_impl(&mut self, index: U2, value: T) {
         let w = value.width();
         if self.size == U2::MAX {
@@ -99,7 +107,7 @@ where
         }
     }
 
-    pub fn get(&mut self, index: U2) -> &T {
+    pub fn get(&self, index: U2) -> &T {
         if index >= self.size {
             panic!("Error handling!");
         }

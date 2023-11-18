@@ -11,22 +11,22 @@ pub mod system;
 pub mod thread;
 
 pub fn native_call_java_lang(execution_context: &mut Frame) -> InstructionResult {
-    match execution_context.object_name.as_str() {
+    match execution_context.object_name().as_str() {
         "java/lang/System" => System::native_call(
-            &execution_context.method_name.clone(),
-            &execution_context.descriptor.clone(),
+            &execution_context.method_name().clone(),
+            &execution_context.descriptor().clone(),
             execution_context,
         ),
         "java/lang/Class" => Class::native_call(
-            &execution_context.method_name.clone(),
-            &execution_context.descriptor.clone(),
+            &execution_context.method_name().clone(),
+            &execution_context.descriptor().clone(),
             execution_context,
         ),
         "java/lang/Thread" => Thread::native_call(
-            &execution_context.method_name.clone(),
-            &execution_context.descriptor.clone(),
+            &execution_context.method_name().clone(),
+            &execution_context.descriptor().clone(),
             execution_context,
         ),
-        _ => panic!("Unknown native class: {}", execution_context.object_name),
+        _ => panic!("Unknown native class: {}", execution_context.object_name()),
     }
 }

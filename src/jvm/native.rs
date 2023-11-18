@@ -13,22 +13,22 @@ pub mod jdk;
 pub fn native_call(execution_context: &mut Frame) -> InstructionResult {
     // NOTE: Native calls return without invoking any return instruction so we need to manually call them.
     let result = match () {
-        _ if execution_context.object_name.starts_with("java/") => {
+        _ if execution_context.object_name().starts_with("java/") => {
             java::native_call_java(execution_context)
         }
-        _ if execution_context.object_name.starts_with("jdk/") => {
+        _ if execution_context.object_name().starts_with("jdk/") => {
             jdk::native_call_jdk(execution_context)
         }
-        _ => panic!("Unknown native class: {}", execution_context.object_name),
+        _ => panic!("Unknown native class: {}", execution_context.object_name()),
     };
-    if let Some(kind) = &result.ret {
+    if let Some(kind) = &result.get_ret() {
         match kind {
             ReturnKind::Value(t) => match t {
-                Types::Int(value) => ireturn(value.clone(), &execution_context.return_value),
-                Types::Long(value) => lreturn(value.clone(), &execution_context.return_value),
-                Types::Float(value) => freturn(value.clone(), &execution_context.return_value),
-                Types::Double(value) => dreturn(value.clone(), &execution_context.return_value),
-                Types::Reference(value) => areturn(value.clone(), &execution_context.return_value),
+                Types::Int(value) => ireturn(value.clone(), execution_context.return_value()),
+                Types::Long(value) => lreturn(value.clone(), execution_context.return_value()),
+                Types::Float(value) => freturn(value.clone(), execution_context.return_value()),
+                Types::Double(value) => dreturn(value.clone(), execution_context.return_value()),
+                Types::Reference(value) => areturn(value.clone(), execution_context.return_value()),
                 _ => panic!("Expected Int return type"),
             },
             ReturnKind::Void => result,

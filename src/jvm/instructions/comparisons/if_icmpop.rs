@@ -32,8 +32,8 @@ impl Instruction for IF_ICMPEQ {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value2 = value2.get();
                     let value1 = value1.get();
@@ -80,8 +80,8 @@ impl Instruction for IF_ICMPNE {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value2 = value2.get();
                     let value1 = value1.get();
@@ -128,8 +128,8 @@ impl Instruction for IF_ICMPLT {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value2 = value2.get();
                     let value1 = value1.get();
@@ -176,8 +176,8 @@ impl Instruction for IF_ICMPGE {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value2 = value2.get();
                     let value1 = value1.get();
@@ -224,8 +224,8 @@ impl Instruction for IF_ICMPGT {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value2 = value2.get();
                     let value1 = value1.get();
@@ -272,8 +272,8 @@ impl Instruction for IF_ICMPLE {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value2 = value2.get();
                     let value1 = value1.get();

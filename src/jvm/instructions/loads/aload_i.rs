@@ -4,7 +4,6 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         runtime_constant_pool::RuntimeConstantPool,
-        types::Types,
     },
     opcodes,
 };
@@ -23,19 +22,9 @@ impl Instruction for ALOAD_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(0) {
-            Types::ReturnAddress(value) => {
-                execution_context
-                    .stack
-                    .push(Types::ReturnAddress(value.clone()));
-            }
-            Types::Reference(value) => {
-                execution_context
-                    .stack
-                    .push(Types::Reference(value.clone()));
-            }
-            _ => panic!("ALOAD_0: Expected a ReturnAddress/Reference"),
-        }
+        let value = execution_context.local_variables().get(0).clone();
+        assert!(value.is_referenceable());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -61,19 +50,9 @@ impl Instruction for ALOAD_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(1) {
-            Types::ReturnAddress(value) => {
-                execution_context
-                    .stack
-                    .push(Types::ReturnAddress(value.clone()));
-            }
-            Types::Reference(value) => {
-                execution_context
-                    .stack
-                    .push(Types::Reference(value.clone()));
-            }
-            _ => panic!("ALOAD_1: Expected a ReturnAddress/Reference"),
-        }
+        let value = execution_context.local_variables().get(1).clone();
+        assert!(value.is_referenceable());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -99,19 +78,9 @@ impl Instruction for ALOAD_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(2) {
-            Types::ReturnAddress(value) => {
-                execution_context
-                    .stack
-                    .push(Types::ReturnAddress(value.clone()));
-            }
-            Types::Reference(value) => {
-                execution_context
-                    .stack
-                    .push(Types::Reference(value.clone()));
-            }
-            _ => panic!("ALOAD_2: Expected a ReturnAddress/Reference"),
-        }
+        let value = execution_context.local_variables().get(2).clone();
+        assert!(value.is_referenceable());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -137,19 +106,9 @@ impl Instruction for ALOAD_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(3) {
-            Types::ReturnAddress(value) => {
-                execution_context
-                    .stack
-                    .push(Types::ReturnAddress(value.clone()));
-            }
-            Types::Reference(value) => {
-                execution_context
-                    .stack
-                    .push(Types::Reference(value.clone()));
-            }
-            _ => panic!("ALOAD_3: Expected a ReturnAddress/Reference"),
-        }
+        let value = execution_context.local_variables().get(3).clone();
+        assert!(value.is_referenceable());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 

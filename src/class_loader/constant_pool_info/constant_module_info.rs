@@ -7,8 +7,8 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantModuleInfo {
-    pub tag: U1,
-    pub name_index: U2,
+    tag: U1,
+    name_index: U2,
 }
 
 impl ConstantPoolInfo for ConstantModuleInfo {

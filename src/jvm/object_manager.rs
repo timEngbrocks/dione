@@ -64,7 +64,7 @@ impl ObjectManager {
         if name.starts_with('[') {
             return false;
         }
-        !matches!(ObjectManager::get(name).fields.capacity(), 0)
+        !matches!(ObjectManager::get(name).fields().capacity(), 0)
     }
 
     pub fn is_array_class(name: &str) -> bool {
@@ -78,7 +78,7 @@ impl ObjectManager {
         if name.starts_with('[') {
             return false;
         }
-        matches!(ObjectManager::get(name).fields.capacity(), 0)
+        matches!(ObjectManager::get(name).fields().capacity(), 0)
     }
 
     pub fn get_string_instance(text: String) -> Reference {
@@ -149,9 +149,9 @@ impl ObjectManager {
     fn load_impl(&mut self, name: &str) {
         let mut objects = self.bootstrap_class_loader.load_object(name);
         for object in objects.drain(..) {
-            self.initialized.insert(object.name.clone(), false);
-            let name = object.name.clone();
-            self.objects.insert(object.name.clone(), object);
+            self.initialized.insert(object.name().clone(), false);
+            let name = object.name().clone();
+            self.objects.insert(object.name().clone(), object);
             self.construct_associated_class_object(&name);
         }
     }
@@ -183,7 +183,7 @@ impl ObjectManager {
 
     fn instantiate_impl(&mut self, name: &str) -> Reference {
         let object = self.get_impl(name).clone();
-        match object.fields.capacity() {
+        match object.fields().capacity() {
             0 => Heap::allocate_interface(object),
             _ => Heap::allocate_class(object),
         }

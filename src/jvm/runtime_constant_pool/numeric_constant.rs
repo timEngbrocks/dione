@@ -15,12 +15,16 @@ pub enum NumericConstantKind {
 
 #[derive(Clone)]
 pub struct NumericConstant {
-    pub value: NumericConstantKind,
+    value: NumericConstantKind,
 }
-
+impl NumericConstant {
+    pub fn value(&self) -> &NumericConstantKind {
+        &self.value
+    }
+}
 impl RuntimeConstant for NumericConstant {
     fn resolve(index: u16, class_file: &ClassFile) -> Self {
-        match class_file.constant_pool.get(index) {
+        match class_file.constant_pool().get(&index) {
 			ConstantPoolInfoType::Integer(value) => {
 				NumericConstant {
 					value: NumericConstantKind::Integer(Int::from_value(value.to_i32())),

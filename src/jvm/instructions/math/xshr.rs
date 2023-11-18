@@ -23,12 +23,12 @@ impl Instruction for ISHR {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let s = value2.get() & 0b11111;
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Int(Int::from_value(value1.get() >> s)));
                     InstructionResult::empty()
                 }
@@ -60,11 +60,11 @@ impl Instruction for LSHR {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let s = value2.get() & 0b111111;
-                    execution_context.stack.push(Types::Long(Long::from_value(
+                    execution_context.stack().push(Types::Long(Long::from_value(
                         (value1.get() as i64) >> s as i64,
                     )));
                     InstructionResult::empty()

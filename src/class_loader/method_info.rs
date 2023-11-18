@@ -24,11 +24,11 @@ pub type MethodAccessFlag = u16;
 
 #[derive(Debug, Clone)]
 pub struct MethodInfo {
-    pub access_flags: MethodAccessFlag,
-    pub name_index: U2,
-    pub descriptor_index: U2,
-    pub attributes_count: U2,
-    pub attributes: Vec<AttributeInfo>,
+    access_flags: MethodAccessFlag,
+    name_index: U2,
+    descriptor_index: U2,
+    attributes_count: U2,
+    attributes: Vec<AttributeInfo>,
 }
 
 impl MethodInfo {
@@ -49,5 +49,25 @@ impl MethodInfo {
             attributes_count,
             attributes,
         }
+    }
+
+    pub fn access_flags(&self) -> &MethodAccessFlag {
+        &self.access_flags
+    }
+
+    pub fn name_index(&self) -> &U2 {
+        &self.name_index
+    }
+
+    pub fn descriptor_index(&self) -> &U2 {
+        &self.descriptor_index
+    }
+
+    pub fn attributes_count(&self) -> &U2 {
+        &self.attributes_count
+    }
+
+    pub fn attributes(&self) -> &Vec<AttributeInfo> {
+        &self.attributes
     }
 }

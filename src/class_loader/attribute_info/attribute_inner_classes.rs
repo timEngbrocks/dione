@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeInnerClasses {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub number_of_classes: U2,
-    pub classes: Vec<InnerClassesListEntry>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    number_of_classes: U2,
+    classes: Vec<InnerClassesListEntry>,
 }
 
 impl Attribute for AttributeInnerClasses {
@@ -34,10 +34,10 @@ impl Attribute for AttributeInnerClasses {
 
 #[derive(Debug, Clone)]
 pub struct InnerClassesListEntry {
-    pub inner_class_info_index: U2,
-    pub outer_class_info_index: U2,
-    pub inner_name_index: U2,
-    pub inner_class_access_flags: U2,
+    inner_class_info_index: U2,
+    outer_class_info_index: U2,
+    inner_name_index: U2,
+    inner_class_access_flags: U2,
 }
 
 impl InnerClassesListEntry {

@@ -6,11 +6,7 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult, InstructionStream},
         object_manager::ObjectManager,
-        runtime_constant_pool::{
-            sym_ref_method_of_class::SymRefMethodOfClass,
-            sym_ref_method_of_interface::SymRefMethodOfInterface, RuntimeConstantPool,
-            RuntimeConstants,
-        },
+        runtime_constant_pool::{RuntimeConstantPool, RuntimeConstants},
         types::Types,
     },
     opcodes,
@@ -40,44 +36,34 @@ impl Instruction for INVOKEVIRTUAL {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
-        let (object, method) = match execution_context.runtime_constant_pool.get(index) {
-            RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass {
-                name,
-                descriptor,
-                class_ref,
-            }) => {
-                let object = ObjectManager::get(class_ref.name.as_str());
-                object
-                    .get_method(name.as_str(), descriptor.as_str())
-                    .unwrap()
-            }
-            RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface {
-                name,
-                descriptor,
-                class_ref,
-            }) => {
-                let object = ObjectManager::get(class_ref.name.as_str());
-                object
-                    .get_method(name.as_str(), descriptor.as_str())
-                    .unwrap()
-            }
-            _ => panic!("Expected SymRefMethodOfClass or SymRefMethodOfInterface"),
-        };
-        let parse_result = parse_method_descriptor(&method.descriptor);
-        let (mut arg_types, return_type) = match parse_result {
+        let (object_name, name, descriptor) =
+            match execution_context.runtime_constant_pool().get(index) {
+                RuntimeConstants::SymRefMethodOfClass(symref) => (
+                    symref.class_ref().name().clone(),
+                    symref.name().clone(),
+                    symref.descriptor().clone(),
+                ),
+                RuntimeConstants::SymRefMethodOfInterface(symref) => (
+                    symref.class_ref().name().clone(),
+                    symref.name().clone(),
+                    symref.descriptor().clone(),
+                ),
+                _ => panic!("Expected SymRefMethodOfClass or SymRefMethodOfInterface"),
+            };
+        let object = ObjectManager::get(&object_name);
+        let (_, method) = object.get_method(&object_name, &descriptor).unwrap();
+        let parse_result = parse_method_descriptor(method.descriptor());
+        let (arg_types, return_type) = match parse_result {
             Some((arg_types, return_type)) => (arg_types, return_type),
-            None => panic!("Invalid method descriptor: {}", method.descriptor),
+            None => panic!("Invalid method descriptor: {}", method.descriptor()),
         };
-        arg_types = arg_types
-            .iter()
-            .rev()
-            .map(|arg| {
-                let actual_arg = execution_context.stack.pop();
-                actual_arg.assert_matches_type(arg);
-                actual_arg
-            })
-            .collect::<Vec<Types>>();
-        let object_ref = match execution_context.stack.pop() {
+        let mut actual_arg_types: Vec<Types> = Vec::with_capacity(arg_types.len());
+        for arg in arg_types.iter().rev() {
+            let actual_arg = execution_context.stack().pop();
+            actual_arg.assert_matches_type(arg);
+            actual_arg_types.push(actual_arg);
+        }
+        let object_ref = match execution_context.stack().pop() {
             Types::Reference(object_ref) => object_ref,
             _ => panic!("INVOKEVIRTUAL: Expected Reference for object_ref"),
         };
@@ -85,21 +71,21 @@ impl Instruction for INVOKEVIRTUAL {
         let (max_locals, max_stack) = if method.is_native() {
             (None, None)
         } else {
-            (Some(method.max_locals), Some(method.max_stack))
+            (Some(*method.max_locals()), Some(*method.max_stack()))
         };
         let mut local_variables = SizedArray::<Types>::new(max_locals);
         local_variables.set(0, Types::Reference(object_ref.clone()));
-        for (index, arg) in arg_types.iter().enumerate() {
+        for (index, arg) in actual_arg_types.iter().enumerate() {
             local_variables.set((index + 1) as u16, arg.clone());
         }
         let stack = Stack::<Types>::new(max_stack);
         let frame = Frame::new(
             local_variables,
             stack,
-            &object.class_file,
-            object.name.clone(),
-            method.name.clone(),
-            method.descriptor.clone(),
+            object.class_file(),
+            object_name.clone(),
+            name,
+            descriptor,
             return_type,
         );
 
@@ -122,7 +108,7 @@ impl Instruction for INVOKEVIRTUAL {
 
         InstructionResult::call(ExecutionContext::new(
             frame,
-            method.instruction_stream.clone(),
+            method.instruction_stream().clone(),
         ))
     }
 
@@ -133,31 +119,25 @@ impl Instruction for INVOKEVIRTUAL {
     fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
         let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
         let (object, method) = match runtime_constant_pool.get(index) {
-            RuntimeConstants::SymRefMethodOfClass(SymRefMethodOfClass {
-                name,
-                descriptor,
-                class_ref,
-            }) => {
-                let object = ObjectManager::get(class_ref.name.as_str());
+            RuntimeConstants::SymRefMethodOfClass(symref) => {
+                let object = ObjectManager::get(symref.class_ref().name().as_str());
                 object
-                    .get_method(name.as_str(), descriptor.as_str())
+                    .get_method(symref.name().as_str(), symref.descriptor().as_str())
                     .unwrap()
             }
-            RuntimeConstants::SymRefMethodOfInterface(SymRefMethodOfInterface {
-                name,
-                descriptor,
-                class_ref,
-            }) => {
-                let object = ObjectManager::get(class_ref.name.as_str());
+            RuntimeConstants::SymRefMethodOfInterface(symref) => {
+                let object = ObjectManager::get(symref.class_ref().name().as_str());
                 object
-                    .get_method(name.as_str(), descriptor.as_str())
+                    .get_method(symref.name().as_str(), symref.descriptor().as_str())
                     .unwrap()
             }
             _ => panic!("Expected SymRefMethodOfClass or SymRefMethodOfInterface"),
         };
         format!(
             "invokevirtual {}.{}:{}",
-            object.name, method.name, method.descriptor
+            object.name(),
+            method.name(),
+            method.descriptor()
         )
     }
 }

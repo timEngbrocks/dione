@@ -7,13 +7,13 @@ use crate::{
 use super::{runtime_constant_pool::RuntimeConstantPool, types::ReturnTypes};
 
 pub struct Frame {
-    pub local_variables: SizedArray<Types>,
-    pub stack: Stack<Types>,
-    pub runtime_constant_pool: RuntimeConstantPool,
-    pub object_name: String,
-    pub method_name: String,
-    pub descriptor: String,
-    pub return_value: ReturnTypes,
+    local_variables: SizedArray<Types>,
+    stack: Stack<Types>,
+    runtime_constant_pool: RuntimeConstantPool,
+    object_name: String,
+    method_name: String,
+    descriptor: String,
+    return_value: ReturnTypes,
 }
 
 impl Frame {
@@ -43,6 +43,34 @@ impl Frame {
             ReturnTypes::Type(t) => t.assert_matches_type(return_value),
         }
     }
+
+    pub fn local_variables(&mut self) -> &mut SizedArray<Types> {
+        &mut self.local_variables
+    }
+
+    pub fn stack(&mut self) -> &mut Stack<Types> {
+        &mut self.stack
+    }
+
+    pub fn runtime_constant_pool(&self) -> &RuntimeConstantPool {
+        &self.runtime_constant_pool
+    }
+
+    pub fn object_name(&self) -> &String {
+        &self.object_name
+    }
+
+    pub fn method_name(&self) -> &String {
+        &self.method_name
+    }
+
+    pub fn descriptor(&self) -> &String {
+        &self.descriptor
+    }
+
+    pub fn return_value(&self) -> &ReturnTypes {
+        &self.return_value
+    }
 }
 
 impl Clone for Frame {
@@ -50,7 +78,7 @@ impl Clone for Frame {
         Frame {
             local_variables: SizedArray::<Types>::new(self.local_variables.len()),
             stack: Stack::<Types>::new(self.stack.max_size()),
-            runtime_constant_pool: self.runtime_constant_pool.clone(),
+            runtime_constant_pool: self.runtime_constant_pool().clone(),
             object_name: self.object_name.clone(),
             method_name: self.method_name.clone(),
             descriptor: self.descriptor.clone(),

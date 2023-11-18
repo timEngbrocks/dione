@@ -23,17 +23,17 @@ impl Instruction for SWAP {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             value1
                 if value1.get_computational_type_category() == ComputationalTypeCategory::Type1 =>
             {
-                match execution_context.stack.pop() {
+                match execution_context.stack().pop() {
                     value2
                         if value2.get_computational_type_category()
                             == ComputationalTypeCategory::Type1 =>
                     {
-                        execution_context.stack.push(value1);
-                        execution_context.stack.push(value2);
+                        execution_context.stack().push(value1);
+                        execution_context.stack().push(value2);
                         InstructionResult::empty()
                     }
                     _ => panic!("SWAP: Expected a Type1 value as the second value"),

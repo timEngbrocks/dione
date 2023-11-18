@@ -25,13 +25,13 @@ impl RuntimeConstant for StringConstant {
     fn resolve(index: u16, class_file: &ClassFile) -> Self {
         let string = resolve_constant!(
             ConstantPoolInfoType::String,
-            index,
-            class_file.constant_pool
+            &index,
+            class_file.constant_pool()
         );
         let text = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            string.string_index,
-            class_file.constant_pool
+            string.string_index(),
+            class_file.constant_pool()
         )
         .to_string();
 

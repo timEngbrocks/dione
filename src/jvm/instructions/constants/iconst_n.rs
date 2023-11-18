@@ -24,7 +24,7 @@ impl Instruction for ICONST_M1 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(-1);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -51,7 +51,7 @@ impl Instruction for ICONST_0 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(0);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -78,7 +78,7 @@ impl Instruction for ICONST_1 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(1);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -105,7 +105,7 @@ impl Instruction for ICONST_2 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(2);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -132,7 +132,7 @@ impl Instruction for ICONST_3 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(3);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -159,7 +159,7 @@ impl Instruction for ICONST_4 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(4);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -186,7 +186,7 @@ impl Instruction for ICONST_5 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(5);
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 

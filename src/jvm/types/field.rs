@@ -14,10 +14,10 @@ pub enum FieldAccessFlags {
 
 #[derive(Clone)]
 pub struct Field {
-    pub name: String,
-    pub descriptor: String,
-    pub access_flags: u16,
-    pub value: Option<Types>,
+    name: String,
+    descriptor: String,
+    access_flags: u16,
+    value: Option<Types>,
 }
 
 impl Field {
@@ -72,5 +72,17 @@ impl Field {
 
     pub fn is_enum(&self) -> bool {
         self.access_flags & FieldAccessFlags::Enum as u16 != 0
+    }
+
+    pub fn name(&self) -> &String {
+        &self.name
+    }
+
+    pub fn descriptor(&self) -> &String {
+        &self.descriptor
+    }
+
+    pub fn access_flags(&self) -> &u16 {
+        &self.access_flags
     }
 }

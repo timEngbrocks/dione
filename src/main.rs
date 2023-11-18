@@ -10,7 +10,8 @@
     clippy::too_many_arguments,
     clippy::len_zero,
     clippy::cast_enum_constructor,
-    clippy::fn_to_numeric_cast_with_truncation
+    clippy::fn_to_numeric_cast_with_truncation,
+    clippy::unit_arg
 )]
 
 use args::{Args, ArgsError};

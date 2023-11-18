@@ -13,22 +13,22 @@ use super::{
 
 #[derive(Clone)]
 pub struct SymRefDynamicallyComputedCallSite {
-    pub method_handle_ref: SymRefMethodHandle,
-    pub arguments: Vec<RuntimeConstants>,
-    pub name: String,
-    pub descriptor: String,
+    method_handle_ref: SymRefMethodHandle,
+    arguments: Vec<RuntimeConstants>,
+    name: String,
+    descriptor: String,
 }
 
 impl RuntimeConstant for SymRefDynamicallyComputedCallSite {
     fn resolve(index: u16, class_file: &ClassFile) -> Self {
         let invokedynamic = resolve_constant!(
             ConstantPoolInfoType::InvokeDynamic,
-            index,
-            class_file.constant_pool
+            &index,
+            class_file.constant_pool()
         );
 
         let bootstrap_method_attr =
-            match class_file.attributes.iter().reduce(|attr, e| match attr {
+            match class_file.attributes().iter().reduce(|attr, e| match attr {
                 AttributeInfo::BootstrapMethods(_) => attr,
                 _ => e,
             }) {
@@ -37,13 +37,13 @@ impl RuntimeConstant for SymRefDynamicallyComputedCallSite {
             };
 
         let bootstrap_method = bootstrap_method_attr
-            .bootstrap_methods
-            .get(invokedynamic.bootstrap_method_attr_index as usize)
+            .bootstrap_methods()
+            .get(*invokedynamic.bootstrap_method_attr_index() as usize)
             .unwrap();
         let method_handle_ref =
-            SymRefMethodHandle::resolve(bootstrap_method.bootstrap_method_ref, class_file);
+            SymRefMethodHandle::resolve(*bootstrap_method.bootstrap_method_ref(), class_file);
         let arguments = bootstrap_method
-            .bootstrap_arguments
+            .bootstrap_arguments()
             .iter()
             .map(|x| match RuntimeConstantPool::resolve(*x, class_file) {
                 Some(constant) => constant,
@@ -52,19 +52,19 @@ impl RuntimeConstant for SymRefDynamicallyComputedCallSite {
             .collect::<Vec<RuntimeConstants>>();
         let name_and_type = resolve_constant!(
             ConstantPoolInfoType::NameAndType,
-            invokedynamic.name_and_type_index,
-            class_file.constant_pool
+            invokedynamic.name_and_type_index(),
+            class_file.constant_pool()
         );
         let name = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            name_and_type.name_index,
-            class_file.constant_pool
+            name_and_type.name_index(),
+            class_file.constant_pool()
         )
         .to_string();
         let descriptor = resolve_constant!(
             ConstantPoolInfoType::Utf8,
-            name_and_type.descriptor_index,
-            class_file.constant_pool
+            name_and_type.descriptor_index(),
+            class_file.constant_pool()
         )
         .to_string();
 

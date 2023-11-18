@@ -38,7 +38,7 @@ impl Instruction for NEWARRAY {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let count = match execution_context.stack.pop() {
+        let count = match execution_context.stack().pop() {
             Types::Int(value) => value.get(),
             _ => panic!("Expected Int"),
         };
@@ -54,7 +54,7 @@ impl Instruction for NEWARRAY {
             _ => panic!("Invalid atype"),
         };
         let reference = Heap::allocate_primitive_array(array);
-        execution_context.stack.push(Types::Reference(reference));
+        execution_context.stack().push(Types::Reference(reference));
         InstructionResult::empty()
     }
 

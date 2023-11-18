@@ -31,8 +31,8 @@ impl Instruction for IRETURN {
     // TODO: Monitor update
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value) => ireturn(value, &execution_context.return_value),
+        match execution_context.stack().pop() {
+            Types::Int(value) => ireturn(value, execution_context.return_value()),
             _ => panic!("Expected Int"),
         }
     }
@@ -77,8 +77,8 @@ impl Instruction for LRETURN {
     // TODO: Monitor update
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Long(value) => lreturn(value, &execution_context.return_value),
+        match execution_context.stack().pop() {
+            Types::Long(value) => lreturn(value, execution_context.return_value()),
             _ => panic!("Expected Long"),
         }
     }
@@ -112,8 +112,8 @@ impl Instruction for FRETURN {
     // TODO: Monitor update
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Float(value) => freturn(value, &execution_context.return_value),
+        match execution_context.stack().pop() {
+            Types::Float(value) => freturn(value, execution_context.return_value()),
             _ => panic!("Expected Float"),
         }
     }
@@ -147,8 +147,8 @@ impl Instruction for DRETURN {
     // TODO: Monitor update
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Double(value) => dreturn(value, &execution_context.return_value),
+        match execution_context.stack().pop() {
+            Types::Double(value) => dreturn(value, execution_context.return_value()),
             _ => panic!("Expected Double"),
         }
     }
@@ -182,9 +182,9 @@ impl Instruction for ARETURN {
     // TODO: Monitor update
     // TODO: Exception handling
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             // FIXME: Check that the reference on the stack and the return type are assignment compatible
-            Types::Reference(value) => areturn(value, &execution_context.return_value),
+            Types::Reference(value) => areturn(value, execution_context.return_value()),
             _ => panic!("Expected Reference"),
         }
     }

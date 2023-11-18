@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeMethodParameters {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub parameters_count: U1,
-    pub parameters: Vec<MethodParameter>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    parameters_count: U1,
+    parameters: Vec<MethodParameter>,
 }
 
 impl Attribute for AttributeMethodParameters {
@@ -34,8 +34,8 @@ impl Attribute for AttributeMethodParameters {
 
 #[derive(Debug, Clone)]
 pub struct MethodParameter {
-    pub name_index: U2,
-    pub access_flags: U2,
+    name_index: U2,
+    access_flags: U2,
 }
 
 impl MethodParameter {

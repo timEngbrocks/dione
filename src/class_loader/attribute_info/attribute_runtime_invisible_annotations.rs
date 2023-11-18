@@ -7,10 +7,10 @@ use super::{attribute_runtime_visibile_annotations::Annotation, Attribute};
 
 #[derive(Debug, Clone)]
 pub struct AttributeRuntimeInvisibleAnnotations {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub num_annotations: U2,
-    pub annotations: Vec<Annotation>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    num_annotations: U2,
+    annotations: Vec<Annotation>,
 }
 
 impl Attribute for AttributeRuntimeInvisibleAnnotations {

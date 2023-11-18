@@ -42,21 +42,27 @@ impl Instruction for PUTSTATIC {
     // FIXME: final fields
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
-        let field_ref = match execution_context.runtime_constant_pool.get(index) {
-            RuntimeConstants::SymRefFieldOfClassOrInterface(value) => value,
-            _ => panic!("Expected SymRefFieldOfClassOrInterface"),
-        };
-        let object = ObjectManager::get(&field_ref.class_ref.name);
-        let field = match object.get_static_field(&field_ref.name, &field_ref.descriptor) {
+        let (object_name, name, descriptor) = execution_context.runtime_constant_pool().map(
+            index,
+            |constant| -> (String, String, String) {
+                match constant {
+                    RuntimeConstants::SymRefFieldOfClassOrInterface(field_ref) => (
+                        field_ref.class_ref().name().clone(),
+                        field_ref.name().clone(),
+                        field_ref.descriptor().clone(),
+                    ),
+                    _ => panic!("Expected SymRefFieldOfClassOrInterface"),
+                }
+            },
+        );
+        let object = ObjectManager::get(&object_name);
+        let field = match object.get_static_field(&name, &descriptor) {
             Some(value) => value,
-            None => panic!(
-                "Could not find field: {}{}",
-                field_ref.name, field_ref.descriptor
-            ),
+            None => panic!("Could not find field: {}{}", name, descriptor),
         };
-        let parsed_descriptor = match parse_field_descriptor(&field_ref.descriptor) {
+        let parsed_descriptor = match parse_field_descriptor(&descriptor) {
             Some(value) => value,
-            None => panic!("Invalid field descriptor: {}", &field_ref.descriptor),
+            None => panic!("Invalid field descriptor: {}", descriptor),
         };
         let expected_value_type = match parsed_descriptor {
             Types::Boolean(_)
@@ -66,8 +72,8 @@ impl Instruction for PUTSTATIC {
             | Types::Int(_) => Types::Int(Int::new()),
             _ => parsed_descriptor.clone(),
         };
-        let value = execution_context.stack.pop();
-        if field_descriptor_is_object(&field_ref.descriptor) {
+        let value = execution_context.stack().pop();
+        if field_descriptor_is_object(&descriptor) {
             match &value {
                 Types::Reference(reference) => {
                     if let ReferencePtr::Array(_) = reference.get() {
@@ -76,7 +82,7 @@ impl Instruction for PUTSTATIC {
                 }
                 _ => panic!("Expected Reference"),
             };
-        } else if field_descriptor_is_array(&field_ref.descriptor) {
+        } else if field_descriptor_is_array(&descriptor) {
             match &value {
                 Types::Reference(reference) => match reference.get() {
                     ReferencePtr::Array(_) => (),
@@ -109,13 +115,17 @@ impl Instruction for PUTSTATIC {
 
     fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
         let index = ((self.indexbyte1 as U2) << 8) | self.indexbyte2 as U2;
-        let field_ref = match runtime_constant_pool.get(index) {
-            RuntimeConstants::SymRefFieldOfClassOrInterface(value) => value,
-            _ => panic!("Expected SymRefFieldOfClassOrInterface"),
-        };
-        format!(
-            "putstatic {} {} {}",
-            field_ref.class_ref.name, field_ref.name, field_ref.descriptor
-        )
+        let (object_name, name, descriptor) =
+            runtime_constant_pool.map(index, |constant| -> (String, String, String) {
+                match constant {
+                    RuntimeConstants::SymRefFieldOfClassOrInterface(field_ref) => (
+                        field_ref.class_ref().name().clone(),
+                        field_ref.name().clone(),
+                        field_ref.descriptor().clone(),
+                    ),
+                    _ => panic!("Expected SymRefFieldOfClassOrInterface"),
+                }
+            });
+        format!("putstatic {} {} {}", object_name, name, descriptor)
     }
 }

@@ -33,12 +33,12 @@ impl Instruction for NEW {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let index = ((self.indexbyte1 as u16) << 8) | (self.indexbyte2 as u16);
-        let class_ref = match execution_context.runtime_constant_pool.get(index) {
+        let class_ref = match execution_context.runtime_constant_pool().get(index) {
             RuntimeConstants::SymRefClassOrInterface(class) => class,
             _ => panic!("Expected SymRefClassOrInterface"),
         };
-        let reference = ObjectManager::instantiate(&class_ref.name);
-        execution_context.stack.push(Types::Reference(reference));
+        let reference = ObjectManager::instantiate(class_ref.name());
+        execution_context.stack().push(Types::Reference(reference));
         InstructionResult::empty()
     }
 

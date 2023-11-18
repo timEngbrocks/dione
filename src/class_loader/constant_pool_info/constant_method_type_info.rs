@@ -7,10 +7,14 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantMethodTypeInfo {
-    pub tag: U1,
-    pub descriptor_index: U2,
+    tag: U1,
+    descriptor_index: U2,
 }
-
+impl ConstantMethodTypeInfo {
+    pub fn descriptor_index(&self) -> &U2 {
+        &self.descriptor_index
+    }
+}
 impl ConstantPoolInfo for ConstantMethodTypeInfo {
     fn new(parser: &mut Parser) -> Self {
         let tag = parser.consume_u1();

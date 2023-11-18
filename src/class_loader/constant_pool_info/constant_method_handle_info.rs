@@ -47,11 +47,19 @@ impl ConstantMethodHandleKind {
 
 #[derive(Clone)]
 pub struct ConstantMethodHandleInfo {
-    pub tag: U1,
-    pub reference_kind: U1,
-    pub reference_index: U2,
+    tag: U1,
+    reference_kind: U1,
+    reference_index: U2,
 }
+impl ConstantMethodHandleInfo {
+    pub fn reference_kind(&self) -> &U1 {
+        &self.reference_kind
+    }
 
+    pub fn reference_index(&self) -> &U2 {
+        &self.reference_index
+    }
+}
 impl ConstantPoolInfo for ConstantMethodHandleInfo {
     fn new(parser: &mut Parser) -> Self {
         let tag = parser.consume_u1();

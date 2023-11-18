@@ -55,7 +55,7 @@ pub struct RuntimeConstantPool {
 impl RuntimeConstantPool {
     pub fn new(class_file: &ClassFile) -> Self {
         let mut constants: HashMap<u16, RuntimeConstants> = HashMap::new();
-        for i in 1..=class_file.constant_pool.len() {
+        for i in 1..=*class_file.constant_pool_count() {
             let constant = match RuntimeConstantPool::resolve(i, class_file) {
                 Some(constant) => constant,
                 None => continue,
@@ -65,12 +65,12 @@ impl RuntimeConstantPool {
 
         RuntimeConstantPool {
             constants,
-            length: class_file.constant_pool.len(),
+            length: *class_file.constant_pool_count(),
         }
     }
 
     pub fn resolve(index: u16, class_file: &ClassFile) -> Option<RuntimeConstants> {
-        match class_file.constant_pool.get(index).get_tag() {
+        match class_file.constant_pool().get(&index).get_tag() {
             7 => Some(RuntimeConstants::SymRefClassOrInterface(
                 SymRefClassOrInterface::resolve(index, class_file),
             )),
@@ -110,6 +110,14 @@ impl RuntimeConstantPool {
             Some(constant) => constant,
             None => panic!("{index}"),
         }
+    }
+
+    pub fn map<F, R>(&self, index: u16, mapper: F) -> R
+    where
+        F: Fn(&RuntimeConstants) -> R,
+    {
+        let constant = self.get(index);
+        mapper(constant)
     }
 
     pub fn len(&self) -> u16 {

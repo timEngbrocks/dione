@@ -7,9 +7,9 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantDoubleInfo {
-    pub tag: U1,
-    pub high_bytes: U4,
-    pub low_bytes: U4,
+    tag: U1,
+    high_bytes: U4,
+    low_bytes: U4,
 }
 
 impl ConstantDoubleInfo {

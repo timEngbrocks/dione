@@ -24,8 +24,8 @@ impl Instruction for DCMPL {
 
     #[allow(clippy::if_same_then_else)]
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Double(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Double(value2) => match execution_context.stack().pop() {
                 Types::Double(value1) => {
                     let value1 = value1.get();
                     let value2 = value2.get();
@@ -39,7 +39,7 @@ impl Instruction for DCMPL {
                         -1
                     };
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Int(Int::from_value(result)));
                     InstructionResult::empty()
                 }

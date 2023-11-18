@@ -7,10 +7,10 @@ use super::{Attribute, AttributeInfo};
 
 #[derive(Debug, Clone)]
 pub struct AttributeRecord {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub components_count: U2,
-    pub components: Vec<RecordComponentInfo>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    components_count: U2,
+    components: Vec<RecordComponentInfo>,
 }
 
 impl Attribute for AttributeRecord {
@@ -34,10 +34,10 @@ impl Attribute for AttributeRecord {
 
 #[derive(Debug, Clone)]
 pub struct RecordComponentInfo {
-    pub name_index: U2,
-    pub descriptor_index: U2,
-    pub attributes_count: U2,
-    pub attributes: Vec<AttributeInfo>,
+    name_index: U2,
+    descriptor_index: U2,
+    attributes_count: U2,
+    attributes: Vec<AttributeInfo>,
 }
 
 impl RecordComponentInfo {

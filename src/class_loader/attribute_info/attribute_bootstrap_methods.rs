@@ -7,12 +7,28 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeBootstrapMethods {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub num_bootstrap_methods: U2,
-    pub bootstrap_methods: Vec<BootstrapMethod>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    num_bootstrap_methods: U2,
+    bootstrap_methods: Vec<BootstrapMethod>,
 }
+impl AttributeBootstrapMethods {
+    pub fn attribute_name_index(&self) -> &U2 {
+        &self.attribute_name_index
+    }
 
+    pub fn attribute_length(&self) -> &U4 {
+        &self.attribute_length
+    }
+
+    pub fn num_bootstrap_methods(&self) -> &U2 {
+        &self.num_bootstrap_methods
+    }
+
+    pub fn bootstrap_methods(&self) -> &Vec<BootstrapMethod> {
+        &self.bootstrap_methods
+    }
+}
 impl Attribute for AttributeBootstrapMethods {
     fn new(parser: &mut Parser, _: &ConstantPool) -> AttributeBootstrapMethods {
         let attribute_name_index = parser.consume_u2();
@@ -34,9 +50,9 @@ impl Attribute for AttributeBootstrapMethods {
 
 #[derive(Debug, Clone)]
 pub struct BootstrapMethod {
-    pub bootstrap_method_ref: U2,
-    pub num_bootstrap_arguments: U2,
-    pub bootstrap_arguments: Vec<U2>,
+    bootstrap_method_ref: U2,
+    num_bootstrap_arguments: U2,
+    bootstrap_arguments: Vec<U2>,
 }
 
 impl BootstrapMethod {
@@ -53,5 +69,17 @@ impl BootstrapMethod {
             num_bootstrap_arguments,
             bootstrap_arguments,
         }
+    }
+
+    pub fn bootstrap_method_ref(&self) -> &U2 {
+        &self.bootstrap_method_ref
+    }
+
+    pub fn num_bootstrap_arguments(&self) -> &U2 {
+        &self.num_bootstrap_arguments
+    }
+
+    pub fn bootstrap_arguments(&self) -> &Vec<U2> {
+        &self.bootstrap_arguments
     }
 }

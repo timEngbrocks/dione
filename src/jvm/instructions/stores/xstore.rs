@@ -26,10 +26,10 @@ impl Instruction for ISTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(self.index as u16, Types::Int(value));
                 InstructionResult::empty()
             }
@@ -62,10 +62,10 @@ impl Instruction for LSTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Long(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(self.index as u16, Types::Long(value));
                 InstructionResult::empty()
             }
@@ -98,10 +98,10 @@ impl Instruction for FSTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Float(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(self.index as u16, Types::Float(value));
                 InstructionResult::empty()
             }
@@ -134,10 +134,10 @@ impl Instruction for DSTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Double(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(self.index as u16, Types::Double(value));
                 InstructionResult::empty()
             }
@@ -170,16 +170,16 @@ impl Instruction for ASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::ReturnAddress(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(self.index as u16, Types::ReturnAddress(value));
                 InstructionResult::empty()
             }
             Types::Reference(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(self.index as u16, Types::Reference(value));
                 InstructionResult::empty()
             }
