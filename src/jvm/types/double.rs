@@ -1,9 +1,9 @@
 use crate::class_loader::parser::U2;
 
-use super::{Value, FloatingPointTypes};
+use super::{FloatingPointTypes, Value};
 
 pub struct Double {
-	value: f64,
+    value: f64,
 }
 
 impl FloatingPointTypes for Double {}
@@ -12,15 +12,11 @@ impl Value for Double {
     type Type = f64;
 
     fn new() -> Self {
-        Self {
-            value: 0.0,
-        }
+        Self { value: 0.0 }
     }
 
     fn from_value(value: f64) -> Self {
-        Self {
-            value,
-        }
+        Self { value }
     }
 
     fn set(&mut self, value: f64) {
@@ -36,11 +32,8 @@ impl Value for Double {
     }
 }
 
-
 impl Clone for Double {
     fn clone(&self) -> Self {
-        Self {
-            value: self.value,
-        }
+        Self { value: self.value }
     }
 }

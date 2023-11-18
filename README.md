@@ -44,8 +44,8 @@ latest GNU nightly toolchain from Rust.
 ## Implemented Instructions
 
 
-<label for="status">Status: Finished 126/205 Instructions</label>
-<progress id="status" value="126" max="205"></progress>
+<label for="status">Status: Finished 138/205 Instructions</label>
+<progress id="status" value="138" max="205"></progress>
 
 | Instruction | State |
 | --- | --- |
@@ -216,20 +216,20 @@ latest GNU nightly toolchain from Rust.
 | <span style="color:green">IF_ICMPLE</span> | implemented |
 | IF_ACMPEQ | not implemented |
 | IF_ACMPNE | not implemented |
-| GOTO | not implemented |
+| <span style="color:green">GOTO</span> | implemented |
 | JSR | not implemented |
 | RET | not implemented |
 | TABLESWITCH | not implemented |
 | LOOKUPSWITCH | not implemented |
-| IRETURN | not implemented |
-| LRETURN | not implemented |
-| FRETURN | not implemented |
-| DRETURN | not implemented |
-| ARETURN | not implemented |
-| RETURN | not implemented |
+| <span style="color:green">IRETURN</span> | implemented |
+| <span style="color:green">LRETURN</span> | implemented |
+| <span style="color:green">FRETURN</span> | implemented |
+| <span style="color:green">DRETURN</span> | implemented |
+| <span style="color:green">ARETURN</span> | implemented |
+| <span style="color:green">RETURN</span> | implemented |
 | GETSTATIC | not implemented |
 | <span style="color:green">PUTSTATIC</span> | implemented |
-| GETFIELD | not implemented |
+| <span style="color:green">GETFIELD</span> | implemented |
 | PUTFIELD | not implemented |
 | <span style="color:yellow">INVOKEVIRTUAL</span> | partially implemented |
 | <span style="color:yellow">INVOKESPECIAL</span> | partially implemented |
@@ -246,10 +246,10 @@ latest GNU nightly toolchain from Rust.
 | MONITORENTER | not implemented |
 | MONITOREXIT | not implemented |
 | WIDE | not implemented |
-| MULTIANEWARRAY | not implemented |
-| IFNULL | not implemented |
-| IFNONNULL | not implemented |
-| GOTO_W | not implemented |
+| <span style="color:green">MULTIANEWARRAY</span> | implemented |
+| <span style="color:green">IFNULL</span> | implemented |
+| <span style="color:green">IFNONNULL</span> | implemented |
+| <span style="color:green">GOTO_W</span> | implemented |
 | JSR_W | not implemented |
 | BREAKPOINT | not implemented |
 | IMPDEP1 | not implemented |

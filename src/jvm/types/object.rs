@@ -1,6 +1,6 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::HashMap;
 
-use crate::{jvm::object_manager::ObjectManager, class_loader::class_file::ClassFile};
+use crate::{class_loader::class_file::ClassFile, jvm::object_manager::ObjectManager};
 
 use super::{field::Field, method::Method};
 
@@ -19,22 +19,22 @@ pub enum ObjectAccessFlags {
 
 #[derive(Clone)]
 pub struct Object {
-    pub name: String,
-    pub access_flags: u16,
-    pub super_class: Option<String>,
-    pub interfaces: HashSet<String>,
-    pub fields: HashMap<String, Field>,
-    pub static_fields: HashMap<String, Field>,
-    pub methods: HashMap<String, Method>,
-    pub class_file: ClassFile,
+    name: String,
+    access_flags: u16,
+    super_class: Option<Box<Object>>,
+    interfaces: HashMap<String, Object>,
+    fields: HashMap<String, Field>,
+    static_fields: HashMap<String, Field>,
+    methods: HashMap<String, Method>,
+    class_file: ClassFile,
 }
 
 impl Object {
     pub fn new_class(
         name: String,
         access_flags: u16,
-        super_class: Option<String>,
-        interfaces: HashSet<String>,
+        super_class: Option<Box<Object>>,
+        interfaces: HashMap<String, Object>,
         fields: HashMap<String, Field>,
         static_fields: HashMap<String, Field>,
         methods: HashMap<String, Method>,
@@ -55,8 +55,8 @@ impl Object {
     pub fn new_interface(
         name: String,
         access_flags: u16,
-        super_class: Option<String>,
-        interfaces: HashSet<String>,
+        super_class: Option<Box<Object>>,
+        interfaces: HashMap<String, Object>,
         static_fields: HashMap<String, Field>,
         methods: HashMap<String, Method>,
         class_file: ClassFile,
@@ -78,11 +78,15 @@ impl Object {
         if self.methods.contains_key(key.as_str()) {
             Some((self, self.methods.get(key.as_str()).unwrap()))
         } else if let Some(super_class) = &self.super_class {
-            let super_class = ObjectManager::get(super_class);
             super_class.get_method(method_name, descriptor)
         } else {
             None
         }
+    }
+
+    pub fn put_static_field(&mut self, field: Field) {
+        let key = format!("{}{}", field.name(), field.descriptor());
+        self.static_fields.insert(key, field);
     }
 
     pub fn get_static_field(&mut self, field_name: &str, descriptor: &str) -> Option<&mut Field> {
@@ -90,11 +94,16 @@ impl Object {
         if self.static_fields.contains_key(key.as_str()) {
             self.static_fields.get_mut(key.as_str())
         } else if let Some(super_class) = &self.super_class {
-            let super_class = ObjectManager::get(super_class);
+            let super_class = ObjectManager::get(&super_class.name);
             super_class.get_static_field(field_name, descriptor)
         } else {
             None
         }
+    }
+
+    pub fn put_field(&mut self, field: Field) {
+        let key = format!("{}{}", field.name(), field.descriptor());
+        self.fields.insert(key, field);
     }
 
     pub fn get_field(&self, field_name: &str, descriptor: &str) -> Option<&Field> {
@@ -102,7 +111,6 @@ impl Object {
         if self.fields.contains_key(key.as_str()) {
             self.fields.get(key.as_str())
         } else if let Some(super_class) = &self.super_class {
-            let super_class = ObjectManager::get(super_class);
             super_class.get_field(field_name, descriptor)
         } else {
             None
@@ -151,5 +159,37 @@ impl Object {
 
     pub fn has_main_method(&self) -> bool {
         self.methods.contains_key("main")
+    }
+
+    pub fn name(&self) -> &String {
+        &self.name
+    }
+
+    pub fn access_flags(&self) -> &u16 {
+        &self.access_flags
+    }
+
+    pub fn super_class(&self) -> &Option<Box<Object>> {
+        &self.super_class
+    }
+
+    pub fn interfaces(&self) -> &HashMap<String, Object> {
+        &self.interfaces
+    }
+
+    pub fn fields(&self) -> &HashMap<String, Field> {
+        &self.fields
+    }
+
+    pub fn static_fields(&self) -> &HashMap<String, Field> {
+        &self.static_fields
+    }
+
+    pub fn methods(&self) -> &HashMap<String, Method> {
+        &self.methods
+    }
+
+    pub fn class_file(&self) -> &ClassFile {
+        &self.class_file
     }
 }

@@ -1,42 +1,138 @@
-use crate::class_loader::parser::{Parser, U4, U2};
+use crate::class_loader::parser::{Parser, U2, U4};
 
-use self::{constants::{nop::NOP, iconst_n::{ICONST_M1, ICONST_0, ICONST_1, ICONST_2, ICONST_3, ICONST_4, ICONST_5}, lconst_n::{LCONST_0, LCONST_1}, fconst_n::{FCONST_0, FCONST_1, FCONST_2}, dconst_n::{DCONST_0, DCONST_1}, xpush::{BIPUSH, SIPUSH}, ldcx::{LDC, LDC_W, LDC2_W}, aconst_null::ACONST_NULL}, unimplemented_instructions::GETFIELD, unimplemented_instructions::MONITOREXIT, unimplemented_instructions::PUTFIELD, unimplemented_instructions::INVOKEDYNAMIC, unimplemented_instructions::INVOKEINTERFACE, unimplemented_instructions::MONITORENTER, unimplemented_instructions::INSTANCEOF, unimplemented_instructions::ARRAYLENGTH, unimplemented_instructions::CHECKCAST, unimplemented_instructions::JSR, unimplemented_instructions::RET, unimplemented_instructions::TABLESWITCH, unimplemented_instructions::LOOKUPSWITCH, unimplemented_instructions::WIDE, unimplemented_instructions::MULTIANEWARRAY, unimplemented_instructions::IFNULL, unimplemented_instructions::IFNONNULL, unimplemented_instructions::GOTO_W, unimplemented_instructions::JSR_W, unimplemented_instructions::BREAKPOINT, unimplemented_instructions::IMPDEP1, unimplemented_instructions::IMPDEP2, control::{x_return::{IRETURN, LRETURN, FRETURN, DRETURN, ARETURN, RETURN}, goto::GOTO}, loads::{aload_i::{ALOAD_0, ALOAD_1, ALOAD_2, ALOAD_3}, xload::{ILOAD, LLOAD, FLOAD, DLOAD, ALOAD}, iload_i::{ILOAD_0, ILOAD_1, ILOAD_2, ILOAD_3}, lload_i::{LLOAD_0, LLOAD_1, LLOAD_2, LLOAD_3}, fload_i::{FLOAD_0, FLOAD_1, FLOAD_2, FLOAD_3}, dload_i::{DLOAD_0, DLOAD_1, DLOAD_2, DLOAD_3}, xaload::{IALOAD, LALOAD, FALOAD, DALOAD, AALOAD, BALOAD, CALOAD, SALOAD}}, comparisons::{if_acmpop::{IF_ACMPEQ, IF_ACMPNE}, ifop::{IFEQ, IFNE, IFLT, IFGE, IFGT, IFLE}, lcmp::LCMP, fcmpl::FCMPL, fcmpg::FCMPG, dcmpl::DCMPL, dcmpg::DCMPG, if_icmpop::{IF_ICMPEQ, IF_ICMPNE, IF_ICMPLT, IF_ICMPGE, IF_ICMPGT, IF_ICMPLE}}, references::{new::NEW, invokespecial::INVOKESPECIAL, invokevirtual::INVOKEVIRTUAL, invokestatic::INVOKESTATIC, athrow::ATHROW, getstatic::GETSTATIC, newarray::NEWARRAY, putstatic::PUTSTATIC, anewarray::ANEWARRAY}, stack::{dup::{DUP, DUP_X1, DUP_X2, DUP2, DUP2_X1, DUP2_X2}, swap::SWAP, pop::{POP, POP2}}, stores::{lstore_i::{LSTORE_0, LSTORE_1, LSTORE_2, LSTORE_3}, dstore_i::{DSTORE_0, DSTORE_1, DSTORE_2, DSTORE_3}, fstore_i::{FSTORE_0, FSTORE_1, FSTORE_2, FSTORE_3}, istore_i::{ISTORE_0, ISTORE_1, ISTORE_2, ISTORE_3}, astore_i::{ASTORE_0, ASTORE_1, ASTORE_2, ASTORE_3}, xstore::{ISTORE, LSTORE, FSTORE, DSTORE, ASTORE}, xastore::{IASTORE, LASTORE, FASTORE, DASTORE, AASTORE, BASTORE, CASTORE, SASTORE}}, math::{xadd::{IADD, LADD, FADD, DADD}, xsub::{ISUB, LSUB, FSUB, DSUB}, xmul::{IMUL, LMUL, FMUL, DMUL}, xdiv::{IDIV, LDIV, FDIV, DDIV}, xrem::{IREM, LREM, FREM, DREM}, xneg::{INEG, LNEG, FNEG, DNEG}, xshl::{ISHL, LSHL}, xshr::{ISHR, LSHR}, xushr::{IUSHR, LUSHR}, xand::{IAND, LAND}, xor::{IOR, LOR}, xxor::{IXOR, LXOR}, iinc::IINC}, conversions::x2y::{I2L, I2F, I2D, L2I, L2F, L2D, F2I, F2L, F2D, D2I, D2L, D2F, I2B, I2C, I2S}};
+use self::{
+    comparisons::{
+        dcmpg::DCMPG,
+        dcmpl::DCMPL,
+        fcmpg::FCMPG,
+        fcmpl::FCMPL,
+        if_acmpop::{IF_ACMPEQ, IF_ACMPNE},
+        if_icmpop::{IF_ICMPEQ, IF_ICMPGE, IF_ICMPGT, IF_ICMPLE, IF_ICMPLT, IF_ICMPNE},
+        ifop::{IFEQ, IFGE, IFGT, IFLE, IFLT, IFNE},
+        lcmp::LCMP,
+    },
+    constants::{
+        aconst_null::ACONST_NULL,
+        dconst_n::{DCONST_0, DCONST_1},
+        fconst_n::{FCONST_0, FCONST_1, FCONST_2},
+        iconst_n::{ICONST_0, ICONST_1, ICONST_2, ICONST_3, ICONST_4, ICONST_5, ICONST_M1},
+        lconst_n::{LCONST_0, LCONST_1},
+        ldcx::{LDC, LDC2_W, LDC_W},
+        nop::NOP,
+        xpush::{BIPUSH, SIPUSH},
+    },
+    control::{
+        goto::GOTO,
+        lookupswitch::LOOKUPSWITCH,
+        tableswitch::TABLESWITCH,
+        x_return::{ARETURN, DRETURN, FRETURN, IRETURN, LRETURN, RETURN},
+    },
+    conversions::x2y::{D2F, D2I, D2L, F2D, F2I, F2L, I2B, I2C, I2D, I2F, I2L, I2S, L2D, L2F, L2I},
+    extended::{
+        goto_w::GOTO_W, ifnonnull::IFNONNULL, ifnull::IFNULL, multianewarray::MULTIANEWARRAY,
+    },
+    loads::{
+        aload_i::{ALOAD_0, ALOAD_1, ALOAD_2, ALOAD_3},
+        dload_i::{DLOAD_0, DLOAD_1, DLOAD_2, DLOAD_3},
+        fload_i::{FLOAD_0, FLOAD_1, FLOAD_2, FLOAD_3},
+        iload_i::{ILOAD_0, ILOAD_1, ILOAD_2, ILOAD_3},
+        lload_i::{LLOAD_0, LLOAD_1, LLOAD_2, LLOAD_3},
+        xaload::{AALOAD, BALOAD, CALOAD, DALOAD, FALOAD, IALOAD, LALOAD, SALOAD},
+        xload::{ALOAD, DLOAD, FLOAD, ILOAD, LLOAD},
+    },
+    math::{
+        iinc::IINC,
+        xadd::{DADD, FADD, IADD, LADD},
+        xand::{IAND, LAND},
+        xdiv::{DDIV, FDIV, IDIV, LDIV},
+        xmul::{DMUL, FMUL, IMUL, LMUL},
+        xneg::{DNEG, FNEG, INEG, LNEG},
+        xor::{IOR, LOR},
+        xrem::{DREM, FREM, IREM, LREM},
+        xshl::{ISHL, LSHL},
+        xshr::{ISHR, LSHR},
+        xsub::{DSUB, FSUB, ISUB, LSUB},
+        xushr::{IUSHR, LUSHR},
+        xxor::{IXOR, LXOR},
+    },
+    references::{
+        anewarray::ANEWARRAY, athrow::ATHROW, getfield::GETFIELD, getstatic::GETSTATIC,
+        invokespecial::INVOKESPECIAL, invokestatic::INVOKESTATIC, invokevirtual::INVOKEVIRTUAL,
+        new::NEW, newarray::NEWARRAY, putstatic::PUTSTATIC,
+    },
+    reserved::impdep::{IMPDEP1, IMPDEP2},
+    stack::{
+        dup::{DUP, DUP2, DUP2_X1, DUP2_X2, DUP_X1, DUP_X2},
+        pop::{POP, POP2},
+        swap::SWAP,
+    },
+    stores::{
+        astore_i::{ASTORE_0, ASTORE_1, ASTORE_2, ASTORE_3},
+        dstore_i::{DSTORE_0, DSTORE_1, DSTORE_2, DSTORE_3},
+        fstore_i::{FSTORE_0, FSTORE_1, FSTORE_2, FSTORE_3},
+        istore_i::{ISTORE_0, ISTORE_1, ISTORE_2, ISTORE_3},
+        lstore_i::{LSTORE_0, LSTORE_1, LSTORE_2, LSTORE_3},
+        xastore::{AASTORE, BASTORE, CASTORE, DASTORE, FASTORE, IASTORE, LASTORE, SASTORE},
+        xstore::{ASTORE, DSTORE, FSTORE, ISTORE, LSTORE},
+    },
+    unimplemented_instructions::ARRAYLENGTH,
+    unimplemented_instructions::BREAKPOINT,
+    unimplemented_instructions::CHECKCAST,
+    unimplemented_instructions::INSTANCEOF,
+    unimplemented_instructions::INVOKEDYNAMIC,
+    unimplemented_instructions::INVOKEINTERFACE,
+    unimplemented_instructions::JSR,
+    unimplemented_instructions::JSR_W,
+    unimplemented_instructions::MONITORENTER,
+    unimplemented_instructions::MONITOREXIT,
+    unimplemented_instructions::PUTFIELD,
+    unimplemented_instructions::RET,
+    unimplemented_instructions::WIDE,
+};
 
-use super::{frame::Frame, execution_context::ExecutionContext, exception_handler::ExceptionHandlerTable};
+use super::{
+    exception_handler::ExceptionHandlerTable, execution_context::ExecutionContext, frame::Frame,
+    runtime_constant_pool::RuntimeConstantPool, types::Types,
+};
 
 pub mod unimplemented_instructions;
 
-pub mod constants;
-pub mod loads;
-pub mod stores;
-pub mod stack;
-pub mod math;
-pub mod conversions;
 pub mod comparisons;
-pub mod references;
+pub mod constants;
 pub mod control;
+pub mod conversions;
 pub mod extended;
+pub mod loads;
+pub mod math;
+pub mod references;
 pub mod reserved;
+pub mod stack;
+pub mod stores;
 
 pub trait Instruction {
-    fn new(parser: &mut Parser) -> Self where Self: Sized;
-    fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult;
+    fn new(parser: &mut Parser) -> Self
+    where
+        Self: Sized;
+    fn execute(&self, execution_context: &mut Frame) -> InstructionResult;
     fn length(&self) -> U2;
-    
-    fn to_string(&self) -> String {
-        format!("Unimplemented to_string for instruction of length: {:?}", self.length())
-    }
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String;
 }
 
 pub enum BranchKind {
-    Absolute(u16),
-    Relative(i16),
+    Absolute(usize),
+    Relative(i32),
+}
+
+pub enum ReturnKind {
+    Void,
+    Value(Types),
 }
 
 pub struct InstructionResult {
-    pub call: Option<ExecutionContext>,
-    pub branch: Option<BranchKind>,
-    pub exception: Option<()>,
+    call: Option<ExecutionContext>,
+    branch: Option<BranchKind>,
+    exception: Option<()>,
+    ret: Option<ReturnKind>,
 }
 
 impl InstructionResult {
@@ -45,6 +141,7 @@ impl InstructionResult {
             call: Some(execution_context),
             branch: None,
             exception: None,
+            ret: None,
         }
     }
 
@@ -53,6 +150,7 @@ impl InstructionResult {
             call: None,
             branch: Some(branch),
             exception: None,
+            ret: None,
         }
     }
 
@@ -61,6 +159,25 @@ impl InstructionResult {
             call: None,
             branch: None,
             exception: Some(()),
+            ret: None,
+        }
+    }
+
+    pub fn return_value(value: Types) -> Self {
+        InstructionResult {
+            call: None,
+            branch: None,
+            exception: None,
+            ret: Some(ReturnKind::Value(value)),
+        }
+    }
+
+    pub fn return_void() -> Self {
+        InstructionResult {
+            call: None,
+            branch: None,
+            exception: None,
+            ret: Some(ReturnKind::Void),
         }
     }
 
@@ -69,7 +186,24 @@ impl InstructionResult {
             call: None,
             branch: None,
             exception: None,
+            ret: None,
         }
+    }
+
+    pub fn get_call(&self) -> &Option<ExecutionContext> {
+        &self.call
+    }
+
+    pub fn get_branch(&self) -> &Option<BranchKind> {
+        &self.branch
+    }
+
+    pub fn get_exception(&self) -> &Option<()> {
+        &self.exception
+    }
+
+    pub fn get_ret(&self) -> &Option<ReturnKind> {
+        &self.ret
     }
 }
 
@@ -78,6 +212,7 @@ pub struct InstructionStream {
     instructions: Vec<Instructions>,
     length: usize,
     cursor: usize,
+    pre_cursor: usize,
     exception_handler_table: ExceptionHandlerTable,
 }
 
@@ -85,14 +220,19 @@ pub struct InstructionStream {
 impl InstructionStream {
     pub fn new_native() -> InstructionStream {
         InstructionStream {
-            instructions: Vec::new(),
-            length: 0,
+            instructions: vec![Instructions::IMPDEP1(IMPDEP1::new_native_call())],
+            length: 1,
             cursor: 0,
+            pre_cursor: 0,
             exception_handler_table: ExceptionHandlerTable::new(),
         }
     }
 
-    pub fn new(parser: &mut Parser, length: U4, exception_handler_table: ExceptionHandlerTable) -> InstructionStream {
+    pub fn new(
+        parser: &mut Parser,
+        length: U4,
+        exception_handler_table: ExceptionHandlerTable,
+    ) -> InstructionStream {
         let mut instructions = Vec::with_capacity(length as usize);
         while parser.remaining() > 0 {
             let instruction = Instructions::new(parser);
@@ -104,6 +244,7 @@ impl InstructionStream {
             instructions,
             length,
             cursor: 0,
+            pre_cursor: 0,
             exception_handler_table,
         }
     }
@@ -112,12 +253,13 @@ impl InstructionStream {
         self.cursor < self.length
     }
 
-    pub fn next(&mut self) -> &mut Instructions {
+    pub fn next(&mut self) -> &Instructions {
         if !self.has_next() {
             panic!("Error handling!");
         }
-        let instruction = &mut self.instructions[self.cursor];
-        self.cursor += 1;
+        self.pre_cursor = self.cursor;
+        let instruction = &self.instructions[self.cursor_to_index(self.cursor)];
+        self.cursor += instruction.length() as usize;
         instruction
     }
 
@@ -128,16 +270,53 @@ impl InstructionStream {
         self.cursor = index;
     }
 
-    pub fn relative_jump(&mut self, offset: usize) {
-        self.absolute_jump(self.cursor + offset);
+    // FIXME: usize can not simply be casted to i32
+    pub fn relative_jump(&mut self, offset: i32) {
+        let new_cursor = (self.pre_cursor as i32) + offset;
+        if new_cursor >= self.length as i32 || new_cursor < 0 {
+            panic!("Error handling!");
+        }
+        self.cursor = new_cursor as usize;
     }
 
     pub fn try_handle(&mut self, exception: &()) -> bool {
         if let Some(handler) = self.exception_handler_table.try_handle(exception) {
-            self.absolute_jump(handler.handler_pc as usize);
+            self.absolute_jump(handler.handler_pc() as usize);
             return true;
         }
         false
+    }
+
+    pub fn len(&self) -> &usize {
+        &self.length
+    }
+
+    pub fn cursor(&self) -> &usize {
+        &self.cursor
+    }
+
+    pub fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
+        let mut string = String::new();
+        for (index, instruction) in self.instructions.iter().enumerate() {
+            string.push_str(&format!(
+                "{:04} {}\n",
+                index,
+                instruction.to_string(runtime_constant_pool)
+            ));
+        }
+        string
+    }
+
+    // FIXME: Find a better way to do this
+    fn cursor_to_index(&self, cursor: usize) -> usize {
+        let mut i = 0;
+        for (index, instruction) in self.instructions.iter().enumerate() {
+            if i == cursor {
+                return index;
+            }
+            i += instruction.length() as usize;
+        }
+        panic!("Error handling!");
     }
 }
 
@@ -352,14 +531,11 @@ pub enum Instructions {
     IMPDEP2(IMPDEP2),
 }
 
-impl std::fmt::Debug for Instructions {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        write!(f, "{}", self.to_string())
-    }
-}
-
 impl Instruction for Instructions {
-    fn new(parser: &mut Parser) -> Self where Self: Sized {
+    fn new(parser: &mut Parser) -> Self
+    where
+        Self: Sized,
+    {
         let opcode = parser.peek_u1();
         match opcode {
             0x00 => Instructions::NOP(NOP::new(parser)),
@@ -567,11 +743,11 @@ impl Instruction for Instructions {
             0xca => Instructions::BREAKPOINT(BREAKPOINT::new(parser)),
             0xfe => Instructions::IMPDEP1(IMPDEP1::new(parser)),
             0xff => Instructions::IMPDEP2(IMPDEP2::new(parser)),
-            v => panic!("Unknown opcode: {v}")
+            v => panic!("Unknown opcode: {v}"),
         }
     }
 
-    fn execute(&mut self, execution_context: &mut Frame) -> InstructionResult {
+    fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         match self {
             Instructions::NOP(instruction) => instruction.execute(execution_context),
             Instructions::ACONST_NULL(instruction) => instruction.execute(execution_context),
@@ -778,7 +954,7 @@ impl Instruction for Instructions {
             Instructions::BREAKPOINT(instruction) => instruction.execute(execution_context),
             Instructions::IMPDEP1(instruction) => instruction.execute(execution_context),
             Instructions::IMPDEP2(instruction) => instruction.execute(execution_context),
-                    }
+        }
     }
 
     fn length(&self) -> U2 {
@@ -991,213 +1167,223 @@ impl Instruction for Instructions {
         }
     }
 
-    fn to_string(&self) -> String {
+    fn to_string(&self, runtime_constant_pool: &RuntimeConstantPool) -> String {
         match self {
-            Instructions::NOP(instruction) => instruction.to_string(),
-            Instructions::ACONST_NULL(instruction) => instruction.to_string(),
-            Instructions::ICONST_M1(instruction) => instruction.to_string(),
-            Instructions::ICONST_0(instruction) => instruction.to_string(),
-            Instructions::ICONST_1(instruction) => instruction.to_string(),
-            Instructions::ICONST_2(instruction) => instruction.to_string(),
-            Instructions::ICONST_3(instruction) => instruction.to_string(),
-            Instructions::ICONST_4(instruction) => instruction.to_string(),
-            Instructions::ICONST_5(instruction) => instruction.to_string(),
-            Instructions::LCONST_0(instruction) => instruction.to_string(),
-            Instructions::LCONST_1(instruction) => instruction.to_string(),
-            Instructions::FCONST_0(instruction) => instruction.to_string(),
-            Instructions::FCONST_1(instruction) => instruction.to_string(),
-            Instructions::FCONST_2(instruction) => instruction.to_string(),
-            Instructions::DCONST_0(instruction) => instruction.to_string(),
-            Instructions::DCONST_1(instruction) => instruction.to_string(),
-            Instructions::BIPUSH(instruction) => instruction.to_string(),
-            Instructions::SIPUSH(instruction) => instruction.to_string(),
-            Instructions::LDC(instruction) => instruction.to_string(),
-            Instructions::LDC_W(instruction) => instruction.to_string(),
-            Instructions::LDC2_W(instruction) => instruction.to_string(),
-            Instructions::ILOAD(instruction) => instruction.to_string(),
-            Instructions::LLOAD(instruction) => instruction.to_string(),
-            Instructions::FLOAD(instruction) => instruction.to_string(),
-            Instructions::DLOAD(instruction) => instruction.to_string(),
-            Instructions::ALOAD(instruction) => instruction.to_string(),
-            Instructions::ILOAD_0(instruction) => instruction.to_string(),
-            Instructions::ILOAD_1(instruction) => instruction.to_string(),
-            Instructions::ILOAD_2(instruction) => instruction.to_string(),
-            Instructions::ILOAD_3(instruction) => instruction.to_string(),
-            Instructions::LLOAD_0(instruction) => instruction.to_string(),
-            Instructions::LLOAD_1(instruction) => instruction.to_string(),
-            Instructions::LLOAD_2(instruction) => instruction.to_string(),
-            Instructions::LLOAD_3(instruction) => instruction.to_string(),
-            Instructions::FLOAD_0(instruction) => instruction.to_string(),
-            Instructions::FLOAD_1(instruction) => instruction.to_string(),
-            Instructions::FLOAD_2(instruction) => instruction.to_string(),
-            Instructions::FLOAD_3(instruction) => instruction.to_string(),
-            Instructions::DLOAD_0(instruction) => instruction.to_string(),
-            Instructions::DLOAD_1(instruction) => instruction.to_string(),
-            Instructions::DLOAD_2(instruction) => instruction.to_string(),
-            Instructions::DLOAD_3(instruction) => instruction.to_string(),
-            Instructions::ALOAD_0(instruction) => instruction.to_string(),
-            Instructions::ALOAD_1(instruction) => instruction.to_string(),
-            Instructions::ALOAD_2(instruction) => instruction.to_string(),
-            Instructions::ALOAD_3(instruction) => instruction.to_string(),
-            Instructions::IALOAD(instruction) => instruction.to_string(),
-            Instructions::LALOAD(instruction) => instruction.to_string(),
-            Instructions::FALOAD(instruction) => instruction.to_string(),
-            Instructions::DALOAD(instruction) => instruction.to_string(),
-            Instructions::AALOAD(instruction) => instruction.to_string(),
-            Instructions::BALOAD(instruction) => instruction.to_string(),
-            Instructions::CALOAD(instruction) => instruction.to_string(),
-            Instructions::SALOAD(instruction) => instruction.to_string(),
-            Instructions::ISTORE(instruction) => instruction.to_string(),
-            Instructions::LSTORE(instruction) => instruction.to_string(),
-            Instructions::FSTORE(instruction) => instruction.to_string(),
-            Instructions::DSTORE(instruction) => instruction.to_string(),
-            Instructions::ASTORE(instruction) => instruction.to_string(),
-            Instructions::ISTORE_0(instruction) => instruction.to_string(),
-            Instructions::ISTORE_1(instruction) => instruction.to_string(),
-            Instructions::ISTORE_2(instruction) => instruction.to_string(),
-            Instructions::ISTORE_3(instruction) => instruction.to_string(),
-            Instructions::LSTORE_0(instruction) => instruction.to_string(),
-            Instructions::LSTORE_1(instruction) => instruction.to_string(),
-            Instructions::LSTORE_2(instruction) => instruction.to_string(),
-            Instructions::LSTORE_3(instruction) => instruction.to_string(),
-            Instructions::FSTORE_0(instruction) => instruction.to_string(),
-            Instructions::FSTORE_1(instruction) => instruction.to_string(),
-            Instructions::FSTORE_2(instruction) => instruction.to_string(),
-            Instructions::FSTORE_3(instruction) => instruction.to_string(),
-            Instructions::DSTORE_0(instruction) => instruction.to_string(),
-            Instructions::DSTORE_1(instruction) => instruction.to_string(),
-            Instructions::DSTORE_2(instruction) => instruction.to_string(),
-            Instructions::DSTORE_3(instruction) => instruction.to_string(),
-            Instructions::ASTORE_0(instruction) => instruction.to_string(),
-            Instructions::ASTORE_1(instruction) => instruction.to_string(),
-            Instructions::ASTORE_2(instruction) => instruction.to_string(),
-            Instructions::ASTORE_3(instruction) => instruction.to_string(),
-            Instructions::IASTORE(instruction) => instruction.to_string(),
-            Instructions::LASTORE(instruction) => instruction.to_string(),
-            Instructions::FASTORE(instruction) => instruction.to_string(),
-            Instructions::DASTORE(instruction) => instruction.to_string(),
-            Instructions::AASTORE(instruction) => instruction.to_string(),
-            Instructions::BASTORE(instruction) => instruction.to_string(),
-            Instructions::CASTORE(instruction) => instruction.to_string(),
-            Instructions::SASTORE(instruction) => instruction.to_string(),
-            Instructions::POP(instruction) => instruction.to_string(),
-            Instructions::POP2(instruction) => instruction.to_string(),
-            Instructions::DUP(instruction) => instruction.to_string(),
-            Instructions::DUP_X1(instruction) => instruction.to_string(),
-            Instructions::DUP_X2(instruction) => instruction.to_string(),
-            Instructions::DUP2(instruction) => instruction.to_string(),
-            Instructions::DUP2_X1(instruction) => instruction.to_string(),
-            Instructions::DUP2_X2(instruction) => instruction.to_string(),
-            Instructions::SWAP(instruction) => instruction.to_string(),
-            Instructions::IADD(instruction) => instruction.to_string(),
-            Instructions::LADD(instruction) => instruction.to_string(),
-            Instructions::FADD(instruction) => instruction.to_string(),
-            Instructions::DADD(instruction) => instruction.to_string(),
-            Instructions::ISUB(instruction) => instruction.to_string(),
-            Instructions::LSUB(instruction) => instruction.to_string(),
-            Instructions::FSUB(instruction) => instruction.to_string(),
-            Instructions::DSUB(instruction) => instruction.to_string(),
-            Instructions::IMUL(instruction) => instruction.to_string(),
-            Instructions::LMUL(instruction) => instruction.to_string(),
-            Instructions::FMUL(instruction) => instruction.to_string(),
-            Instructions::DMUL(instruction) => instruction.to_string(),
-            Instructions::IDIV(instruction) => instruction.to_string(),
-            Instructions::LDIV(instruction) => instruction.to_string(),
-            Instructions::FDIV(instruction) => instruction.to_string(),
-            Instructions::DDIV(instruction) => instruction.to_string(),
-            Instructions::IREM(instruction) => instruction.to_string(),
-            Instructions::LREM(instruction) => instruction.to_string(),
-            Instructions::FREM(instruction) => instruction.to_string(),
-            Instructions::DREM(instruction) => instruction.to_string(),
-            Instructions::INEG(instruction) => instruction.to_string(),
-            Instructions::LNEG(instruction) => instruction.to_string(),
-            Instructions::FNEG(instruction) => instruction.to_string(),
-            Instructions::DNEG(instruction) => instruction.to_string(),
-            Instructions::ISHL(instruction) => instruction.to_string(),
-            Instructions::LSHL(instruction) => instruction.to_string(),
-            Instructions::ISHR(instruction) => instruction.to_string(),
-            Instructions::LSHR(instruction) => instruction.to_string(),
-            Instructions::IUSHR(instruction) => instruction.to_string(),
-            Instructions::LUSHR(instruction) => instruction.to_string(),
-            Instructions::IAND(instruction) => instruction.to_string(),
-            Instructions::LAND(instruction) => instruction.to_string(),
-            Instructions::IOR(instruction) => instruction.to_string(),
-            Instructions::LOR(instruction) => instruction.to_string(),
-            Instructions::IXOR(instruction) => instruction.to_string(),
-            Instructions::LXOR(instruction) => instruction.to_string(),
-            Instructions::IINC(instruction) => instruction.to_string(),
-            Instructions::I2L(instruction) => instruction.to_string(),
-            Instructions::I2F(instruction) => instruction.to_string(),
-            Instructions::I2D(instruction) => instruction.to_string(),
-            Instructions::L2I(instruction) => instruction.to_string(),
-            Instructions::L2F(instruction) => instruction.to_string(),
-            Instructions::L2D(instruction) => instruction.to_string(),
-            Instructions::F2I(instruction) => instruction.to_string(),
-            Instructions::F2L(instruction) => instruction.to_string(),
-            Instructions::F2D(instruction) => instruction.to_string(),
-            Instructions::D2I(instruction) => instruction.to_string(),
-            Instructions::D2L(instruction) => instruction.to_string(),
-            Instructions::D2F(instruction) => instruction.to_string(),
-            Instructions::I2B(instruction) => instruction.to_string(),
-            Instructions::I2C(instruction) => instruction.to_string(),
-            Instructions::I2S(instruction) => instruction.to_string(),
-            Instructions::LCMP(instruction) => instruction.to_string(),
-            Instructions::FCMPL(instruction) => instruction.to_string(),
-            Instructions::FCMPG(instruction) => instruction.to_string(),
-            Instructions::DCMPL(instruction) => instruction.to_string(),
-            Instructions::DCMPG(instruction) => instruction.to_string(),
-            Instructions::IFEQ(instruction) => instruction.to_string(),
-            Instructions::IFNE(instruction) => instruction.to_string(),
-            Instructions::IFLT(instruction) => instruction.to_string(),
-            Instructions::IFGE(instruction) => instruction.to_string(),
-            Instructions::IFGT(instruction) => instruction.to_string(),
-            Instructions::IFLE(instruction) => instruction.to_string(),
-            Instructions::IF_ICMPEQ(instruction) => instruction.to_string(),
-            Instructions::IF_ICMPNE(instruction) => instruction.to_string(),
-            Instructions::IF_ICMPLT(instruction) => instruction.to_string(),
-            Instructions::IF_ICMPGE(instruction) => instruction.to_string(),
-            Instructions::IF_ICMPGT(instruction) => instruction.to_string(),
-            Instructions::IF_ICMPLE(instruction) => instruction.to_string(),
-            Instructions::IF_ACMPEQ(instruction) => instruction.to_string(),
-            Instructions::IF_ACMPNE(instruction) => instruction.to_string(),
-            Instructions::GOTO(instruction) => instruction.to_string(),
-            Instructions::JSR(instruction) => instruction.to_string(),
-            Instructions::RET(instruction) => instruction.to_string(),
-            Instructions::TABLESWITCH(instruction) => instruction.to_string(),
-            Instructions::LOOKUPSWITCH(instruction) => instruction.to_string(),
-            Instructions::IRETURN(instruction) => instruction.to_string(),
-            Instructions::LRETURN(instruction) => instruction.to_string(),
-            Instructions::FRETURN(instruction) => instruction.to_string(),
-            Instructions::DRETURN(instruction) => instruction.to_string(),
-            Instructions::ARETURN(instruction) => instruction.to_string(),
-            Instructions::RETURN(instruction) => instruction.to_string(),
-            Instructions::GETSTATIC(instruction) => instruction.to_string(),
-            Instructions::PUTSTATIC(instruction) => instruction.to_string(),
-            Instructions::GETFIELD(instruction) => instruction.to_string(),
-            Instructions::PUTFIELD(instruction) => instruction.to_string(),
-            Instructions::INVOKEVIRTUAL(instruction) => instruction.to_string(),
-            Instructions::INVOKESPECIAL(instruction) => instruction.to_string(),
-            Instructions::INVOKESTATIC(instruction) => instruction.to_string(),
-            Instructions::INVOKEINTERFACE(instruction) => instruction.to_string(),
-            Instructions::INVOKEDYNAMIC(instruction) => instruction.to_string(),
-            Instructions::NEW(instruction) => instruction.to_string(),
-            Instructions::NEWARRAY(instruction) => instruction.to_string(),
-            Instructions::ANEWARRAY(instruction) => instruction.to_string(),
-            Instructions::ARRAYLENGTH(instruction) => instruction.to_string(),
-            Instructions::ATHROW(instruction) => instruction.to_string(),
-            Instructions::CHECKCAST(instruction) => instruction.to_string(),
-            Instructions::INSTANCEOF(instruction) => instruction.to_string(),
-            Instructions::MONITORENTER(instruction) => instruction.to_string(),
-            Instructions::MONITOREXIT(instruction) => instruction.to_string(),
-            Instructions::WIDE(instruction) => instruction.to_string(),
-            Instructions::MULTIANEWARRAY(instruction) => instruction.to_string(),
-            Instructions::IFNULL(instruction) => instruction.to_string(),
-            Instructions::IFNONNULL(instruction) => instruction.to_string(),
-            Instructions::GOTO_W(instruction) => instruction.to_string(),
-            Instructions::JSR_W(instruction) => instruction.to_string(),
-            Instructions::BREAKPOINT(instruction) => instruction.to_string(),
-            Instructions::IMPDEP1(instruction) => instruction.to_string(),
-            Instructions::IMPDEP2(instruction) => instruction.to_string(),
+            Instructions::NOP(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ACONST_NULL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_M1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_4(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ICONST_5(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LCONST_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LCONST_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FCONST_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FCONST_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FCONST_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DCONST_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DCONST_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::BIPUSH(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::SIPUSH(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LDC(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LDC_W(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LDC2_W(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ILOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LLOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FLOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DLOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ILOAD_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ILOAD_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ILOAD_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ILOAD_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LLOAD_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LLOAD_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LLOAD_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LLOAD_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FLOAD_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FLOAD_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FLOAD_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FLOAD_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DLOAD_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DLOAD_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DLOAD_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DLOAD_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ALOAD_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ALOAD_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ALOAD_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ALOAD_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::AALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::BALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::CALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::SALOAD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FSTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DSTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISTORE_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISTORE_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISTORE_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISTORE_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSTORE_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSTORE_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSTORE_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSTORE_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FSTORE_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FSTORE_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FSTORE_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FSTORE_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DSTORE_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DSTORE_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DSTORE_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DSTORE_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ASTORE_0(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ASTORE_1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ASTORE_2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ASTORE_3(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::AASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::BASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::CASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::SASTORE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::POP(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::POP2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DUP(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DUP_X1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DUP_X2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DUP2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DUP2_X1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DUP2_X2(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::SWAP(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IADD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LADD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FADD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DADD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISUB(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSUB(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FSUB(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DSUB(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IMUL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LMUL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FMUL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DMUL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IDIV(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LDIV(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FDIV(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DDIV(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IREM(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LREM(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FREM(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DREM(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::INEG(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LNEG(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FNEG(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DNEG(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISHL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSHL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ISHR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LSHR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IUSHR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LUSHR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IAND(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LAND(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IOR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LOR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IXOR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LXOR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IINC(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::I2L(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::I2F(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::I2D(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::L2I(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::L2F(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::L2D(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::F2I(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::F2L(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::F2D(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::D2I(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::D2L(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::D2F(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::I2B(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::I2C(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::I2S(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LCMP(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FCMPL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FCMPG(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DCMPL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DCMPG(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFEQ(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFNE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFLT(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFGE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFGT(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFLE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ICMPEQ(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ICMPNE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ICMPLT(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ICMPGE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ICMPGT(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ICMPLE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ACMPEQ(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IF_ACMPNE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::GOTO(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::JSR(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::RET(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::TABLESWITCH(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LOOKUPSWITCH(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IRETURN(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::LRETURN(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::FRETURN(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::DRETURN(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ARETURN(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::RETURN(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::GETSTATIC(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::PUTSTATIC(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::GETFIELD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::PUTFIELD(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::INVOKEVIRTUAL(instruction) => {
+                instruction.to_string(runtime_constant_pool)
+            }
+            Instructions::INVOKESPECIAL(instruction) => {
+                instruction.to_string(runtime_constant_pool)
+            }
+            Instructions::INVOKESTATIC(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::INVOKEINTERFACE(instruction) => {
+                instruction.to_string(runtime_constant_pool)
+            }
+            Instructions::INVOKEDYNAMIC(instruction) => {
+                instruction.to_string(runtime_constant_pool)
+            }
+            Instructions::NEW(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::NEWARRAY(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ANEWARRAY(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ARRAYLENGTH(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::ATHROW(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::CHECKCAST(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::INSTANCEOF(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::MONITORENTER(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::MONITOREXIT(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::WIDE(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::MULTIANEWARRAY(instruction) => {
+                instruction.to_string(runtime_constant_pool)
+            }
+            Instructions::IFNULL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IFNONNULL(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::GOTO_W(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::JSR_W(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::BREAKPOINT(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IMPDEP1(instruction) => instruction.to_string(runtime_constant_pool),
+            Instructions::IMPDEP2(instruction) => instruction.to_string(runtime_constant_pool),
         }
     }
 }

@@ -1,9 +1,15 @@
 use crate::class_loader::parser::U2;
 
-use super::{Value, IntegralTypes};
+use super::{int::Int, IntegralTypes, Value};
 
 pub struct Short {
-	value: i16,
+    value: i16,
+}
+
+impl Short {
+    pub fn to_int(&self) -> Int {
+        Int::from_value(self.value as i32)
+    }
 }
 
 impl IntegralTypes for Short {}
@@ -12,15 +18,11 @@ impl Value for Short {
     type Type = i16;
 
     fn new() -> Self {
-        Self {
-            value: 0,
-        }
+        Self { value: 0 }
     }
 
     fn from_value(value: i16) -> Self {
-        Self {
-            value,
-        }
+        Self { value }
     }
 
     fn set(&mut self, value: i16) {
@@ -38,8 +40,6 @@ impl Value for Short {
 
 impl Clone for Short {
     fn clone(&self) -> Self {
-        Self {
-            value: self.value,
-        }
+        Self { value: self.value }
     }
 }

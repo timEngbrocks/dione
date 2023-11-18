@@ -1,4 +1,8 @@
-use super::{attribute_info::{AttributeInfo, Attribute}, parser::Parser, constant_pool_info::ConstantPool};
+use super::{
+    attribute_info::{Attribute, AttributeInfo},
+    constant_pool_info::ConstantPool,
+    parser::Parser,
+};
 
 #[derive(Debug)]
 pub enum FieldAccessFlags {
@@ -17,30 +21,50 @@ pub type FieldAccessFlag = u16;
 
 #[derive(Debug, Clone)]
 pub struct FieldInfo {
-    pub access_flags: FieldAccessFlag,
-    pub name_index: u16,
-    pub descriptor_index: u16,
-    pub attributes_count: u16,
-    pub attributes: Vec<AttributeInfo>,
+    access_flags: FieldAccessFlag,
+    name_index: u16,
+    descriptor_index: u16,
+    attributes_count: u16,
+    attributes: Vec<AttributeInfo>,
 }
 
 impl FieldInfo {
-	pub fn new(parser: &mut Parser, constant_pool: &ConstantPool) -> FieldInfo {
-		let access_flags = parser.consume_u2();
-		let name_index = parser.consume_u2();
-		let descriptor_index = parser.consume_u2();
-		let attributes_count = parser.consume_u2();
-		let mut attributes = Vec::with_capacity(attributes_count as usize);
-		for _ in 0..attributes_count {
-			attributes.push(AttributeInfo::new(parser, constant_pool));
-		}
+    pub fn new(parser: &mut Parser, constant_pool: &ConstantPool) -> FieldInfo {
+        let access_flags = parser.consume_u2();
+        let name_index = parser.consume_u2();
+        let descriptor_index = parser.consume_u2();
+        let attributes_count = parser.consume_u2();
+        let mut attributes = Vec::with_capacity(attributes_count as usize);
+        for _ in 0..attributes_count {
+            attributes.push(AttributeInfo::new(parser, constant_pool));
+        }
 
-		FieldInfo {
-			access_flags,
-			name_index,
-			descriptor_index,
-			attributes_count,
-			attributes
-		}
-	}
+        FieldInfo {
+            access_flags,
+            name_index,
+            descriptor_index,
+            attributes_count,
+            attributes,
+        }
+    }
+
+    pub fn access_flags(&self) -> &FieldAccessFlag {
+        &self.access_flags
+    }
+
+    pub fn name_index(&self) -> &u16 {
+        &self.name_index
+    }
+
+    pub fn descriptor_index(&self) -> &u16 {
+        &self.descriptor_index
+    }
+
+    pub fn attributes_count(&self) -> &u16 {
+        &self.attributes_count
+    }
+
+    pub fn attributes(&self) -> &Vec<AttributeInfo> {
+        &self.attributes
+    }
 }

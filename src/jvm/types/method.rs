@@ -17,13 +17,13 @@ pub enum MethodAccesFlags {
 
 #[derive(Clone)]
 pub struct Method {
-    pub name: String,
-    pub descriptor: String,
-    pub access_flags: u16,
-    pub max_locals: u16,
-    pub max_stack: u16,
-    pub instruction_stream: InstructionStream,
-    pub native: bool,
+    name: String,
+    descriptor: String,
+    access_flags: u16,
+    max_locals: u16,
+    max_stack: u16,
+    instruction_stream: InstructionStream,
+    native: bool,
 }
 
 impl Method {
@@ -93,5 +93,33 @@ impl Method {
 
     pub fn is_synthetic(&self) -> bool {
         self.access_flags & MethodAccesFlags::Synthetic as u16 != 0
+    }
+
+    pub fn name(&self) -> &String {
+        &self.name
+    }
+
+    pub fn descriptor(&self) -> &String {
+        &self.descriptor
+    }
+
+    pub fn access_flags(&self) -> &u16 {
+        &self.access_flags
+    }
+
+    pub fn max_locals(&self) -> &u16 {
+        &self.max_locals
+    }
+
+    pub fn max_stack(&self) -> &u16 {
+        &self.max_stack
+    }
+
+    pub fn instruction_stream(&self) -> &InstructionStream {
+        &self.instruction_stream
+    }
+
+    pub fn native(&self) -> &bool {
+        &self.native
     }
 }

@@ -11,7 +11,11 @@ pub struct Parser {
 
 impl Display for Parser {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("start: {:X}, length: {:X}", self.cursor, self.data.len()))
+        f.write_fmt(format_args!(
+            "start: {:X}, length: {:X}",
+            self.cursor,
+            self.data.len()
+        ))
     }
 }
 
@@ -78,6 +82,17 @@ impl Parser {
 
     pub fn offset(&self) -> usize {
         self.cursor
+    }
+
+    pub fn align(&mut self, alignment: usize) -> usize {
+        let padding = alignment - (self.cursor % alignment);
+        if padding == alignment {
+            return 0;
+        }
+        for _ in 0..padding {
+            self.consume_u1();
+        }
+        padding
     }
 
     fn current_data(&self) -> &[u8] {
