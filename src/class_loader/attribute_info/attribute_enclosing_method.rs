@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeEnclosingMethod {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub class_index: U2,
-    pub method_index: U2,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    class_index: U2,
+    method_index: U2,
 }
 
 impl Attribute for AttributeEnclosingMethod {

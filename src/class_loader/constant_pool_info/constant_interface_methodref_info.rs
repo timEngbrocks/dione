@@ -7,11 +7,19 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantInterfaceMethodrefInfo {
-    pub tag: U1,
-    pub class_index: U2,
-    pub name_and_type_index: U2,
+    tag: U1,
+    class_index: U2,
+    name_and_type_index: U2,
 }
+impl ConstantInterfaceMethodrefInfo {
+    pub fn class_index(&self) -> &U2 {
+        &self.class_index
+    }
 
+    pub fn name_and_type_index(&self) -> &U2 {
+        &self.name_and_type_index
+    }
+}
 impl ConstantPoolInfo for ConstantInterfaceMethodrefInfo {
     fn new(parser: &mut Parser) -> Self {
         let tag = parser.consume_u1();

@@ -23,10 +23,12 @@ impl Instruction for LSTORE_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Long(value) => {
-                execution_context.local_variables.set(0, Types::Long(value));
+                execution_context
+                    .local_variables()
+                    .set(0, Types::Long(value));
                 InstructionResult::empty()
             }
             _ => panic!("LSTORE_0: Expected Long"),
@@ -55,10 +57,12 @@ impl Instruction for LSTORE_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Long(value) => {
-                execution_context.local_variables.set(1, Types::Long(value));
+                execution_context
+                    .local_variables()
+                    .set(1, Types::Long(value));
                 InstructionResult::empty()
             }
             _ => panic!("LSTORE_1: Expected Long"),
@@ -87,10 +91,12 @@ impl Instruction for LSTORE_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Long(value) => {
-                execution_context.local_variables.set(2, Types::Long(value));
+                execution_context
+                    .local_variables()
+                    .set(2, Types::Long(value));
                 InstructionResult::empty()
             }
             _ => panic!("LSTORE_2: Expected Long"),
@@ -119,10 +125,12 @@ impl Instruction for LSTORE_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Long(value) => {
-                execution_context.local_variables.set(3, Types::Long(value));
+                execution_context
+                    .local_variables()
+                    .set(3, Types::Long(value));
                 InstructionResult::empty()
             }
             _ => panic!("LSTORE_3: Expected Long"),

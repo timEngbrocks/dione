@@ -21,11 +21,11 @@ pub type FieldAccessFlag = u16;
 
 #[derive(Debug, Clone)]
 pub struct FieldInfo {
-    pub access_flags: FieldAccessFlag,
-    pub name_index: u16,
-    pub descriptor_index: u16,
-    pub attributes_count: u16,
-    pub attributes: Vec<AttributeInfo>,
+    access_flags: FieldAccessFlag,
+    name_index: u16,
+    descriptor_index: u16,
+    attributes_count: u16,
+    attributes: Vec<AttributeInfo>,
 }
 
 impl FieldInfo {
@@ -46,5 +46,25 @@ impl FieldInfo {
             attributes_count,
             attributes,
         }
+    }
+
+    pub fn access_flags(&self) -> &FieldAccessFlag {
+        &self.access_flags
+    }
+
+    pub fn name_index(&self) -> &u16 {
+        &self.name_index
+    }
+
+    pub fn descriptor_index(&self) -> &u16 {
+        &self.descriptor_index
+    }
+
+    pub fn attributes_count(&self) -> &u16 {
+        &self.attributes_count
+    }
+
+    pub fn attributes(&self) -> &Vec<AttributeInfo> {
+        &self.attributes
     }
 }

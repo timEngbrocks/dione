@@ -46,32 +46,32 @@ impl Instruction for MULTIANEWARRAY {
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         assert!(self.dimensions >= 1);
         let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
-        let class_ref = match execution_context.runtime_constant_pool.get(index) {
-            RuntimeConstants::SymRefClassOrInterface(value) => value,
+        let class_ref = match execution_context.runtime_constant_pool().get(index) {
+            RuntimeConstants::SymRefClassOrInterface(value) => value.clone(),
             _ => panic!("Expected SymRefClassOrInterface"),
         };
-        let count = match execution_context.stack.pop() {
+        let count = match execution_context.stack().pop() {
             Types::Int(value) => value.get() as usize,
             _ => panic!("Expected Int"),
         };
         let array = match class_ref.clone() {
-            class_ref if ObjectManager::is_class(&class_ref.name) => ReferenceArray::new(
+            class_ref if ObjectManager::is_class(class_ref.name()) => ReferenceArray::new(
                 ReferenceArrayKind::Class(class_ref, Reference::new()),
                 count,
             ),
-            class_ref if ObjectManager::is_interface(&class_ref.name) => ReferenceArray::new(
+            class_ref if ObjectManager::is_interface(class_ref.name()) => ReferenceArray::new(
                 ReferenceArrayKind::Interface(class_ref, Reference::new()),
                 count,
             ),
-            class_ref if ObjectManager::is_array_class(&class_ref.name) => ReferenceArray::new(
+            class_ref if ObjectManager::is_array_class(class_ref.name()) => ReferenceArray::new(
                 ReferenceArrayKind::Array(class_ref, Reference::new()),
                 count,
             ),
             _ => panic!("Invalid class reference"),
         };
-        let reference = Heap::allocate_reference_array(array);
-        let reference = (1..self.dimensions).fold(reference, |reference, _index| {
-            let count = match execution_context.stack.pop() {
+        let mut reference = Heap::allocate_reference_array(array);
+        for _ in 1..self.dimensions {
+            let count = match execution_context.stack().pop() {
                 Types::Int(value) => value.get() as usize,
                 _ => panic!("Expected Int"),
             };
@@ -79,9 +79,9 @@ impl Instruction for MULTIANEWARRAY {
                 ReferenceArrayKind::Array(class_ref.clone(), reference),
                 count,
             );
-            Heap::allocate_reference_array(array)
-        });
-        execution_context.stack.push(Types::Reference(reference));
+            reference = Heap::allocate_reference_array(array);
+        }
+        execution_context.stack().push(Types::Reference(reference));
         InstructionResult::empty()
     }
 

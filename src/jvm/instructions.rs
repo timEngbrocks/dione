@@ -129,10 +129,10 @@ pub enum ReturnKind {
 }
 
 pub struct InstructionResult {
-    pub call: Option<ExecutionContext>,
-    pub branch: Option<BranchKind>,
-    pub exception: Option<()>,
-    pub ret: Option<ReturnKind>,
+    call: Option<ExecutionContext>,
+    branch: Option<BranchKind>,
+    exception: Option<()>,
+    ret: Option<ReturnKind>,
 }
 
 impl InstructionResult {
@@ -188,6 +188,22 @@ impl InstructionResult {
             exception: None,
             ret: None,
         }
+    }
+
+    pub fn get_call(&self) -> &Option<ExecutionContext> {
+        &self.call
+    }
+
+    pub fn get_branch(&self) -> &Option<BranchKind> {
+        &self.branch
+    }
+
+    pub fn get_exception(&self) -> &Option<()> {
+        &self.exception
+    }
+
+    pub fn get_ret(&self) -> &Option<ReturnKind> {
+        &self.ret
     }
 }
 
@@ -265,7 +281,7 @@ impl InstructionStream {
 
     pub fn try_handle(&mut self, exception: &()) -> bool {
         if let Some(handler) = self.exception_handler_table.try_handle(exception) {
-            self.absolute_jump(handler.handler_pc as usize);
+            self.absolute_jump(handler.handler_pc() as usize);
             return true;
         }
         false

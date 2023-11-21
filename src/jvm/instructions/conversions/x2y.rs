@@ -26,10 +26,10 @@ impl Instruction for I2L {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 // Note: Rust's as cast uses sign extension
-                execution_context.stack.push(Types::Long(i2l(value)));
+                execution_context.stack().push(Types::Long(i2l(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Int on top of stack"),
@@ -59,10 +59,10 @@ impl Instruction for I2F {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 // NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
-                execution_context.stack.push(Types::Float(i2f(value)));
+                execution_context.stack().push(Types::Float(i2f(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Int on top of stack"),
@@ -91,9 +91,9 @@ impl Instruction for I2D {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
-                execution_context.stack.push(Types::Double(i2d(value)));
+                execution_context.stack().push(Types::Double(i2d(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Int on top of stack"),
@@ -122,9 +122,9 @@ impl Instruction for L2I {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Long(value) => {
-                execution_context.stack.push(Types::Int(l2i(value)));
+                execution_context.stack().push(Types::Int(l2i(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Long on top of stack"),
@@ -153,10 +153,10 @@ impl Instruction for L2F {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Long(value) => {
                 // NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
-                execution_context.stack.push(Types::Float(l2f(value)));
+                execution_context.stack().push(Types::Float(l2f(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Long on top of stack"),
@@ -185,10 +185,10 @@ impl Instruction for L2D {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Long(value) => {
                 // NOTE: Possible FIXME: as I am not sure that Rust's as uses roundTiesToEven for rounding.
-                execution_context.stack.push(Types::Double(l2d(value)));
+                execution_context.stack().push(Types::Double(l2d(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Long on top of stack"),
@@ -217,9 +217,9 @@ impl Instruction for F2I {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Float(value) => {
-                execution_context.stack.push(Types::Int(f2i(value)));
+                execution_context.stack().push(Types::Int(f2i(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Float on top of stack"),
@@ -248,9 +248,9 @@ impl Instruction for F2L {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Float(value) => {
-                execution_context.stack.push(Types::Long(f2l(value)));
+                execution_context.stack().push(Types::Long(f2l(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Float on top of stack"),
@@ -279,9 +279,9 @@ impl Instruction for F2D {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Float(value) => {
-                execution_context.stack.push(Types::Double(f2d(value)));
+                execution_context.stack().push(Types::Double(f2d(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Float on top of stack"),
@@ -310,9 +310,9 @@ impl Instruction for D2I {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Double(value) => {
-                execution_context.stack.push(Types::Int(d2i(value)));
+                execution_context.stack().push(Types::Int(d2i(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Double on top of stack"),
@@ -341,9 +341,9 @@ impl Instruction for D2L {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Double(value) => {
-                execution_context.stack.push(Types::Long(d2l(value)));
+                execution_context.stack().push(Types::Long(d2l(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Double on top of stack"),
@@ -372,9 +372,9 @@ impl Instruction for D2F {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Double(value) => {
-                execution_context.stack.push(Types::Float(d2f(value)));
+                execution_context.stack().push(Types::Float(d2f(value)));
                 InstructionResult::empty()
             }
             _ => panic!("Expected Double on top of stack"),
@@ -403,10 +403,10 @@ impl Instruction for I2B {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 execution_context
-                    .stack
+                    .stack()
                     .push(Types::Int(i2b(value).to_int()));
                 InstructionResult::empty()
             }
@@ -436,11 +436,11 @@ impl Instruction for I2C {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 // NOTE: Possible FIXME: as I am not sure that Rust's as uses zero extension in this case.
                 execution_context
-                    .stack
+                    .stack()
                     .push(Types::Int(i2c(value).to_int()));
                 InstructionResult::empty()
             }
@@ -470,11 +470,11 @@ impl Instruction for I2S {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 // NOTE: Possible FIXME: as I am not sure that Rust's as uses zero extension in this case.
                 execution_context
-                    .stack
+                    .stack()
                     .push(Types::Int(i2s(value).to_int()));
                 InstructionResult::empty()
             }

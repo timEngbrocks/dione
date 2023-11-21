@@ -32,26 +32,32 @@ impl Instruction for GETSTATIC {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let index = (self.indexbyte1 as u16) << 8 | self.indexbyte2 as u16;
-        let field = match execution_context.runtime_constant_pool.get(index) {
-            RuntimeConstants::SymRefFieldOfClassOrInterface(field) => field,
-            _ => panic!("Expected SymRefFieldOfClassOrInterface"),
-        };
+        let (object_name, name, descriptor) = execution_context.runtime_constant_pool().map(
+            index,
+            |constant| -> (String, String, String) {
+                match constant {
+                    RuntimeConstants::SymRefFieldOfClassOrInterface(field_ref) => (
+                        field_ref.class_ref().name().clone(),
+                        field_ref.name().clone(),
+                        field_ref.descriptor().clone(),
+                    ),
+                    _ => panic!("Expected SymRefFieldOfClassOrInterface"),
+                }
+            },
+        );
         // FIXME: initialize class, if not already initialized
-        let object = ObjectManager::get(&field.class_ref.name);
-        let value = match object.get_static_field(&field.name, &field.descriptor) {
+        let object = ObjectManager::get(&object_name);
+        let value = match object.get_static_field(&name, &descriptor) {
             Some(value) => match value.get_value() {
                 Some(x) => x,
                 None => panic!(
                     "Could not get value of static field {} on {}",
-                    field.name, field.class_ref.name
+                    name, object_name
                 ),
             },
-            None => panic!(
-                "Could not find static field {} on {}",
-                field.name, field.class_ref.name
-            ),
+            None => panic!("Could not find static field {} on {}", name, object_name),
         };
-        execution_context.stack.push(value.clone());
+        execution_context.stack().push(value.clone());
         InstructionResult::empty()
     }
 
@@ -67,7 +73,9 @@ impl Instruction for GETSTATIC {
         };
         format!(
             "getstatic {}.{}:{}",
-            field.class_ref.name, field.name, field.descriptor
+            field.class_ref().name(),
+            field.name(),
+            field.descriptor()
         )
     }
 }

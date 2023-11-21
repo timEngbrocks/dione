@@ -7,9 +7,9 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantDynamicInfo {
-    pub tag: U1,
-    pub bootstrap_method_attr_index: U2,
-    pub name_and_type_index: U2,
+    tag: U1,
+    bootstrap_method_attr_index: U2,
+    name_and_type_index: U2,
 }
 
 impl ConstantPoolInfo for ConstantDynamicInfo {

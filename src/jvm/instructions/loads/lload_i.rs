@@ -4,7 +4,6 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         runtime_constant_pool::RuntimeConstantPool,
-        types::Types,
     },
     opcodes,
 };
@@ -23,12 +22,9 @@ impl Instruction for LLOAD_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(0) {
-            Types::Long(value) => {
-                execution_context.stack.push(Types::Long(value.clone()));
-            }
-            _ => panic!("LLOAD_0: Expected a Long"),
-        }
+        let value = execution_context.local_variables().get(0).clone();
+        assert!(value.is_long());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -54,12 +50,9 @@ impl Instruction for LLOAD_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(1) {
-            Types::Long(value) => {
-                execution_context.stack.push(Types::Long(value.clone()));
-            }
-            _ => panic!("LLOAD_1: Expected a Long"),
-        }
+        let value = execution_context.local_variables().get(1).clone();
+        assert!(value.is_long());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -85,12 +78,9 @@ impl Instruction for LLOAD_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(2) {
-            Types::Long(value) => {
-                execution_context.stack.push(Types::Long(value.clone()));
-            }
-            _ => panic!("LLOAD_2: Expected a Long"),
-        }
+        let value = execution_context.local_variables().get(2).clone();
+        assert!(value.is_long());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -116,12 +106,9 @@ impl Instruction for LLOAD_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(3) {
-            Types::Long(value) => {
-                execution_context.stack.push(Types::Long(value.clone()));
-            }
-            _ => panic!("LLOAD_3: Expected a Long"),
-        }
+        let value = execution_context.local_variables().get(3).clone();
+        assert!(value.is_long());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 

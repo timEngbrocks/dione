@@ -76,8 +76,8 @@ pub trait Attribute {
 impl Attribute for AttributeInfo {
     fn new(parser: &mut Parser, constant_pool: &ConstantPool) -> Self {
         let attribute_name_index = parser.peek_u2();
-        let attribute_name = match constant_pool.get(attribute_name_index) {
-            ConstantPoolInfoType::Utf8(info) => match String::from_utf8(info.bytes.clone()) {
+        let attribute_name = match constant_pool.get(&attribute_name_index) {
+            ConstantPoolInfoType::Utf8(info) => match String::from_utf8(info.bytes().clone()) {
                 Ok(v) => v,
                 Err(error) => panic!("{error}"),
             },
@@ -148,11 +148,9 @@ impl Attribute for AttributeInfo {
                 for _ in 0..attribute_length {
                     parser.consume_u1();
                 }
-                AttributeInfo::ConstantValue(AttributeConstantValue {
-                    attribute_name_index: 0,
-                    attribute_length: 2,
-                    constantvalue_index: 0,
-                })
+                AttributeInfo::ConstantValue(AttributeConstantValue::placeholder(
+                    attribute_length + 6,
+                ))
             }
         }
     }

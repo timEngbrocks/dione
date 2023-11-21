@@ -7,9 +7,9 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeNestHost {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub host_class_index: U2,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    host_class_index: U2,
 }
 
 impl Attribute for AttributeNestHost {

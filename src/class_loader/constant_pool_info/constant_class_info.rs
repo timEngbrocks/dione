@@ -7,10 +7,14 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantClassInfo {
-    pub tag: U1,
-    pub name_index: U2,
+    tag: U1,
+    name_index: U2,
 }
-
+impl ConstantClassInfo {
+    pub fn name_index(&self) -> &U2 {
+        &self.name_index
+    }
+}
 impl ConstantPoolInfo for ConstantClassInfo {
     fn new(parser: &mut Parser) -> Self {
         let tag = parser.consume_u1();

@@ -23,11 +23,11 @@ impl Instruction for IOR {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Int(Int::from_value(value1.get() | value2.get())));
                     InstructionResult::empty()
                 }
@@ -59,11 +59,11 @@ impl Instruction for LOR {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Long(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Long(value2) => match execution_context.stack().pop() {
                 Types::Long(value1) => {
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Long(Long::from_value(value1.get() | value2.get())));
                     InstructionResult::empty()
                 }

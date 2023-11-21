@@ -27,7 +27,7 @@ impl Instruction for BIPUSH {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Int::from_value(bitutils::sign_extend32(self.byte as u32, 8));
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 
@@ -60,7 +60,7 @@ impl Instruction for SIPUSH {
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let intermediate_short = ((self.byte1 as u16) << 8) | self.byte2 as u16;
         let value = Int::from_value(bitutils::sign_extend32(intermediate_short as u32, 16));
-        execution_context.stack.push(Types::Int(value));
+        execution_context.stack().push(Types::Int(value));
         InstructionResult::empty()
     }
 

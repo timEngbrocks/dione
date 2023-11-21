@@ -4,7 +4,6 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         runtime_constant_pool::RuntimeConstantPool,
-        types::Types,
     },
     opcodes,
 };
@@ -26,12 +25,12 @@ impl Instruction for ILOAD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(self.index as u16) {
-            Types::Int(value) => {
-                execution_context.stack.push(Types::Int(value.clone()));
-            }
-            _ => panic!("ILOAD: Expected a Int"),
-        }
+        let value = execution_context
+            .local_variables()
+            .get(self.index as u16)
+            .clone();
+        assert!(value.is_int());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -60,12 +59,12 @@ impl Instruction for LLOAD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(self.index as u16) {
-            Types::Long(value) => {
-                execution_context.stack.push(Types::Long(value.clone()));
-            }
-            _ => panic!("LLOAD: Expected a Long"),
-        }
+        let value = execution_context
+            .local_variables()
+            .get(self.index as u16)
+            .clone();
+        assert!(value.is_long());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -94,12 +93,12 @@ impl Instruction for FLOAD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(self.index as u16) {
-            Types::Float(value) => {
-                execution_context.stack.push(Types::Float(value.clone()));
-            }
-            _ => panic!("FLOAD: Expected a Float"),
-        }
+        let value = execution_context
+            .local_variables()
+            .get(self.index as u16)
+            .clone();
+        assert!(value.is_float());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -128,12 +127,12 @@ impl Instruction for DLOAD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(self.index as u16) {
-            Types::Double(value) => {
-                execution_context.stack.push(Types::Double(value.clone()));
-            }
-            _ => panic!("DLOAD: Expected a Double"),
-        }
+        let value = execution_context
+            .local_variables()
+            .get(self.index as u16)
+            .clone();
+        assert!(value.is_double());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -162,19 +161,12 @@ impl Instruction for ALOAD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(self.index as u16) {
-            Types::ReturnAddress(value) => {
-                execution_context
-                    .stack
-                    .push(Types::ReturnAddress(value.clone()));
-            }
-            Types::Reference(value) => {
-                execution_context
-                    .stack
-                    .push(Types::Reference(value.clone()));
-            }
-            _ => panic!("ALOAD: Expected a ReturnAddress/Reference"),
-        }
+        let value = execution_context
+            .local_variables()
+            .get(self.index as u16)
+            .clone();
+        assert!(value.is_referenceable());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 

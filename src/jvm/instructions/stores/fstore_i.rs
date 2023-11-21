@@ -23,11 +23,11 @@ impl Instruction for FSTORE_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Float(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(0, Types::Float(value));
                 InstructionResult::empty()
             }
@@ -57,11 +57,11 @@ impl Instruction for FSTORE_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Float(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(1, Types::Float(value));
                 InstructionResult::empty()
             }
@@ -91,11 +91,11 @@ impl Instruction for FSTORE_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Float(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(2, Types::Float(value));
                 InstructionResult::empty()
             }
@@ -125,11 +125,11 @@ impl Instruction for FSTORE_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = execution_context.stack.pop();
+        let value = execution_context.stack().pop();
         match value {
             Types::Float(value) => {
                 execution_context
-                    .local_variables
+                    .local_variables()
                     .set(3, Types::Float(value));
                 InstructionResult::empty()
             }

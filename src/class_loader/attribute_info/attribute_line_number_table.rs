@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeLineNumberTable {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub line_number_table_length: U2,
-    pub line_number_table: Vec<LineNumberTableEntry>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    line_number_table_length: U2,
+    line_number_table: Vec<LineNumberTableEntry>,
 }
 
 impl Attribute for AttributeLineNumberTable {
@@ -34,8 +34,8 @@ impl Attribute for AttributeLineNumberTable {
 
 #[derive(Debug, Clone)]
 pub struct LineNumberTableEntry {
-    pub start_pc: U2,
-    pub line_number: U2,
+    start_pc: U2,
+    line_number: U2,
 }
 
 impl LineNumberTableEntry {

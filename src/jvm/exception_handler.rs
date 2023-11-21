@@ -1,9 +1,38 @@
+use crate::class_loader::attribute_info::attribute_code::ExceptionTableEntry;
+
 #[derive(Clone)]
 pub struct ExceptionHandler {
-    pub start_pc: u16,
-    pub end_pc: u16,
-    pub handler_pc: u16,
-    pub catch_type: u16,
+    start_pc: u16,
+    end_pc: u16,
+    handler_pc: u16,
+    catch_type: u16,
+}
+
+impl ExceptionHandler {
+    pub fn new(exception_table_entry: ExceptionTableEntry) -> ExceptionHandler {
+        ExceptionHandler {
+            start_pc: exception_table_entry.start_pc(),
+            end_pc: exception_table_entry.end_pc(),
+            handler_pc: exception_table_entry.handler_pc(),
+            catch_type: exception_table_entry.catch_type(),
+        }
+    }
+
+    pub fn start_pc(&self) -> u16 {
+        self.start_pc
+    }
+
+    pub fn end_pc(&self) -> u16 {
+        self.end_pc
+    }
+
+    pub fn handler_pc(&self) -> u16 {
+        self.handler_pc
+    }
+
+    pub fn catch_type(&self) -> u16 {
+        self.catch_type
+    }
 }
 
 #[derive(Clone)]

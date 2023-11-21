@@ -7,9 +7,9 @@ use super::{attribute_runtime_visibile_annotations::ElementValue, Attribute};
 
 #[derive(Debug, Clone)]
 pub struct AttributeAnnotationDefault {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub default_value: ElementValue,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    default_value: ElementValue,
 }
 
 impl Attribute for AttributeAnnotationDefault {

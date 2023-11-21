@@ -24,7 +24,7 @@ impl Instruction for DCONST_0 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Double::from_value(0.0);
-        execution_context.stack.push(Types::Double(value));
+        execution_context.stack().push(Types::Double(value));
         InstructionResult::empty()
     }
 
@@ -51,7 +51,7 @@ impl Instruction for DCONST_1 {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let value = Double::from_value(1.0);
-        execution_context.stack.push(Types::Double(value));
+        execution_context.stack().push(Types::Double(value));
         InstructionResult::empty()
     }
 

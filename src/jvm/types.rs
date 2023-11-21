@@ -88,6 +88,26 @@ impl Types {
         assert_eq!(std::mem::discriminant(self), std::mem::discriminant(other));
     }
 
+    pub fn is_referenceable(&self) -> bool {
+        matches!(self, Types::Reference(_) | Types::ReturnAddress(_))
+    }
+
+    pub fn is_int(&self) -> bool {
+        matches!(self, Types::Int(_))
+    }
+
+    pub fn is_long(&self) -> bool {
+        matches!(self, Types::Long(_))
+    }
+
+    pub fn is_float(&self) -> bool {
+        matches!(self, Types::Float(_))
+    }
+
+    pub fn is_double(&self) -> bool {
+        matches!(self, Types::Double(_))
+    }
+
     pub fn transfer_from(&mut self, other: &Types) {
         self.assert_matches_type(other);
         match self {

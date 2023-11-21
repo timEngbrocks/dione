@@ -24,15 +24,15 @@ impl Instruction for IASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Int(value) => value,
             _ => panic!("IASTORE: value must be an int"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("IASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("IASTORE: arrayref must be a reference"),
         };
@@ -70,15 +70,15 @@ impl Instruction for LASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Long(value) => value,
             _ => panic!("LASTORE: value must be a long"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("LASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("LASTORE: arrayref must be a reference"),
         };
@@ -116,15 +116,15 @@ impl Instruction for FASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Float(value) => value,
             _ => panic!("FASTORE: value must be a float"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("FASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("FASTORE: arrayref must be a reference"),
         };
@@ -162,15 +162,15 @@ impl Instruction for DASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Double(value) => value,
             _ => panic!("DASTORE: value must be a double"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("DASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("DASTORE: arrayref must be a reference"),
         };
@@ -208,15 +208,15 @@ impl Instruction for AASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("AASTORE: value must be a reference"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("AASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("AASTORE: arrayref must be a reference"),
         };
@@ -254,15 +254,15 @@ impl Instruction for BASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Byte(value) => value,
             _ => panic!("BASTORE: value must be a byte"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("BASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("BASTORE: arrayref must be a reference"),
         };
@@ -300,15 +300,15 @@ impl Instruction for CASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Char(value) => value,
             _ => panic!("CASTORE: value must be a char"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("CASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("CASTORE: arrayref must be a reference"),
         };
@@ -346,15 +346,15 @@ impl Instruction for SASTORE {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        let value = match execution_context.stack.pop() {
+        let value = match execution_context.stack().pop() {
             Types::Short(value) => value,
             _ => panic!("SASTORE: value must be a short"),
         };
-        let index = match execution_context.stack.pop() {
+        let index = match execution_context.stack().pop() {
             Types::Int(index) => index.get() as usize,
             _ => panic!("SASTORE: index must be an int"),
         };
-        let arrayref = match execution_context.stack.pop() {
+        let arrayref = match execution_context.stack().pop() {
             Types::Reference(reference) => reference,
             _ => panic!("SASTORE: arrayref must be a reference"),
         };

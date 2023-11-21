@@ -4,10 +4,10 @@ use super::{sym_ref_method_handle::SymRefMethodHandle, RuntimeConstant, RuntimeC
 
 #[derive(Clone)]
 pub struct SymRefDynamicallyComputedConstant {
-    pub method_handle_ref: SymRefMethodHandle,
-    pub arguments: Vec<RuntimeConstants>,
-    pub name: String,
-    pub descriptor: String,
+    method_handle_ref: SymRefMethodHandle,
+    arguments: Vec<RuntimeConstants>,
+    name: String,
+    descriptor: String,
 }
 
 impl RuntimeConstant for SymRefDynamicallyComputedConstant {

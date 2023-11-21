@@ -42,22 +42,22 @@ pub fn compare_class_file_version_to_global(major_version: u16, minor_version: u
 
 #[derive(Debug, Clone)]
 pub struct ClassFile {
-    pub magic: U4,
-    pub minor_version: U2,
-    pub major_version: U2,
-    pub constant_pool_count: U2,
-    pub constant_pool: ConstantPool,
-    pub access_flags: U2,
-    pub this_class: U2,
-    pub super_class: U2,
-    pub interfaces_count: U2,
-    pub interfaces: Vec<U2>,
-    pub fields_count: U2,
-    pub fields: Vec<FieldInfo>,
-    pub methods_count: U2,
-    pub methods: Vec<MethodInfo>,
-    pub attributes_count: U2,
-    pub attributes: Vec<AttributeInfo>,
+    magic: U4,
+    minor_version: U2,
+    major_version: U2,
+    constant_pool_count: U2,
+    constant_pool: ConstantPool,
+    access_flags: U2,
+    this_class: U2,
+    super_class: U2,
+    interfaces_count: U2,
+    interfaces: Vec<U2>,
+    fields_count: U2,
+    fields: Vec<FieldInfo>,
+    methods_count: U2,
+    methods: Vec<MethodInfo>,
+    attributes_count: U2,
+    attributes: Vec<AttributeInfo>,
 }
 
 impl ClassFile {
@@ -141,5 +141,69 @@ impl ClassFile {
 
     pub fn is_interface(&self) -> bool {
         self.access_flags & ClassFileAccessFlags::Interface as u16 != 0
+    }
+
+    pub fn magic(&self) -> &U4 {
+        &self.magic
+    }
+
+    pub fn minor_version(&self) -> &U2 {
+        &self.minor_version
+    }
+
+    pub fn major_version(&self) -> &U2 {
+        &self.major_version
+    }
+
+    pub fn constant_pool_count(&self) -> &U2 {
+        &self.constant_pool_count
+    }
+
+    pub fn constant_pool(&self) -> &ConstantPool {
+        &self.constant_pool
+    }
+
+    pub fn access_flags(&self) -> &U2 {
+        &self.access_flags
+    }
+
+    pub fn this_class(&self) -> &U2 {
+        &self.this_class
+    }
+
+    pub fn super_class(&self) -> &U2 {
+        &self.super_class
+    }
+
+    pub fn interfaces_count(&self) -> &U2 {
+        &self.interfaces_count
+    }
+
+    pub fn interfaces(&self) -> &Vec<U2> {
+        &self.interfaces
+    }
+
+    pub fn fields_count(&self) -> &U2 {
+        &self.fields_count
+    }
+
+    pub fn fields(&self) -> &Vec<FieldInfo> {
+        &self.fields
+    }
+
+    pub fn methods_count(&self) -> &U2 {
+        &self.methods_count
+    }
+
+    pub fn methods(&self) -> &Vec<MethodInfo> {
+        &self.methods
+    }
+
+    pub fn attributes_count(&self) -> &U2 {
+        &self.attributes_count
+    }
+
+    pub fn attributes(&self) -> &Vec<AttributeInfo> {
+        &self.attributes
     }
 }

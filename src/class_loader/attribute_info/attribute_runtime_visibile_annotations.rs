@@ -9,10 +9,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeRuntimeVisibleAnnotations {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub num_annotations: U2,
-    pub annotations: Vec<Annotation>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    num_annotations: U2,
+    annotations: Vec<Annotation>,
 }
 
 impl Attribute for AttributeRuntimeVisibleAnnotations {
@@ -36,9 +36,9 @@ impl Attribute for AttributeRuntimeVisibleAnnotations {
 
 #[derive(Debug, Clone)]
 pub struct Annotation {
-    pub type_index: U2,
-    pub num_element_value_pairs: U2,
-    pub element_value_pairs: Vec<ElementValuePair>,
+    type_index: U2,
+    num_element_value_pairs: U2,
+    element_value_pairs: Vec<ElementValuePair>,
 }
 
 impl Annotation {
@@ -60,8 +60,8 @@ impl Annotation {
 
 #[derive(Debug, Clone)]
 pub struct ElementValuePair {
-    pub element_name_index: U2,
-    pub value: ElementValue,
+    element_name_index: U2,
+    value: ElementValue,
 }
 
 impl ElementValuePair {
@@ -78,8 +78,8 @@ impl ElementValuePair {
 
 #[derive(Debug, Clone)]
 pub struct ElementValue {
-    pub tag: U1,
-    pub value: Value,
+    tag: U1,
+    value: Value,
 }
 
 impl ElementValue {
@@ -101,7 +101,7 @@ pub enum Value {
 }
 
 impl Value {
-    pub fn new(tag: U1, parser: &mut Parser) -> Value {
+    fn new(tag: U1, parser: &mut Parser) -> Value {
         match tag {
             b'B' | b'C' | b'D' | b'F' | b'I' | b'J' | b'S' | b'Z' | b's' => {
                 Value::Constant(ValueConstant::new(parser))
@@ -117,7 +117,7 @@ impl Value {
 
 #[derive(Debug, Clone)]
 pub struct ValueConstant {
-    pub const_value_index: U2,
+    const_value_index: U2,
 }
 
 impl ValueConstant {
@@ -130,8 +130,8 @@ impl ValueConstant {
 
 #[derive(Debug, Clone)]
 pub struct ValueEnum {
-    pub type_name_index: U2,
-    pub const_name_index: U2,
+    type_name_index: U2,
+    const_name_index: U2,
 }
 
 impl ValueEnum {
@@ -148,7 +148,7 @@ impl ValueEnum {
 
 #[derive(Debug, Clone)]
 pub struct ValueClass {
-    pub class_info_index: U2,
+    class_info_index: U2,
 }
 
 impl ValueClass {
@@ -161,8 +161,8 @@ impl ValueClass {
 
 #[derive(Debug, Clone)]
 pub struct ValueArray {
-    pub num_values: U2,
-    pub values: Vec<ElementValue>,
+    num_values: U2,
+    values: Vec<ElementValue>,
 }
 
 impl ValueArray {

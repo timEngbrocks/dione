@@ -18,7 +18,7 @@ pub mod types;
 static mut INSTANCE: Option<JVM> = None;
 
 pub struct JVM {
-    pub interpreter: Interpreter,
+    interpreter: Interpreter,
 }
 
 impl JVM {

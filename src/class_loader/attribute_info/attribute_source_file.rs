@@ -7,9 +7,9 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeSourceFile {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub source_file_index: U2,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    source_file_index: U2,
 }
 
 impl Attribute for AttributeSourceFile {

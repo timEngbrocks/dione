@@ -32,7 +32,7 @@ impl Instruction for IFEQ {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 if value.get() == 0 {
                     InstructionResult::branch(BranchKind::Relative(offset as i32))
@@ -75,7 +75,7 @@ impl Instruction for IFNE {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 if value.get() != 0 {
                     InstructionResult::branch(BranchKind::Relative(offset as i32))
@@ -118,7 +118,7 @@ impl Instruction for IFLT {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 if value.get() < 0 {
                     InstructionResult::branch(BranchKind::Relative(offset as i32))
@@ -161,7 +161,7 @@ impl Instruction for IFGE {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 if value.get() >= 0 {
                     InstructionResult::branch(BranchKind::Relative(offset as i32))
@@ -204,7 +204,7 @@ impl Instruction for IFGT {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 if value.get() > 0 {
                     InstructionResult::branch(BranchKind::Relative(offset as i32))
@@ -247,7 +247,7 @@ impl Instruction for IFLE {
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let offset = ((self.branchbyte1 as i16) << 8) | self.branchbyte2 as i16;
-        match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
             Types::Int(value) => {
                 if value.get() <= 0 {
                     InstructionResult::branch(BranchKind::Relative(offset as i32))

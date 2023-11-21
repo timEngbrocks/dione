@@ -23,18 +23,18 @@ impl Instruction for IUSHR {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let s = value2.get() & 0b11111;
                     let x = value1.get();
                     if x < 0 {
                         execution_context
-                            .stack
+                            .stack()
                             .push(Types::Int(Int::from_value((x >> s) + (2 << !s))));
                     } else {
                         execution_context
-                            .stack
+                            .stack()
                             .push(Types::Int(Int::from_value(x >> s)));
                     }
                     InstructionResult::empty()
@@ -67,18 +67,18 @@ impl Instruction for LUSHR {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let s = value2.get() & 0b111111;
                     let x = value1.get();
                     if x < 0 {
                         execution_context
-                            .stack
+                            .stack()
                             .push(Types::Long(Long::from_value(((x as i64) >> s) + (2 << !s))));
                     } else {
                         execution_context
-                            .stack
+                            .stack()
                             .push(Types::Long(Long::from_value((x as i64) >> s)));
                     }
                     InstructionResult::empty()

@@ -19,14 +19,14 @@ pub enum ObjectAccessFlags {
 
 #[derive(Clone)]
 pub struct Object {
-    pub name: String,
-    pub access_flags: u16,
-    pub super_class: Option<Box<Object>>,
-    pub interfaces: HashMap<String, Object>,
-    pub fields: HashMap<String, Field>,
-    pub static_fields: HashMap<String, Field>,
-    pub methods: HashMap<String, Method>,
-    pub class_file: ClassFile,
+    name: String,
+    access_flags: u16,
+    super_class: Option<Box<Object>>,
+    interfaces: HashMap<String, Object>,
+    fields: HashMap<String, Field>,
+    static_fields: HashMap<String, Field>,
+    methods: HashMap<String, Method>,
+    class_file: ClassFile,
 }
 
 impl Object {
@@ -85,7 +85,7 @@ impl Object {
     }
 
     pub fn put_static_field(&mut self, field: Field) {
-        let key = format!("{}{}", field.name, field.descriptor);
+        let key = format!("{}{}", field.name(), field.descriptor());
         self.static_fields.insert(key, field);
     }
 
@@ -102,7 +102,7 @@ impl Object {
     }
 
     pub fn put_field(&mut self, field: Field) {
-        let key = format!("{}{}", field.name, field.descriptor);
+        let key = format!("{}{}", field.name(), field.descriptor());
         self.fields.insert(key, field);
     }
 
@@ -159,5 +159,37 @@ impl Object {
 
     pub fn has_main_method(&self) -> bool {
         self.methods.contains_key("main")
+    }
+
+    pub fn name(&self) -> &String {
+        &self.name
+    }
+
+    pub fn access_flags(&self) -> &u16 {
+        &self.access_flags
+    }
+
+    pub fn super_class(&self) -> &Option<Box<Object>> {
+        &self.super_class
+    }
+
+    pub fn interfaces(&self) -> &HashMap<String, Object> {
+        &self.interfaces
+    }
+
+    pub fn fields(&self) -> &HashMap<String, Field> {
+        &self.fields
+    }
+
+    pub fn static_fields(&self) -> &HashMap<String, Field> {
+        &self.static_fields
+    }
+
+    pub fn methods(&self) -> &HashMap<String, Method> {
+        &self.methods
+    }
+
+    pub fn class_file(&self) -> &ClassFile {
+        &self.class_file
     }
 }

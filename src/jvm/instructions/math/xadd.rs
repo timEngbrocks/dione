@@ -23,14 +23,14 @@ impl Instruction for IADD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Int(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Int(value2) => match execution_context.stack().pop() {
                 Types::Int(value1) => {
                     let value1 = value1.get();
                     let value2 = value2.get();
                     let result = value1 + value2;
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Int(Int::from_value(result)));
                     InstructionResult::empty()
                 }
@@ -62,14 +62,14 @@ impl Instruction for LADD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Long(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Long(value2) => match execution_context.stack().pop() {
                 Types::Long(value1) => {
                     let value1 = value1.get();
                     let value2 = value2.get();
                     let result = value1 + value2;
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Long(Long::from_value(result)));
                     InstructionResult::empty()
                 }
@@ -101,14 +101,14 @@ impl Instruction for FADD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Float(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Float(value2) => match execution_context.stack().pop() {
                 Types::Float(value1) => {
                     let value1 = value1.get();
                     let value2 = value2.get();
                     let result = value1 + value2;
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Float(Float::from_value(result)));
                     InstructionResult::empty()
                 }
@@ -140,14 +140,14 @@ impl Instruction for DADD {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.stack.pop() {
-            Types::Double(value2) => match execution_context.stack.pop() {
+        match execution_context.stack().pop() {
+            Types::Double(value2) => match execution_context.stack().pop() {
                 Types::Double(value1) => {
                     let value1 = value1.get();
                     let value2 = value2.get();
                     let result = value1 + value2;
                     execution_context
-                        .stack
+                        .stack()
                         .push(Types::Double(Double::from_value(result)));
                     InstructionResult::empty()
                 }

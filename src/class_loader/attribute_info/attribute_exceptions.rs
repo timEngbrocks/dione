@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeExceptions {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub number_of_exceptions: U2,
-    pub exception_index_table: Vec<U2>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    number_of_exceptions: U2,
+    exception_index_table: Vec<U2>,
 }
 
 impl Attribute for AttributeExceptions {

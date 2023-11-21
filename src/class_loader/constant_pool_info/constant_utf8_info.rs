@@ -7,9 +7,9 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantUtf8Info {
-    pub tag: U1,
-    pub length: U2,
-    pub bytes: Vec<U1>,
+    tag: U1,
+    length: U2,
+    bytes: Vec<U1>,
 }
 
 #[allow(clippy::inherent_to_string)]
@@ -19,6 +19,10 @@ impl ConstantUtf8Info {
             Ok(v) => v,
             Err(_) => panic!("Could not create string from bytes!"),
         }
+    }
+
+    pub fn bytes(&self) -> &Vec<U1> {
+        &self.bytes
     }
 }
 

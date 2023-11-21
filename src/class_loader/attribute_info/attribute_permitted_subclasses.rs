@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributePermittedSubclasses {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub number_of_classes: U2,
-    pub classes: Vec<U2>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    number_of_classes: U2,
+    classes: Vec<U2>,
 }
 
 impl Attribute for AttributePermittedSubclasses {

@@ -4,7 +4,6 @@ use crate::{
         frame::Frame,
         instructions::{Instruction, InstructionResult},
         runtime_constant_pool::RuntimeConstantPool,
-        types::Types,
     },
     opcodes,
 };
@@ -23,12 +22,9 @@ impl Instruction for DLOAD_0 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(0) {
-            Types::Double(value) => {
-                execution_context.stack.push(Types::Double(value.clone()));
-            }
-            _ => panic!("DLOAD_0: Expected a Double"),
-        }
+        let value = execution_context.local_variables().get(0).clone();
+        assert!(value.is_double());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -54,12 +50,9 @@ impl Instruction for DLOAD_1 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(1) {
-            Types::Double(value) => {
-                execution_context.stack.push(Types::Double(value.clone()));
-            }
-            _ => panic!("DLOAD_1: Expected a Double"),
-        }
+        let value = execution_context.local_variables().get(1).clone();
+        assert!(value.is_double());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -85,12 +78,9 @@ impl Instruction for DLOAD_2 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(2) {
-            Types::Double(value) => {
-                execution_context.stack.push(Types::Double(value.clone()));
-            }
-            _ => panic!("DLOAD_2: Expected a Double"),
-        }
+        let value = execution_context.local_variables().get(2).clone();
+        assert!(value.is_double());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 
@@ -116,12 +106,9 @@ impl Instruction for DLOAD_3 {
     }
 
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
-        match execution_context.local_variables.get(3) {
-            Types::Double(value) => {
-                execution_context.stack.push(Types::Double(value.clone()));
-            }
-            _ => panic!("DLOAD_3: Expected a Double"),
-        }
+        let value = execution_context.local_variables().get(3).clone();
+        assert!(value.is_double());
+        execution_context.stack().push(value);
         InstructionResult::empty()
     }
 

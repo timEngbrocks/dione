@@ -7,10 +7,10 @@ use super::Attribute;
 
 #[derive(Debug, Clone)]
 pub struct AttributeStackMapTable {
-    pub attribute_name_index: U2,
-    pub attribute_length: U4,
-    pub number_of_entries: U2,
-    pub entries: Vec<StackMapFrameTypes>,
+    attribute_name_index: U2,
+    attribute_length: U4,
+    number_of_entries: U2,
+    entries: Vec<StackMapFrameTypes>,
 }
 
 impl Attribute for AttributeStackMapTable {
@@ -67,7 +67,7 @@ impl StackMapFrameTypes {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameSame {
-    pub frame_type: U1,
+    frame_type: U1,
 }
 
 impl StackMapFrameSame {
@@ -80,8 +80,8 @@ impl StackMapFrameSame {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameSameLocal1StackItem {
-    pub frame_type: U1,
-    pub stack: Vec<VerificationTypes>,
+    frame_type: U1,
+    stack: Vec<VerificationTypes>,
 }
 
 impl StackMapFrameSameLocal1StackItem {
@@ -95,9 +95,9 @@ impl StackMapFrameSameLocal1StackItem {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameSameLocal1StackItemFrameExtended {
-    pub frame_type: U1,
-    pub offset_delta: U2,
-    pub stack: Vec<VerificationTypes>,
+    frame_type: U1,
+    offset_delta: U2,
+    stack: Vec<VerificationTypes>,
 }
 
 impl StackMapFrameSameLocal1StackItemFrameExtended {
@@ -116,8 +116,8 @@ impl StackMapFrameSameLocal1StackItemFrameExtended {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameChop {
-    pub frame_type: U1,
-    pub offset_delta: U2,
+    frame_type: U1,
+    offset_delta: U2,
 }
 
 impl StackMapFrameChop {
@@ -134,8 +134,8 @@ impl StackMapFrameChop {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameSameFrameExtended {
-    pub frame_type: U1,
-    pub offset_delta: U2,
+    frame_type: U1,
+    offset_delta: U2,
 }
 
 impl StackMapFrameSameFrameExtended {
@@ -152,9 +152,9 @@ impl StackMapFrameSameFrameExtended {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameAppend {
-    pub frame_type: U1,
-    pub offset_delta: U2,
-    pub locals: Vec<VerificationTypes>,
+    frame_type: U1,
+    offset_delta: U2,
+    locals: Vec<VerificationTypes>,
 }
 
 impl StackMapFrameAppend {
@@ -176,12 +176,12 @@ impl StackMapFrameAppend {
 
 #[derive(Debug, Clone)]
 pub struct StackMapFrameFull {
-    pub frame_type: U1,
-    pub offset_delta: U2,
-    pub number_of_locals: U2,
-    pub locals: Vec<VerificationTypes>,
-    pub number_of_stack_items: U2,
-    pub stack: Vec<VerificationTypes>,
+    frame_type: U1,
+    offset_delta: U2,
+    number_of_locals: U2,
+    locals: Vec<VerificationTypes>,
+    number_of_stack_items: U2,
+    stack: Vec<VerificationTypes>,
 }
 
 impl StackMapFrameFull {
@@ -247,7 +247,7 @@ impl VerificationTypes {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeTopVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeTopVariable {
@@ -260,7 +260,7 @@ impl VerificationTypeTopVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeIntegerVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeIntegerVariable {
@@ -273,7 +273,7 @@ impl VerificationTypeIntegerVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeFloatVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeFloatVariable {
@@ -286,7 +286,7 @@ impl VerificationTypeFloatVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeLongVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeLongVariable {
@@ -299,7 +299,7 @@ impl VerificationTypeLongVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeDoubleVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeDoubleVariable {
@@ -312,7 +312,7 @@ impl VerificationTypeDoubleVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeNullVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeNullVariable {
@@ -325,7 +325,7 @@ impl VerificationTypeNullVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeUninitializedThisVariable {
-    pub tag: U1,
+    tag: U1,
 }
 
 impl VerificationTypeUninitializedThisVariable {
@@ -338,8 +338,8 @@ impl VerificationTypeUninitializedThisVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeObjectVariable {
-    pub tag: U1,
-    pub cpool_index: U2,
+    tag: U1,
+    cpool_index: U2,
 }
 
 impl VerificationTypeObjectVariable {
@@ -353,8 +353,8 @@ impl VerificationTypeObjectVariable {
 
 #[derive(Debug, Clone)]
 pub struct VerificationTypeUninitializedVariable {
-    pub tag: U1,
-    pub offset: U2,
+    tag: U1,
+    offset: U2,
 }
 
 impl VerificationTypeUninitializedVariable {

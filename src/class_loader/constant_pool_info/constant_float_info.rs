@@ -7,8 +7,8 @@ use super::{
 
 #[derive(Clone)]
 pub struct ConstantFloatInfo {
-    pub tag: U1,
-    pub bytes: U4,
+    tag: U1,
+    bytes: U4,
 }
 
 impl ConstantFloatInfo {

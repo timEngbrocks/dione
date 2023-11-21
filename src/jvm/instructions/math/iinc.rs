@@ -30,12 +30,12 @@ impl Instruction for IINC {
     fn execute(&self, execution_context: &mut Frame) -> InstructionResult {
         let constant = self.constant as i32;
         match execution_context
-            .local_variables
+            .local_variables()
             .get(self.index as u16)
             .clone()
         {
             Types::Int(value) => {
-                execution_context.local_variables.set(
+                execution_context.local_variables().set(
                     self.index as u16,
                     Types::Int(Int::from_value(value.get() + constant)),
                 );
