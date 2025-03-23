@@ -1,0 +1,47 @@
+Magic: 0xcafebabe
+Minor Version: 0
+Major Version: 63
+Constant Pool Count: 26
+Constant Pool:
+	[0]: Methodref: Tag: 10, Class Index: 2, Name and Type Index: 3
+	[1]: Class: Tag: 7, Name Index: 4
+	[2]: NameAndType: Tag: 12, Name Index: 5, Descriptor Index: 6
+	[3]: Utf8: Tag: 1, Length: 16, Bytes: java/lang/Object
+	[4]: Utf8: Tag: 1, Length: 6, Bytes: <init>
+	[5]: Utf8: Tag: 1, Length: 3, Bytes: ()V
+	[6]: Fieldref: Tag: 9, Class Index: 8, Name and Type Index: 9
+	[7]: Class: Tag: 7, Name Index: 10
+	[8]: NameAndType: Tag: 12, Name Index: 11, Descriptor Index: 12
+	[9]: Utf8: Tag: 1, Length: 16, Bytes: java/lang/System
+	[10]: Utf8: Tag: 1, Length: 3, Bytes: out
+	[11]: Utf8: Tag: 1, Length: 21, Bytes: Ljava/io/PrintStream;
+	[12]: Methodref: Tag: 10, Class Index: 14, Name and Type Index: 15
+	[13]: Class: Tag: 7, Name Index: 16
+	[14]: NameAndType: Tag: 12, Name Index: 17, Descriptor Index: 18
+	[15]: Utf8: Tag: 1, Length: 19, Bytes: java/io/PrintStream
+	[16]: Utf8: Tag: 1, Length: 7, Bytes: println
+	[17]: Utf8: Tag: 1, Length: 4, Bytes: (I)V
+	[18]: Class: Tag: 7, Name Index: 20
+	[19]: Utf8: Tag: 1, Length: 4, Bytes: Main
+	[20]: Utf8: Tag: 1, Length: 4, Bytes: Code
+	[21]: Utf8: Tag: 1, Length: 15, Bytes: LineNumberTable
+	[22]: Utf8: Tag: 1, Length: 4, Bytes: main
+	[23]: Utf8: Tag: 1, Length: 22, Bytes: ([Ljava/lang/String;)V
+	[24]: Utf8: Tag: 1, Length: 10, Bytes: SourceFile
+	[25]: Utf8: Tag: 1, Length: 9, Bytes: Main.java
+Access Flags: 0b00000000100001
+This Class: 19
+Super Class: 2
+Interfaces Count: 0
+Fields Count: 0
+Methods Count: 2
+Methods:
+	[0]: Access Flags: 0b00000000000001, Name Index: 5, Descriptor Index: 6, Attributes Count: 1
+		Attributes:
+		[0]: Code: Max Stack: 1, Max Locals: 1, Code Length: 5, Code: 00101010 10110111 00000000 00000001 10110001, Exception Table Length: 0, Exception Table: [], Attributes Count: 1, Attributes: [LineNumberTable: Line Number Table Length: 1, Line Number Table: [{Start PC: 0, Line Number: 1}]]
+	[1]: Access Flags: 0b00000000001001, Name Index: 23, Descriptor Index: 24, Attributes Count: 1
+		Attributes:
+		[0]: Code: Max Stack: 2, Max Locals: 4, Code Length: 16, Code: 00000100 00111100 00000101 00111101 00011011 00011100 01100000 00111110 10110010 00000000 00000111 00011101 10110110 00000000 00001101 10110001, Exception Table Length: 0, Exception Table: [], Attributes Count: 1, Attributes: [LineNumberTable: Line Number Table Length: 5, Line Number Table: [{Start PC: 0, Line Number: 3}, {Start PC: 2, Line Number: 4}, {Start PC: 4, Line Number: 5}, {Start PC: 8, Line Number: 6}, {Start PC: 15, Line Number: 7}]]
+Attributes Count: 1
+Attributes:
+	[0]: SourceFile: Source File Index: 26

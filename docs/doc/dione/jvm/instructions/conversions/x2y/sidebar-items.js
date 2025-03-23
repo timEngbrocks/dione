@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["D2F","D2I","D2L","F2D","F2I","F2L","I2B","I2C","I2D","I2F","I2L","I2S","L2D","L2F","L2I"]};

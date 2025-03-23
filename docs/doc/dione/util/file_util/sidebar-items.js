@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["_list_files","list_files"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["MethodAccessFlags"],"struct":["MethodInfo"],"type":["MethodAccessFlag"]};

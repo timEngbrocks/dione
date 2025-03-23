@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["goto","x_return"]};

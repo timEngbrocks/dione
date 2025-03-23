@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["IF_ACMPEQ","IF_ACMPNE"]};

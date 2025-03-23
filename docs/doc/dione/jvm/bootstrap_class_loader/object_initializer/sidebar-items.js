@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["get_access_flags","get_fields","get_interfaces","get_methods","get_name","get_super_class","initialize_class","initialize_interface"]};
