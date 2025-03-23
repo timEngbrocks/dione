@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ReferenceArrayKind"],"struct":["PrimitiveArray","ReferenceArray"],"trait":["Array"]};

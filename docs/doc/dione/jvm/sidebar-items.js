@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["bootstrap_class_loader","descriptor","exception_handler","execution_context","frame","instructions","interpreter","object_manager","runtime_constant_pool","types"],"static":["FIRST_CALL","INSTANCE"],"struct":["JVM","RolloverOnStartTrigger"]};

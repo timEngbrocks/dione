@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["BranchKind","Instructions"],"mod":["comparisons","constants","control","conversions","extended","loads","math","references","reserved","stack","stores","unimplemented_instructions"],"struct":["InstructionResult","InstructionStream"],"trait":["Instruction"]};

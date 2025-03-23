@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["MethodHandleKind"],"fn":["is_allowed_method_name"],"struct":["SymRefMethodHandle"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ComputationalTypeCategory","ReturnTypes","Types"],"mod":["array","boolean","byte","char","double","field","float","int","long","method","object","reference","return_address","short"],"trait":["FloatingPointTypes","IntegralTypes","NumericTypes","PrimitiveTypes","Value","Width"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ClassFileAccessFlags"],"fn":["compare_class_file_version_to_global"],"static":["GLOBAL_CLASS_FILE_MAJOR_VERSION","GLOBAL_CLASS_FILE_MINOR_VERSION"],"struct":["ClassFile"]};

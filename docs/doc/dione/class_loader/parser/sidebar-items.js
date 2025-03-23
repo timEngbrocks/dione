@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["Parser"],"type":["U1","U2","U4"]};

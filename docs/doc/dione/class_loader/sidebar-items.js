@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["load","load_file"],"mod":["attribute_info","class_file","constant_pool_info","field_info","method_info","parser"]};
