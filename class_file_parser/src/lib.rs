@@ -1,16 +1,12 @@
 use std::fs;
 
-use class_file::{class_file_parser, ClassFile};
+use class_file::{ClassFile, class_file_parser};
 
-pub type U1 = u8;
-pub type U2 = u16;
-pub type U4 = u32;
-
+pub mod attribute_info;
 pub mod class_file;
 pub mod cp_info;
 pub mod field_info;
 pub mod method_info;
-pub mod attribute_info;
 
 pub fn parse(path: String) -> ClassFile {
     let class_file_raw = match fs::read(&path) {
@@ -24,7 +20,10 @@ pub fn parse(path: String) -> ClassFile {
     };
 
     if !rest.is_empty() {
-        panic!("Failed to parse complete class file. Have {} bytes remaining!", rest.len());
+        panic!(
+            "Failed to parse complete class file. Have {} bytes remaining!",
+            rest.len()
+        );
     }
 
     class_file

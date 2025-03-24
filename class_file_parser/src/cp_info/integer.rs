@@ -1,8 +1,8 @@
 use std::fmt;
 
-use nom::{error::ParseError, number::complete::be_u32, IResult};
+use nom::{IResult, error::ParseError, number::complete::be_u32};
 
-use crate::{U1, U4};
+use util::numbers::{U1, U4};
 
 use super::INTEGER;
 
@@ -13,13 +13,15 @@ pub struct Integer {
 }
 
 impl fmt::Display for Integer {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Tag: {}, Bytes: {}", self.tag, self.bytes)?;
         Ok(())
     }
 }
 
-pub fn integer_parser<'a, E: ParseError<&'a[u8]> + std::fmt::Debug>(input: &'a[u8]) -> IResult<&'a[u8], Integer> {
+pub fn integer_parser<'a, E: ParseError<&'a [u8]> + std::fmt::Debug>(
+    input: &'a [u8],
+) -> IResult<&'a [u8], Integer> {
     let (input, bytes) = be_u32::<&[u8], E>(input).expect("Failed to read 'bytes'");
 
     Ok((input, Integer {

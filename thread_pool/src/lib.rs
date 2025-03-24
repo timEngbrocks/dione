@@ -1,10 +1,15 @@
-use std::{collections::HashMap, error::Error, sync::mpsc::{self, Receiver, Sender}, thread::{self, JoinHandle}};
+use std::{
+    collections::HashMap,
+    error::Error,
+    sync::mpsc::{self, Receiver, Sender},
+    thread::{self, JoinHandle},
+};
 
 #[derive(Default)]
 pub struct ThreadPool {
     ids: Vec<usize>,
     handles: HashMap<usize, JoinHandle<()>>,
-    tx: HashMap<usize, Sender<ControlMessage>>
+    tx: HashMap<usize, Sender<ControlMessage>>,
 }
 
 impl ThreadPool {
@@ -15,9 +20,7 @@ impl ThreadPool {
         F: Send + 'static,
     {
         let (tx, rx) = mpsc::channel();
-        let handle = thread::spawn(move || {
-            f(c, rx)
-        });
+        let handle = thread::spawn(move || f(c, rx));
 
         let id = if self.ids.is_empty() {
             0
@@ -58,5 +61,5 @@ impl ThreadPool {
 }
 
 pub enum ControlMessage {
-    SHUTDOWN
+    SHUTDOWN,
 }

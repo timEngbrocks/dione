@@ -113,6 +113,7 @@ dependencies = [
  "clap",
  "class_file_parser",
  "thread_pool",
+ "util",
 ]
 
 [[package]]

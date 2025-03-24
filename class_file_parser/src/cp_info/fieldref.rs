@@ -1,8 +1,7 @@
 use std::fmt;
 
-use nom::{error::ParseError, number::complete::be_u16, IResult};
-
-use crate::{U1, U2};
+use nom::{IResult, error::ParseError, number::complete::be_u16};
+use util::numbers::{U1, U2};
 
 use super::FIELDREF;
 
@@ -14,15 +13,22 @@ pub struct Fieldref {
 }
 
 impl fmt::Display for Fieldref {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Tag: {}, Class Index: {}, Name and Type Index: {}", self.tag, self.class_index, self.name_and_type_index)?;
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "Tag: {}, Class Index: {}, Name and Type Index: {}",
+            self.tag, self.class_index, self.name_and_type_index
+        )?;
         Ok(())
     }
 }
 
-pub fn fieldref_parser<'a, E: ParseError<&'a[u8]> + std::fmt::Debug>(input: &'a[u8]) -> IResult<&'a[u8], Fieldref> {
+pub fn fieldref_parser<'a, E: ParseError<&'a [u8]> + std::fmt::Debug>(
+    input: &'a [u8],
+) -> IResult<&'a [u8], Fieldref> {
     let (input, class_index) = be_u16::<&[u8], E>(input).expect("Failed to read 'class_index'");
-    let (input, name_and_type_index) = be_u16::<&[u8], E>(input).expect("Failed to read 'name_and_type_index'");
+    let (input, name_and_type_index) =
+        be_u16::<&[u8], E>(input).expect("Failed to read 'name_and_type_index'");
 
     Ok((input, Fieldref {
         tag: FIELDREF,

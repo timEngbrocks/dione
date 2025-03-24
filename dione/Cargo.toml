@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-class_file_parser = { path = "../class_file_parser" }
+class_file_parser = { path = "../class_file_parser" } 
+thread_pool = { path = "../thread_pool" }
+util = { path = "../util" }
 clap = { version = "4.5.32", features = ["derive"] }

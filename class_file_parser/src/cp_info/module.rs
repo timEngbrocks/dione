@@ -1,8 +1,8 @@
 use std::fmt;
 
-use nom::{error::ParseError, number::complete::be_u16, IResult};
+use nom::{IResult, error::ParseError, number::complete::be_u16};
 
-use crate::{U1, U2};
+use util::numbers::{U1, U2};
 
 use super::MODULE;
 
@@ -13,13 +13,15 @@ pub struct Module {
 }
 
 impl fmt::Display for Module {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Tag: {}, Name Index: {}", self.tag, self.name_index)?;
         Ok(())
     }
 }
 
-pub fn module_parser<'a, E: ParseError<&'a[u8]> + std::fmt::Debug>(input: &'a[u8]) -> IResult<&'a[u8], Module> {
+pub fn module_parser<'a, E: ParseError<&'a [u8]> + std::fmt::Debug>(
+    input: &'a [u8],
+) -> IResult<&'a [u8], Module> {
     let (input, name_index) = be_u16::<&[u8], E>(input).expect("Failed to read 'name_index'");
 
     Ok((input, Module {
